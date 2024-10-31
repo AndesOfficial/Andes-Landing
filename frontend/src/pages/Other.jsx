@@ -5,7 +5,6 @@ import {
   faShieldAlt,
   faMapMarkerAlt,
   faPhoneAlt,
-  faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import MyFooter from "../components/MyFooter";
 

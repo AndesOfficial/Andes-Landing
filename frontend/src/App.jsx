@@ -10,7 +10,7 @@ import { useEffect, useRef } from "react";
 import LocomotiveScroll from "locomotive-scroll";
 import Other from "./pages/Other";
 import './App.css';
-import IntercomComponent from './intercom'; // Import the Intercom component
+import IntercomComponent from './intercom'; 
 
 function App() {
   const scrollRef = useRef(null);
@@ -41,6 +41,7 @@ function App() {
             <Route path="/working" element={<Working />} />
             <Route path="/andes-assured" element={<AndesAssured />} />
             <Route path="/other" element={<Other />} />
+            <Route path="/privacypolicy" element={<Other />} />
             <Route path="*" element={<h1>404 Not Found</h1>} />
           </Routes>
         </div>

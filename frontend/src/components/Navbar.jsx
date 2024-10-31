@@ -53,6 +53,14 @@ const Navbar = () => {
             >
               About us
             </a>
+            <a
+              href="/privacypolicy"
+              className={`text-gray-900 hover:text-gray-700 transition duration-300 ${
+                isActive("/privacy-policy") ? "underline" : ""
+              }`}
+            >
+              Privacy Policy
+            </a>
           </div>
           <div className="hidden md:flex items-center">
             <a
@@ -125,6 +133,14 @@ const Navbar = () => {
             }`}
           >
             About us
+          </a>
+          <a
+            href="/privacypolicy"
+            className={`block text-gray-900 py-2 hover:bg-blue-600 hover:text-white transition duration-300 ${
+              isActive("/privacy-policy") ? "bg-blue-600 text-white" : ""
+            }`}
+          >
+            Privacy Policy
           </a>
           <a
             href="https://play.google.com/store/apps/details?id=com.andes.laundry"
