@@ -1,29 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import scheduleImage from "../assets/Schedule.jpeg"; // Adjust the path according to your setup
 
 const Schedule = () => {
-  useEffect(() => {
-    const detectDeviceAndRedirect = () => {
-      // Check if the device is Android
-      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      
-      if (/android/i.test(userAgent)) {
-        // If Android, redirect to Play Store
-        window.location.href = "https://play.google.com/store";
-      } else {
-        // If not Android, open WhatsApp with a pre-filled message
-        var phoneNumber = "1234567890"; // Replace with the target phone number
-        var message = "Hello, I need help!";
-        var url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-        window.location.href = url;
-      }
-    };
-
-    // Automatically call the function when the component mounts
-    detectDeviceAndRedirect();
-
-  }, []); // Empty dependency array to run this effect only once, when the component mounts
-
   return (
     <section className="bg-teal-200 flex justify-center items-center py-24 px-6">
       <div className="flex flex-col md:flex-row items-center md:space-x-12 max-w-5xl mx-auto">
