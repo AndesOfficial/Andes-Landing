@@ -2,12 +2,27 @@ import React from "react";
 import scheduleImage from "../assets/Schedule.jpeg"; // Adjust the path according to your setup
 
 const Schedule = () => {
+
+    const handleQRCodeScan = () => {
+    if (navigator.userAgent.match(/Android/i)) {
+      // Redirect to Play Store if it's Android
+      window.location.href = 'https://play.google.com/store/apps/details?id=com.andes.laundry';
+    } else if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+      // Redirect to WhatsApp on iOS
+      window.location.href = 'whatsapp://';
+    } else {
+      alert('Unsupported platform');
+    }
+  };
+
+  
   return (
     <section className="bg-teal-200 flex justify-center items-center py-24 px-6">
       <div className="flex flex-col md:flex-row items-center md:space-x-12 max-w-5xl mx-auto">
         {/* Image Section */}
         <div className="flex-shrink-0 mb-8 md:mb-0">
-          <div className="w-64 h-64 bg-cover bg-center rounded-tl-[120px] rounded-tr-[120px] rounded-bl-[120px] rounded-br-[120px] overflow-hidden">
+          <div className="w-64 h-64 bg-cover bg-center rounded-tl-[120px] rounded-tr-[120px] rounded-bl-[120px] rounded-br-[120px] overflow-hidden"
+            onClick={handleQRCodeScan}>
             <img
               src={scheduleImage}
               alt="Schedule your pickup"
