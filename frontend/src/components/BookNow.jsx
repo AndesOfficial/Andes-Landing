@@ -1,8 +1,26 @@
 const BookNow = () => {
-  const handleButtonClick = () => {
-    window.location.href = 'https://play.google.com/store/apps/details?id=com.andes.laundry';
-  };
+  // const handleButtonClick = () => {
+  //   window.location.href = 'https://play.google.com/store/apps/details?id=com.andes.laundry';
+  // };
 
+   const handleButtonClick = () => {
+    const androidUrl =
+      "https://play.google.com/store/search?q=Andes%20laundry&c=apps&hl=en";
+    const iosUrl = "https://wa.me/918626076578";
+  
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    
+    if (/android/i.test(userAgent)) {
+      console.log("Platform detected: Android");
+      window.location.href = androidUrl;
+    } else if (/iphone|ipod|ipad/|/mac/i.test(userAgent)) {
+      console.log("Platform detected: iOS");
+      window.location.href = iosUrl;
+    } else {
+      console.log("Platform not identified - No action taken");
+      alert("Platform not supported for redirection.");
+    }
+  };
   return (
     <div className="bg-yellow-200 flex flex-col items-center justify-center py-20">
       <h2 className="text-2xl md:text-3xl font-semibold text-blue-900 mb-6 px-4 md:px-0">
