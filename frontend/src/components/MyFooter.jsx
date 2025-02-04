@@ -7,9 +7,14 @@ const MyFooter = () => {
         {/* Upper Section */}
         <div className="flex flex-col md:flex-row justify-center items-center border-b border-gray-600 pb-6 mb-6">
           <nav className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-8 text-center">
-            <Link to="/book-now" className="hover:text-blue-400">
+            <a
+              href="https://play.google.com/store/apps/details?id=com.andes.laundry"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-400"
+            >
               Book now
-            </Link>
+            </a>
             <Link to="/working" className="hover:text-blue-400">
               How it works
             </Link>
@@ -37,12 +42,12 @@ const MyFooter = () => {
         {/* Social Links */}
         <div className="flex justify-center space-x-8 mb-8">
           <a
-            href="https://instagram.com"
+            href="mailto:andesnow1604@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-400 hover:text-blue-500"
           >
-            <i className="fab fa-instagram"></i> Mail
+            <i className="fab fa-envelope"></i> Mail
           </a>
           <a
             href="https://instagram.com"
@@ -72,7 +77,7 @@ const MyFooter = () => {
 
         {/* Bottom Section */}
         <div className="text-center text-gray-400 text-sm">
-          <p>© 2024 Andes Inc.</p>
+          <p>© 2025 Andes Inc.</p>
           <p>Powered by Andes.</p>
         </div>
       </div>

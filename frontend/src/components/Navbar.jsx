@@ -43,7 +43,7 @@ const Navbar = () => {
                 isActive("/andes-assured") ? "underline" : ""
               }`}
             >
-              Andes Assured
+              Andes
             </a>
             <a
               href="/about"

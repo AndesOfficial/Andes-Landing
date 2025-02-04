@@ -152,7 +152,7 @@ const PrivacyPolicy = () => {
             7. Data Retention and Deletion
           </h2>
           <p className="text-gray-700">
-            We retain your personal data only as long as necessary for the purposes stated in this Privacy Policy. Location data, if collected, is stored temporarily and deleted once it is no longer required for service fulfillment. You may request deletion of your data by contacting us at andes@example.com.
+            We retain your personal data only as long as necessary for the purposes stated in this Privacy Policy. Location data, if collected, is stored temporarily and deleted once it is no longer required for service fulfillment. You may request deletion of your data by contacting us at andesnow1604@gmail.com.
           </p>
         </section>
 
@@ -192,7 +192,7 @@ const PrivacyPolicy = () => {
           <p className="text-gray-700">
             If you have any questions regarding this Privacy Policy, you may contact us at:
           </p>
-          <p className="text-gray-700">Email: andes@example.com</p>
+          <p className="text-gray-700">Email: andesnow1604@gmail.com</p>
         </section>
       </div>
 

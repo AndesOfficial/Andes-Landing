@@ -8,13 +8,13 @@ import Vaibhav from '../assets/VaibhavSharma.jpg';
 import Sumith from '../assets/Sumith.jpg';
 import Mayur from '../assets/mayur.png';
 import Saubhagya from '../assets/Saubhagya.png';
+import Gaurav from '../assets/GauravBind.png';
 
 const teamMembers = [
   { src: Aryan, name: "Aryan Gupta", title: "Founder and CEO" },
-  { src: Saubhagya, name: "Saubhagya Singh" },
+  { src: Gaurav, name: "Gaurav Bind" },
   { src: Prakhar, name: "Prakhar Parashar" },
   { src: Yash, name: "Yash Tekavade" },
-  { src: Mayur, name: "Mayur Behere" },
 ];
 
 const TeamSection = () => {

@@ -32,9 +32,8 @@ const Services = () => {
           price="₹59/Kg"
           description="For everyday laundry, bedsheets and towels."
           includes={["WASH", "TUMBLE-DRY"]}
-          serviceTime="24H*"
+          serviceTime="24H-48H*"
           returned="IN A LAUNDRY/ANDES BAG"
-          icon="🧺"
         />
         <ItemCard
           title="Wash & Iron"

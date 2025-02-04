@@ -102,7 +102,7 @@ const LandingPage = () => {
               </div>
               <div className="flex items-center shadow-white p-2 md:p-4 rounded-lg bg-white">
                 <a
-                  href="#"
+                  href="https://wa.me/918626076578"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center"
