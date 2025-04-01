@@ -6,7 +6,7 @@ import washIronImage from './assets/wash_iron.jpg';
 import blazersImage from './assets/blazers.jpeg';
 import shirtPantImage from './assets/shirt_pant.jpeg';
 import bedsheetSingleImage from './assets/bedsheet_single.jpeg';
-import uniformImage from './assets/uniform.jpeg';
+import uniformImage from './assets/Uniform.jpeg';
 import simpleShoesImage from './assets/simple_shoes.jpg';
 import loafersSneakersImage from './assets/loafers_sneakers.jpg';
 import sareeEmbroideryImage from './assets/saree_embroidery.jpg';
