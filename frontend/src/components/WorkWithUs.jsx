@@ -4,7 +4,7 @@ const WorkWithUs = () => {
       title: "Careers",
       description: "Check open positions",
       linkText: "Learn more",
-      href: "mailto:andesnow1604@gmail.com",
+      href: "mailto:care@andes.co.in",
     },
     {
       title: "Cleaning partners",

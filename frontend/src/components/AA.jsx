@@ -5,7 +5,7 @@ const AndesAssured = () => {
     <div className="bg-blue-700 py-12 mt-9">
       <div className="container mx-auto px-6 md:px-12 md:pt-24 md:pb-24">
         <h1 className="text-4xl font-bold text-center text-white mb-12">
-          What is Andes Assured?
+        why andes only?
         </h1>
         <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 md:overflow-y-hidden">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center transform transition-transform duration-300 md:hover:scale-105 md:hover:shadow-2xl min-w-full md:min-w-0">
@@ -28,16 +28,16 @@ const AndesAssured = () => {
               ever before.
             </p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-lg text-center transform transition-transform duration-300 md:hover:scale-105 md:hover:shadow-2xl min-w-full md:min-w-0">
-            <FaShieldAlt className="text-blue-500 text-6xl mx-auto mb-4" />
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-              Clothes Insurance
-            </h2>
-            <p className="text-gray-600">
-              Your clothes are in safe hands. If anything goes wrong, we’ve
-              got you covered.
-            </p>
-          </div>
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+              <FaLeaf className="text-blue-500 text-6xl mx-auto mb-4" />
+              <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+                Water Efficient
+              </h2>
+              <p className="text-gray-600">
+                We use advanced water-saving technologies to minimize waste while
+                maintaining superior cleaning quality.
+              </p>
+            </div>
           <div className="bg-white p-6 rounded-lg shadow-lg text-center transform transition-transform duration-300 md:hover:scale-105 md:hover:shadow-2xl min-w-full md:min-w-0">
             <FaLeaf className="text-blue-500 text-6xl mx-auto mb-4" />
             <h2 className="text-2xl font-semibold text-gray-800 mb-2">
@@ -51,7 +51,7 @@ const AndesAssured = () => {
         </div>
         <div className="text-center mt-20">
           <h2 className="text-xl md:text-2xl font-serif text-white">
-            &quot;Luxury you can afford, savings you’ll love&quot;
+            &quot;Got your clothes dirty? Andes now!&quot;
           </h2>
         </div>
       </div>

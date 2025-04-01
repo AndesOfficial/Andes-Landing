@@ -9,7 +9,8 @@ import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import card4 from "../assets/card4.png";
-import MyFooter from "../components/MyFooter";
+import {Helmet} from "react-helmet-async";
+
 
 const bulletPoints1 = [
   { icon: "🔔", text: "Get notified when your order is ready for pick-up" },
@@ -40,6 +41,10 @@ const bulletPointsEnvironmental = [
 const Working = () => {
   return (
     <div>
+      <Helmet>
+        <title>Andes Laundry - Working</title>
+        <meta name="description" content="Learn more about Andes Laundry's working process." />
+      </Helmet>
       <QuickCleanFresh />
 
       <div>
@@ -87,7 +92,6 @@ const Working = () => {
 
       <CustomerStories />
       <Schedule />
-      <MyFooter /> {/* Footer stays at the bottom of the page */}
     </div>
   );
 };

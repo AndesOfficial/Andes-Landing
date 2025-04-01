@@ -3,7 +3,7 @@ import moneyicon from "../assets/moneyicon.svg";
 import serviceicon from "../assets/serviceicon.svg";
 const PricingSection = () => {
   return (
-    <section className="bg-blue-500 text-white py-24">
+    <section className="bg-blue-500 text-white py-24 ">
       <div className="text-center mb-8">
         <h2 className="text-3xl md:text-5xl font-bold">Simple pricing</h2>
         <p className="text-lg text-blue-100 mt-2">No hidden fees.</p>
@@ -20,7 +20,7 @@ const PricingSection = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <p className="text-lg font-semibold">Free 24h delivery</p>
+            <p className="text-lg font-semibold">Free 48h delivery</p>
           </div>
 
           {/* Feature 2 */}
@@ -44,7 +44,7 @@ const PricingSection = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <p className="text-lg font-semibold">Service fee from ₹6</p>
+            <p className="text-lg font-semibold">Service fee from ₹8</p>
           </div>
         </div>
       </div>

@@ -15,7 +15,8 @@ const WhoWeAre = () => {
           Andes is the #1 fastest and safest on-demand laundry service platform.
           You can schedule a laundry pickup with just a few taps, and we’ll take
           care of the rest. From pickup to cleaning, ironing, or dry cleaning to
-          delivery – all within 48 hours. Need just ironing? Every service is backed
+          delivery – all within 48 hours. Need just ironing? We’ll have your
+          clothes back to you in as fast as 120 minutes. Every service is backed
           by Andes Assured.
         </p>
         {/* Subsection: Current Availability */}

@@ -9,7 +9,6 @@ import Future from "../components/Future.jsx";
 import BookNow from "../components/BookNow.jsx";
 // import Serviceinfo from "../components/Serviceinfo.jsx";
 import ServiceFeatures from "../components/ServiceFeatures.jsx";
-import MyFooter from "../components/MyFooter.jsx";
 import playstore from "../assets/playstoreicon.svg";
 import appstore from "../assets/appstoreicon.svg"; // Import the App Store icon
 import AndesAssured from "../components/AA.jsx";
@@ -23,6 +22,7 @@ import card4 from "../assets/card4.png";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import Appsupport from "../components/Appsupport.jsx";
 import FAQ from "../components/Faq.jsx";
+import {Helmet} from "react-helmet-async";
 
 const bulletPoints1 = [
   { icon: "🔔", text: "Get notified when your order is ready for pick-up" },
@@ -50,6 +50,10 @@ const LandingPage = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Andes Laundry - Home</title>
+        <meta name="description" content="Welcome to Andes Laundry, your trusted laundry partner in Pune." />
+      </Helmet>
       {/* Hero Section */}
       <div className="bg-blue-500 md:min-h-screen flex justify-center items-center pt-16 md:pt-2">
         <main className="container mx-auto px-4 flex flex-col md:flex-row items-center">
@@ -102,7 +106,7 @@ const LandingPage = () => {
               </div>
               <div className="flex items-center shadow-white p-2 md:p-4 rounded-lg bg-white">
                 <a
-                  href="https://wa.me/918626076578"
+                  href="#"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center"
@@ -214,7 +218,6 @@ const LandingPage = () => {
         <Appsupport />
       </section>
       <FAQ />
-      <MyFooter /> {/* Footer stays at the bottom of the page */}
     </div>
   );
 };

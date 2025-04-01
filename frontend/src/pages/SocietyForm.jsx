@@ -3,8 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import MyFooter from "../components/MyFooter";
-
+import {Helmet} from "react-helmet-async";
 const SocietyForm = () => {
   const [society, setSociety] = useState("");
   const [wingHouseNumber, setWingHouseNumber] = useState("");
@@ -30,6 +29,10 @@ const SocietyForm = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Andes Laundry - Society Form</title>
+        <meta name="description" content="Submit your society details to join Andes Laundry." />
+      </Helmet>
       <div className="flex flex-col md:flex-row justify-center items-center min-h-screen bg-blue-100">
         <div className="md:w-1/2 w-full p-6 mt-16 md:ml-36">
           <form
@@ -116,7 +119,6 @@ const SocietyForm = () => {
         {/* Toast Container */}
         <ToastContainer />
       </div>
-      <MyFooter /> {/* Footer stays at the bottom of the page */}
     </div>
   );
 };
