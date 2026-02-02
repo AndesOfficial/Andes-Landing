@@ -1,4 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    sendPasswordResetEmail
+} from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase';
 
 const AuthContext = createContext();
 
@@ -10,43 +19,57 @@ export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Simulate checking for a logged-in user on mount
+    // 1. Check if user is logged in (Firebase does this automatically)
     useEffect(() => {
-        const user = localStorage.getItem('andes_user');
-        if (user) {
-            setCurrentUser(JSON.parse(user));
-        }
-        setLoading(false);
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // If user is logged in, fetch their name from Firestore
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    setCurrentUser({ ...user, ...docSnap.data() });
+                } else {
+                    setCurrentUser(user);
+                }
+            } else {
+                setCurrentUser(null);
+            }
+            setLoading(false);
+        });
+
+        return unsubscribe;
     }, []);
 
+    // 2. Sign Up 
     const signup = async (name, email, password) => {
-        // Simulate API call
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const user = { name, email, id: Date.now() };
-                localStorage.setItem('andes_user', JSON.stringify(user));
-                setCurrentUser(user);
-                resolve(user);
-            }, 1000);
+        const result = await createUserWithEmailAndPassword(auth, email, password);
+        const user = result.user;
+
+        // Save the extra "Name" field to Firestore
+        await setDoc(doc(db, "users", user.uid), {
+            fullName: name,
+            email: email,
+            createdAt: new Date(),
+            uid: user.uid
         });
+
+        return user;
     };
 
-    const login = async (email, password) => {
-        // Simulate API call
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                // Mock login - accept any email/password for demo
-                const user = { name: "Demo User", email, id: Date.now() };
-                localStorage.setItem('andes_user', JSON.stringify(user));
-                setCurrentUser(user);
-                resolve(user);
-            }, 1000);
-        });
+    // 3. Login
+    const login = (email, password) => {
+        return signInWithEmailAndPassword(auth, email, password);
     };
 
+    // 4. Logout
     const logout = () => {
-        localStorage.removeItem('andes_user');
-        setCurrentUser(null);
+        return signOut(auth);
+    };
+
+    // 5. Reset Password
+    const resetPassword = (email) => {
+        return sendPasswordResetEmail(auth, email);
     };
 
     const value = {
@@ -54,6 +77,7 @@ export const AuthProvider = ({ children }) => {
         signup,
         login,
         logout,
+        resetPassword,
         loading
     };
 

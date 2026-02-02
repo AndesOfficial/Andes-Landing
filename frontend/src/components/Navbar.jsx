@@ -65,8 +65,9 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             {currentUser ? (
               <>
-                <span className="text-gray-700 font-medium">Hi, {currentUser.name.split(' ')[0]}</span>
-                <button onClick={logout} className="text-gray-500 hover:text-indigo-600 font-medium">Logout</button>
+                <span className="text-gray-700 font-medium">
+                  Hi, {currentUser.name ? currentUser.name.split(' ')[0] : currentUser.displayName?.split(' ')[0] || "User"}
+                </span>                <button onClick={logout} className="text-gray-500 hover:text-indigo-600 font-medium">Logout</button>
                 <Link
                   to="/order"
                   className="bg-indigo-600 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 shadow-lg shadow-indigo-500/30"
