@@ -66,7 +66,7 @@ const Navbar = () => {
             {currentUser ? (
               <>
                 <span className="text-gray-700 font-medium">
-                  Hi, {currentUser.name ? currentUser.name.split(' ')[0] : currentUser.displayName?.split(' ')[0] || "User"}
+                  Hi, {currentUser.fullName ? currentUser.fullName.split(' ')[0] : currentUser.name ? currentUser.name.split(' ')[0] : currentUser.displayName?.split(' ')[0] || "User"}
                 </span>                <button onClick={logout} className="text-gray-500 hover:text-indigo-600 font-medium">Logout</button>
                 <Link
                   to="/order"
@@ -146,7 +146,7 @@ const Navbar = () => {
             <div className="pt-4 space-y-3 border-t border-gray-100 mt-4">
               {currentUser ? (
                 <>
-                  <div className="px-4 text-gray-700 font-medium">Logged in as {currentUser.name}</div>
+                  <div className="px-4 text-gray-700 font-medium">Logged in as {currentUser.fullName || currentUser.name || "User"}</div>
                   <Link to="/order" className="block text-center bg-indigo-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 text-lg">
                     New Order
                   </Link>
