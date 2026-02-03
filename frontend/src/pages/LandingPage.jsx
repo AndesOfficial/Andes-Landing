@@ -22,7 +22,7 @@ import card4 from "../assets/card4.png";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import Appsupport from "../components/Appsupport.jsx";
 import FAQ from "../components/Faq.jsx";
-import {Helmet} from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 
 const bulletPoints1 = [
   { icon: "🔔", text: "Get notified when your order is ready for pick-up" },
@@ -70,10 +70,10 @@ const LandingPage = () => {
             </h1>
 
             {/* Typewriter text with fixed height and left alignment */}
+            {/* Typewriter text with fixed height and left alignment */}
             <h1
               className="text-2xl sm:text-4xl md:text-5xl font-bold text-yellow-300 md:mb-8 typing text-left"
               style={{
-                minWidth: "300px", // Set minimum width to the largest word length to avoid shifting
                 minHeight: "70px", // Set a fixed height to avoid vertical shifting
               }}
             >

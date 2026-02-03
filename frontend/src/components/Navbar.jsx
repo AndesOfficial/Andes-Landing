@@ -19,55 +19,53 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
+  //  Helper function to close the mobile menu
+  const closeMenu = () => setIsOpen(false);
+
   return (
     <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg py-2" : "bg-white/95 py-4"
       }`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-3">
+            {/* Also close menu if clicking logo */}
+            <Link to="/" onClick={closeMenu} className="flex items-center space-x-3">
               <img src={logo} alt="Andes logo" className="h-16 w-16" />
             </Link>
           </div>
 
-          {/* Desktop menu */}
+          
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/working"
-              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/working") ? "text-indigo-600 font-semibold" : ""
-                }`}
+              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/working") ? "text-indigo-600 font-semibold" : ""}`}
             >
               How it works
             </Link>
-
             <Link to="/services"
-              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/services") ? "text-indigo-600 font-semibold" : ""
-                }`}
+              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/services") ? "text-indigo-600 font-semibold" : ""}`}
             >
               Services & Pricing
             </Link>
-
             <Link to="/andes-assured"
-              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/andes-assured") ? "text-indigo-600 font-semibold" : ""
-                }`}
+              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/andes-assured") ? "text-indigo-600 font-semibold" : ""}`}
             >
               Andes Assured
             </Link>
-
             <Link to="/about"
-              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/about") ? "text-indigo-600 font-semibold" : ""
-                }`}
+              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/about") ? "text-indigo-600 font-semibold" : ""}`}
             >
               About us
             </Link>
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Buttons (Desktop) */}
           <div className="hidden md:flex items-center space-x-4">
             {currentUser ? (
               <>
                 <span className="text-gray-700 font-medium">
                   Hi, {currentUser.fullName ? currentUser.fullName.split(' ')[0] : currentUser.name ? currentUser.name.split(' ')[0] : currentUser.displayName?.split(' ')[0] || "User"}
-                </span>                <button onClick={logout} className="text-gray-500 hover:text-indigo-600 font-medium">Logout</button>
+                </span>
+                <button onClick={logout} className="text-gray-500 hover:text-indigo-600 font-medium">Logout</button>
                 <Link
                   to="/order"
                   className="bg-indigo-600 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 shadow-lg shadow-indigo-500/30"
@@ -120,24 +118,29 @@ const Navbar = () => {
             } md:hidden transition-all duration-300 ease-in-out overflow-hidden`}
         >
           <div className="pt-4 pb-6 space-y-4">
+            
             <Link to="/working"
+              onClick={closeMenu}
               className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
             >
               How it works
             </Link>
             <Link to="/services"
+              onClick={closeMenu}
               className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
             >
               Services & Pricing
             </Link>
 
             <Link to="/andes-assured"
+              onClick={closeMenu}
               className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
             >
               Andes Assured
             </Link>
 
             <Link to="/about"
+              onClick={closeMenu}
               className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
             >
               About us
@@ -147,17 +150,32 @@ const Navbar = () => {
               {currentUser ? (
                 <>
                   <div className="px-4 text-gray-700 font-medium">Logged in as {currentUser.fullName || currentUser.name || "User"}</div>
-                  <Link to="/order" className="block text-center bg-indigo-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 text-lg">
+                  <Link 
+                    to="/order" 
+                    onClick={closeMenu}
+                    className="block text-center bg-indigo-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 text-lg"
+                  >
                     New Order
                   </Link>
-                  <button onClick={logout} className="block w-full text-center text-gray-500 py-2">Logout</button>
+                  <button 
+                    onClick={() => { logout(); closeMenu(); }} 
+                    className="block w-full text-center text-gray-500 py-2"
+                  >
+                    Logout
+                  </button>
                 </>
               ) : (
                 <>
-                  <Link to="/login" className="block text-center text-gray-700 font-medium py-2">
+                  <Link 
+                    to="/login" 
+                    onClick={closeMenu}
+                    className="block text-center text-gray-700 font-medium py-2"
+                  >
                     Log In
                   </Link>
-                  <Link to="/signup"
+                  <Link 
+                    to="/signup"
+                    onClick={closeMenu}
                     className="block text-center bg-indigo-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 text-lg"
                   >
                     Sign Up Now

@@ -8,6 +8,7 @@
   body {
     @apply font-sans bg-gray-50 text-slate-800 antialiased;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
   }
 }
 

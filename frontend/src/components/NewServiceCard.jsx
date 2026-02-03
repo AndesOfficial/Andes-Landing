@@ -1,16 +1,16 @@
 import React from 'react';
 
 const ServiceCard = ({ service }) => {
-  const originalPrice = service.unit === 'piece' || service.unit === 'pair' 
-    ? service.rateByPiece 
+  const originalPrice = service.unit === 'piece' || service.unit === 'pair'
+    ? service.rateByPiece
     : service.rateByKg;
-  const discountedPrice = service.unit === 'piece' || service.unit === 'pair' 
-    ? service.discountedRateByPiece 
+  const discountedPrice = service.unit === 'piece' || service.unit === 'pair'
+    ? service.discountedRateByPiece
     : service.discountedRateByKg;
-  const unitText = service.unit === 'piece' 
-    ? 'per piece' 
-    : service.unit === 'pair' 
-      ? 'per pair' 
+  const unitText = service.unit === 'piece'
+    ? 'per piece'
+    : service.unit === 'pair'
+      ? 'per pair'
       : 'per kg';
 
   return (
@@ -19,21 +19,23 @@ const ServiceCard = ({ service }) => {
       <div className="absolute top-4 right-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10 animate-pulse">
         {service.discount}% OFF
       </div>
-      
+
       {/* Service Image */}
       <div className="h-48 overflow-hidden">
-        <img 
-          src={service.image} 
-          alt={service.displayName} 
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+        <img
+          src={service.image}
+          alt={service.displayName}
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 will-change-transform"
         />
       </div>
-      
+
       {/* Service Details */}
       <div className="p-6">
         <h3 className="text-xl font-bold text-gray-800 mb-2">{service.displayName}</h3>
         <p className="text-gray-600 text-sm mb-4">{service.description}</p>
-        
+
         <div className="flex items-end justify-between">
           <div>
             <span className="text-gray-400 text-sm line-through mr-2">

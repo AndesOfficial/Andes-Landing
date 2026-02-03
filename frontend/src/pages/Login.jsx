@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -52,6 +53,10 @@ const Login = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+            <Helmet>
+                <title>{showReset ? 'Reset Password' : 'Log In'} - Andes Laundry</title>
+                <meta name="description" content="Log in to your Andes Laundry account to schedule pickups, track orders, and manage your profile." />
+            </Helmet>
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
                 <div className="text-center">
                     <h2 className="text-3xl font-extrabold text-slate-900">

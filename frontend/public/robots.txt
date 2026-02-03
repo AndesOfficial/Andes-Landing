@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://andes-landing.web.app/sitemap.xml
