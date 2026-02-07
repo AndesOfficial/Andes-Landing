@@ -38,7 +38,7 @@ const Login = () => {
             } else {
                 // Handle Login
                 await login(email, password);
-                navigate('/order');
+                navigate('/dashboard');
             }
         } catch (err) {
             if (showReset) {

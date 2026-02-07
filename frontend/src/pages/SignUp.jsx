@@ -26,7 +26,7 @@ const SignUp = () => {
         setLoading(true);
         try {
             await signup(name, email, password);
-            navigate('/order'); // Redirect to order after signup
+            navigate('/dashboard'); // Redirect to dashboard after signup
         } catch (err) {
             setError('Failed to create an account');
         }

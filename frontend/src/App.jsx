@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import LandingPage from "./pages/LandingPage";
 import AboutPage from "./pages/AboutPage";
@@ -14,6 +14,11 @@ import DownloadPage from './pages/DownloadPage';
 import NewServicePage from './pages/NewServicePage';
 import data from './data';
 import ServiceFooter from './components/ServiceFooter';
+import DashboardLayout from "./components/DashboardLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard from "./pages/Dashboard";
+import MyOrders from "./pages/MyOrders";
+import Profile from "./pages/Profile";
 
 // Pages
 import SignUp from "./pages/SignUp";
@@ -26,6 +31,8 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
+    if (!scrollRef.current) return;
+
     const scroll = new LocomotiveScroll({
       el: scrollRef.current,
       smooth: true,
@@ -48,6 +55,26 @@ function App() {
     };
   }, [location.pathname]);
 
+  if (location.pathname.startsWith('/dashboard')) {
+    return (
+      <>
+        <Routes>
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }>
+            <Route index element={<Dashboard />} />
+            <Route path="orders" element={<MyOrders />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Route>
+        </Routes>
+        <IntercomComponent />
+      </>
+    );
+  }
+
   return (
     <>
       <Navbar />
@@ -63,7 +90,7 @@ function App() {
             <Route path="/download" element={<DownloadPage />} />
             <Route path="/services" element={<NewServicePage data={data} />} />
 
-            {/* New Routes */}
+            {/* Public Auth Routes */}
             <Route path="/signup" element={<div data-scroll-section><SignUp /></div>} />
             <Route path="/login" element={<div data-scroll-section><Login /></div>} />
             <Route path="/order" element={<div data-scroll-section><OrderPlacement /></div>} />

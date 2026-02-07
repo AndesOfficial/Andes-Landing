@@ -15,6 +15,7 @@ const OrderPlacement = () => {
     const { cart, addToCart, removeFromCart, placeOrder } = useOrder();
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [selectedSlot, setSelectedSlot] = useState(null);
     const navigate = useNavigate();
 
     const handleServiceSelect = (service) => {
@@ -23,7 +24,7 @@ const OrderPlacement = () => {
 
     const handlePlaceOrder = async () => {
         setLoading(true);
-        await placeOrder();
+        await placeOrder(selectedSlot);
         setLoading(false);
         navigate('/order-confirmation');
     };
@@ -86,11 +87,17 @@ const OrderPlacement = () => {
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-2">Pickup Date</label>
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="border rounded-lg p-4 cursor-pointer hover:border-indigo-500 hover:bg-indigo-50 transition-colors">
+                                    <div
+                                        className={`border rounded-lg p-4 cursor-pointer transition-colors ${selectedSlot === 'morning' ? 'border-indigo-500 bg-indigo-50 ring-2 ring-indigo-500' : 'hover:border-indigo-500 hover:bg-indigo-50'}`}
+                                        onClick={() => setSelectedSlot('morning')}
+                                    >
                                         <div className="font-semibold text-slate-900">Tomorrow</div>
                                         <div className="text-sm text-slate-500">9:00 AM - 12:00 PM</div>
                                     </div>
-                                    <div className="border rounded-lg p-4 cursor-pointer hover:border-indigo-500 hover:bg-indigo-50 transition-colors">
+                                    <div
+                                        className={`border rounded-lg p-4 cursor-pointer transition-colors ${selectedSlot === 'afternoon' ? 'border-indigo-500 bg-indigo-50 ring-2 ring-indigo-500' : 'hover:border-indigo-500 hover:bg-indigo-50'}`}
+                                        onClick={() => setSelectedSlot('afternoon')}
+                                    >
                                         <div className="font-semibold text-slate-900">Tomorrow</div>
                                         <div className="text-sm text-slate-500">2:00 PM - 5:00 PM</div>
                                     </div>
@@ -98,7 +105,7 @@ const OrderPlacement = () => {
                             </div>
                             <div className="flex justify-between mt-8">
                                 <Button variant="secondary" onClick={() => setStep(1)}>Back</Button>
-                                <Button onClick={() => setStep(3)}>Next: Review</Button>
+                                <Button onClick={() => setStep(3)} disabled={!selectedSlot}>Next: Review</Button>
                             </div>
                         </div>
                     </div>
@@ -132,7 +139,7 @@ const OrderPlacement = () => {
                             <FaTruck className="text-blue-500 mt-1 mr-3" />
                             <div>
                                 <h4 className="font-semibold text-blue-900">Pickup Details</h4>
-                                <p className="text-sm text-blue-700">Scheduled for Tomorrow, 9:00 AM - 12:00 PM</p>
+                                <p className="text-sm text-blue-700">Scheduled for Tomorrow, {selectedSlot === 'morning' ? '9:00 AM - 12:00 PM' : '2:00 PM - 5:00 PM'}</p>
                             </div>
                         </div>
 
