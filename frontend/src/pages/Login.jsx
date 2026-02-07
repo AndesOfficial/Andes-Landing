@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/common/Button';
@@ -13,8 +13,15 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [showReset, setShowReset] = useState(false); // Toggle between Login and Reset
 
-    const { login, resetPassword } = useAuth();
+    const { login, resetPassword, currentUser } = useAuth();
     const navigate = useNavigate();
+
+    // Redirect if user is already logged in or logs in successfully
+    useEffect(() => {
+        if (currentUser) {
+            navigate('/dashboard');
+        }
+    }, [currentUser, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,7 +45,7 @@ const Login = () => {
             } else {
                 // Handle Login
                 await login(email, password);
-                navigate('/dashboard');
+                // navigate('/dashboard'); // Removed: handled by useEffect
             }
         } catch (err) {
             if (showReset) {
