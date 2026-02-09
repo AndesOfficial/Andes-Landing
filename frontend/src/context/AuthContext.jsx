@@ -28,9 +28,16 @@ export const AuthProvider = ({ children }) => {
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
-                    setCurrentUser({ ...user, ...docSnap.data() });
+                    setCurrentUser({
+                        uid: user.uid,
+                        email: user.email,
+                        ...docSnap.data()
+                    });
                 } else {
-                    setCurrentUser(user);
+                    setCurrentUser({
+                        uid: user.uid,
+                        email: user.email
+                    });
                 }
             } else {
                 setCurrentUser(null);

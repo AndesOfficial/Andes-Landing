@@ -34,7 +34,10 @@ export const OrderProvider = ({ children }) => {
     const clearCart = () => setCart([]);
 
     const placeOrder = async (deliverySlot) => {
-        if (!currentUser) throw new Error("User must be logged in");
+        if (!currentUser) {
+            console.error("Attempted to place order without user logged in");
+            throw new Error("User must be logged in");
+        }
 
         const orderData = {
             userId: currentUser.uid,
@@ -49,12 +52,18 @@ export const OrderProvider = ({ children }) => {
             orderId: '#ORD-' + Math.floor(100000 + Math.random() * 900000) // Simple random ID
         };
 
+        console.log("Placing order with data:", orderData); // Debug log
+
         try {
             const docRef = await addDoc(collection(db, "orders"), orderData);
             clearCart();
             return { id: docRef.id, ...orderData };
         } catch (error) {
             console.error("Error creating order: ", error);
+            // Log specifically if it's a permission error
+            if (error.code === 'permission-denied') {
+                console.error("Permission denied. Check Firestore rules. User ID:", currentUser.uid);
+            }
             throw error;
         }
     };
