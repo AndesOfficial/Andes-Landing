@@ -9,31 +9,53 @@ const MyOrders = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // check if user is logged in
         if (!currentUser) return;
 
+        const ordersRef = collection(db, "orders");
+        // query for my orders
         const q = query(
-            collection(db, "orders"),
+            ordersRef,
             where("userId", "==", currentUser.uid)
         );
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            const ordersData = snapshot.docs
-                .map(doc => ({
-                    id: doc.id,
-                    ...doc.data(),
-                    // Convert Timestamp to readable date
-                    date: doc.data().createdAt?.toDate().toLocaleDateString() || 'Just now',
-                    timestamp: doc.data().createdAt?.seconds || 0 // Store for sorting
-                }))
-                .sort((a, b) => b.timestamp - a.timestamp); // Sort by timestamp desc
+            console.log("Fetched orders count:", snapshot.docs.length);
 
-            setOrders(ordersData);
+            let ordersList = [];
+
+            // loop through docs to format data
+            snapshot.docs.forEach(doc => {
+                const data = doc.data();
+
+                // date formatting is inconsistent, fixing it here
+                let displayDate = 'Just now';
+                if (data.createdAt) {
+                    displayDate = data.createdAt.toDate().toLocaleDateString();
+                }
+
+                ordersList.push({
+                    id: doc.id,
+                    ...data,
+                    date: displayDate,
+                    timestamp: data.createdAt ? data.createdAt.seconds : 0
+                });
+            });
+
+            // sort by newest first
+            ordersList.sort((a, b) => {
+                return b.timestamp - a.timestamp;
+            });
+
+            console.log("Processed Orders:", ordersList);
+            setOrders(ordersList);
             setLoading(false);
         }, (error) => {
-            console.error("Error fetching orders:", error);
+            console.log("Error getting orders:", error);
             setLoading(false);
         });
 
+        // cleanup
         return () => unsubscribe();
     }, [currentUser]);
 

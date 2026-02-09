@@ -28,25 +28,51 @@ const Dashboard = () => {
     useEffect(() => {
         if (!currentUser) return;
 
-        // Query orders for the current user
+
+
+        // query orders for the current user
         const q = query(collection(db, "orders"), where("userId", "==", currentUser.uid));
 
-        // Real-time listener for order updates
+        // Real-time listener
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            // console.log("Dashboard Snapshot:", querySnapshot.size);
+
             let activeCount = 0;
             let completedCount = 0;
             let totalSpent = 0;
+            let orders = [];
 
-            const orders = querySnapshot.docs
-                .map(doc => ({ id: doc.id, ...doc.data() }))
-                .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)); // Sort by newest first
-
-            orders.forEach(order => {
-                const status = order.status || 'Processing';
-                if (['Processing', 'Pending', 'Scheduled'].includes(status)) activeCount++;
-                else if (['Delivered', 'Completed'].includes(status)) completedCount++;
-                totalSpent += parseFloat(order.totalPrice || 0);
+            // manually map the docs
+            querySnapshot.docs.forEach(doc => {
+                orders.push({ id: doc.id, ...doc.data() });
             });
+
+            // sort newest first
+            orders.sort((a, b) => {
+                const timeA = a.createdAt?.seconds || 0;
+                const timeB = b.createdAt?.seconds || 0;
+                return timeB - timeA;
+            });
+
+            // calculate stats
+            for (let i = 0; i < orders.length; i++) {
+                const order = orders[i];
+                const status = order.status || 'Processing';
+
+                // active statuses
+                if (status === 'Processing' || status === 'Pending' || status === 'Scheduled') {
+                    activeCount = activeCount + 1;
+                }
+                // completed statuses
+                else if (status === 'Delivered' || status === 'Completed') {
+                    completedCount = completedCount + 1;
+                }
+
+                // add up total price if it exists
+                if (order.totalPrice) {
+                    totalSpent = totalSpent + parseFloat(order.totalPrice);
+                }
+            }
 
             setStats({
                 active: activeCount,
@@ -54,11 +80,23 @@ const Dashboard = () => {
                 saved: totalSpent.toFixed(2)
             });
 
-            setRecentOrder(orders.length > 0 ? {
-                ...orders[0],
-                date: orders[0].createdAt?.toDate().toLocaleDateString() || 'Just now'
-            } : null);
-        }, (error) => console.error("Error fetching dashboard data:", error));
+            // get the most recent one
+            let lastOrder = null;
+            if (orders.length > 0) {
+                const first = orders[0];
+                let dateStr = 'Just now';
+                if (first.createdAt) {
+                    dateStr = first.createdAt.toDate().toLocaleDateString();
+                }
+
+                lastOrder = {
+                    ...first,
+                    date: dateStr
+                };
+            }
+            setRecentOrder(lastOrder);
+
+        }, (error) => console.log("Dashboard Error:", error));
 
         return () => unsubscribe();
     }, [currentUser]);
