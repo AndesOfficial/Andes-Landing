@@ -1,9 +1,16 @@
 import Intercom from '@intercom/messenger-js-sdk';
 
-export default function Component() {
-  Intercom({
-    app_id: import.meta.env.VITE_INTERCOM_APP_ID || 'o4sf91nl',
-  });
+export default function IntercomComponent() {
+  const APP_ID = import.meta.env.VITE_INTERCOM_APP_ID;
 
-  return <div></div>;
+  if (APP_ID) {
+    Intercom({
+      app_id: APP_ID,
+    });
+  } else {
+    console.log("Intercom not initialized: VITE_INTERCOM_APP_ID missing in .env");
+  }
+
+
+  return null;
 }

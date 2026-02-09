@@ -4,6 +4,7 @@ import { useOrder } from '../context/OrderContext';
 import Button from '../components/common/Button';
 import { FaTshirt, FaCalendarAlt, FaCheck, FaTruck, FaArrowLeft, FaTrash, FaMinus, FaPlus } from 'react-icons/fa';
 
+// TODO: put this in a separate file or database later
 const quickServices = [
     { id: 'wash-fold', name: 'Wash & Fold', price: 1.5, unit: 'kg', icon: <FaTshirt />, desc: 'Regular laundry, washed, dried, and folded.' },
     { id: 'dry-clean', name: 'Dry Clean', price: 5.0, unit: 'item', icon: <FaTshirt />, desc: 'Delicate items cleaned with care.' },
@@ -12,21 +13,26 @@ const quickServices = [
 ];
 
 const OrderPlacement = () => {
+    // keeping track of cart and order functions
     const { cart, addToCart, removeFromCart, updateQuantity, placeOrder, totalItems, totalPrice } = useOrder();
+
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
     const [selectedSlot, setSelectedSlot] = useState(null);
     const navigate = useNavigate();
 
-    // No longer auto-skipping step 1, because Step 1 is now the Cart Review.
+    // checking what's in the cart for debugging
+    console.log("Current Cart Items:", cart);
 
     const handlePlaceOrder = async () => {
+        console.log("Placing order with slot:", selectedSlot);
         setLoading(true);
+
         try {
             await placeOrder(selectedSlot);
             navigate('/order-confirmation');
         } catch (error) {
-            console.error("Order placement failed:", error);
+            console.log("Something went wrong:", error);
             alert("Failed to place order. Please try again.");
         } finally {
             setLoading(false);
@@ -45,6 +51,7 @@ const OrderPlacement = () => {
         }
     };
 
+    // if cart is empty, show the empty state
     if (cart.length === 0 && step === 1) {
         return (
             <div className="min-h-screen bg-gray-50 pt-32 pb-12 px-4 sm:px-6 lg:px-8">
@@ -77,7 +84,6 @@ const OrderPlacement = () => {
                     <h1 className="text-3xl font-bold text-slate-900">Checkout</h1>
                 </div>
 
-                {/* Steps Indicator */}
                 <div className="flex justify-center mb-12">
                     <div className="flex items-center space-x-4">
                         <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold transition-all ${step >= 1 ? 'bg-indigo-600 text-white shadow-lg' : 'bg-gray-200 text-gray-500'}`}>1</div>
@@ -92,7 +98,6 @@ const OrderPlacement = () => {
                     </div>
                 </div>
 
-                {/* Step 1: Review Cart */}
                 {step === 1 && (
                     <div className="bg-white rounded-2xl shadow-sm p-8 animate-fade-in">
                         <h2 className="text-2xl font-bold text-slate-800 mb-6">Review Cart</h2>
@@ -102,7 +107,6 @@ const OrderPlacement = () => {
                                 <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between p-4 border border-gray-100 rounded-xl hover:border-indigo-100 transition-colors bg-gray-50/50">
                                     <div className="flex items-center w-full sm:w-auto mb-4 sm:mb-0">
                                         <div className="h-16 w-16 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
-                                            {/* Placeholder image if item.image is missing or just use icon logic */}
                                             {item.image ? (
                                                 <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
                                             ) : (
@@ -119,27 +123,18 @@ const OrderPlacement = () => {
 
                                     <div className="flex items-center justify-between w-full sm:w-auto sm:space-x-8">
                                         <div className="flex items-center bg-white rounded-lg border border-gray-200">
-                                            <button
-                                                onClick={() => handleDecrement(item)}
-                                                className="px-3 py-1 hover:bg-gray-50 text-gray-600"
-                                            >
+                                            <button onClick={() => handleDecrement(item)} className="px-3 py-1 hover:bg-gray-50 text-gray-600">
                                                 <FaMinus size={10} />
                                             </button>
                                             <span className="px-3 font-medium text-gray-900">{item.quantity}</span>
-                                            <button
-                                                onClick={() => handleIncrement(item)}
-                                                className="px-3 py-1 hover:bg-gray-50 text-indigo-600"
-                                            >
+                                            <button onClick={() => handleIncrement(item)} className="px-3 py-1 hover:bg-gray-50 text-indigo-600">
                                                 <FaPlus size={10} />
                                             </button>
                                         </div>
                                         <div className="text-right min-w-[80px]">
                                             <p className="font-bold text-gray-900">₹{(item.price * item.quantity).toFixed(2)}</p>
                                         </div>
-                                        <button
-                                            onClick={() => removeFromCart(item.id)}
-                                            className="text-gray-400 hover:text-red-500 transition-colors p-2"
-                                        >
+                                        <button onClick={() => removeFromCart(item.id)} className="text-gray-400 hover:text-red-500 transition-colors p-2">
                                             <FaTrash />
                                         </button>
                                     </div>
@@ -156,10 +151,7 @@ const OrderPlacement = () => {
                                 <Link to="/services" className="px-6 py-3 border border-gray-200 rounded-xl font-semibold text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all">
                                     Add More
                                 </Link>
-                                <button
-                                    onClick={() => setStep(2)}
-                                    className="px-8 py-3 rounded-xl font-bold bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-indigo-500/30 transition-all"
-                                >
+                                <button onClick={() => setStep(2)} className="px-8 py-3 rounded-xl font-bold bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-indigo-500/30 transition-all">
                                     Proceed to Schedule
                                 </button>
                             </div>
@@ -167,7 +159,6 @@ const OrderPlacement = () => {
                     </div>
                 )}
 
-                {/* Step 2: Schedule */}
                 {step === 2 && (
                     <div className="bg-white rounded-2xl shadow-sm p-8 animate-fade-in max-w-2xl mx-auto">
                         <h2 className="text-2xl font-bold text-slate-800 mb-6">When should we pickup?</h2>
@@ -206,10 +197,7 @@ const OrderPlacement = () => {
                             <button
                                 onClick={() => setStep(3)}
                                 disabled={!selectedSlot}
-                                className={`px-8 py-3 rounded-xl font-bold transition-all ${!selectedSlot
-                                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                        : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg'
-                                    }`}
+                                className={`px-8 py-3 rounded-xl font-bold transition-all ${!selectedSlot ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg'}`}
                             >
                                 Review Order
                             </button>
@@ -217,7 +205,6 @@ const OrderPlacement = () => {
                     </div>
                 )}
 
-                {/* Step 3: Confirmation Preview */}
                 {step === 3 && (
                     <div className="bg-white rounded-2xl shadow-sm p-8 animate-fade-in max-w-2xl mx-auto">
                         <h2 className="text-2xl font-bold text-slate-800 mb-6">Order Confirmation</h2>
