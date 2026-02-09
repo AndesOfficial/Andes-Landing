@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useAuth } from "../context/AuthContext";
+import { useOrder } from "../context/OrderContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { currentUser, logout } = useAuth();
+  const { totalItems } = useOrder();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,7 +36,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          
+
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/working"
               className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/working") ? "text-indigo-600 font-semibold" : ""}`}
@@ -60,11 +62,27 @@ const Navbar = () => {
 
           {/* Action Buttons (Desktop) */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Cart Icon */}
+            {currentUser && (
+              <Link to="/order" className="relative p-2 text-gray-600 hover:text-indigo-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                {/* Badge */}
+                {totalItems > 0 && (
+                  <span className="absolute top-0 right-0 inline-flex items-center justify-center p-1 w-5 h-5 text-xs font-bold leading-none text-red-100 transform translate-x-1/4 -translate-y-1/4 bg-red-600 rounded-full">
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
+            )}
+
             {currentUser ? (
               <>
                 <span className="text-gray-700 font-medium">
                   Hi, {currentUser.fullName ? currentUser.fullName.split(' ')[0] : currentUser.name ? currentUser.name.split(' ')[0] : currentUser.displayName?.split(' ')[0] || "User"}
                 </span>
+                <Link to="/dashboard" className="text-gray-500 hover:text-indigo-600 font-medium">Dashboard</Link>
                 <button onClick={logout} className="text-gray-500 hover:text-indigo-600 font-medium">Logout</button>
                 <Link
                   to="/order"
@@ -118,7 +136,7 @@ const Navbar = () => {
             } md:hidden transition-all duration-300 ease-in-out overflow-hidden`}
         >
           <div className="pt-4 pb-6 space-y-4">
-            
+
             <Link to="/working"
               onClick={closeMenu}
               className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
@@ -150,15 +168,22 @@ const Navbar = () => {
               {currentUser ? (
                 <>
                   <div className="px-4 text-gray-700 font-medium">Logged in as {currentUser.fullName || currentUser.name || "User"}</div>
-                  <Link 
-                    to="/order" 
+                  <Link
+                    to="/dashboard"
+                    onClick={closeMenu}
+                    className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    to="/order"
                     onClick={closeMenu}
                     className="block text-center bg-indigo-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 text-lg"
                   >
                     New Order
                   </Link>
-                  <button 
-                    onClick={() => { logout(); closeMenu(); }} 
+                  <button
+                    onClick={() => { logout(); closeMenu(); }}
                     className="block w-full text-center text-gray-500 py-2"
                   >
                     Logout
@@ -166,14 +191,14 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
-                  <Link 
-                    to="/login" 
+                  <Link
+                    to="/login"
                     onClick={closeMenu}
                     className="block text-center text-gray-700 font-medium py-2"
                   >
                     Log In
                   </Link>
-                  <Link 
+                  <Link
                     to="/signup"
                     onClick={closeMenu}
                     className="block text-center bg-indigo-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 text-lg"

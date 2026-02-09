@@ -102,10 +102,10 @@ function App() {
               <Route path="/services" element={<NewServicePage data={data} />} />
 
               {/* Public Auth Routes */}
-              <Route path="/signup" element={<div data-scroll-section><SignUp /></div>} />
-              <Route path="/login" element={<div data-scroll-section><Login /></div>} />
-              <Route path="/order" element={<div data-scroll-section><OrderPlacement /></div>} />
-              <Route path="/order-confirmation" element={<div data-scroll-section><OrderConfirmation /></div>} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/order" element={<OrderPlacement />} />
+              <Route path="/order-confirmation" element={<OrderConfirmation />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
