@@ -31,6 +31,16 @@ export const OrderProvider = ({ children }) => {
         setCart((prev) => prev.filter((i) => i.id !== itemId));
     };
 
+    const updateQuantity = (itemId, newQuantity) => {
+        if (newQuantity < 1) {
+            removeFromCart(itemId);
+            return;
+        }
+        setCart((prev) =>
+            prev.map((i) => (i.id === itemId ? { ...i, quantity: newQuantity } : i))
+        );
+    };
+
     const clearCart = () => setCart([]);
 
     const placeOrder = async (deliverySlot) => {
@@ -74,6 +84,7 @@ export const OrderProvider = ({ children }) => {
         schedule,
         addToCart,
         removeFromCart,
+        updateQuantity,
         setPreferences,
         setSchedule,
         placeOrder,

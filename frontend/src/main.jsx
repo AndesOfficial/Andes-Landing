@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
@@ -8,7 +8,8 @@ import { OrderProvider } from './context/OrderContext'
 import './index.css'
 import './normalize.css'
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <HelmetProvider>
     <BrowserRouter>
       <AuthProvider>
@@ -17,6 +18,5 @@ ReactDOM.render(
         </OrderProvider>
       </AuthProvider>
     </BrowserRouter>
-  </HelmetProvider>,
-  document.getElementById('root')
+  </HelmetProvider>
 )
