@@ -1,30 +1,38 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import LandingPage from "./pages/LandingPage";
-import AboutPage from "./pages/AboutPage";
-import Working from "./pages/Working";
-import AndesAssured from "./pages/AndesAssured";
 import "./locomotive-scroll.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense, lazy } from "react";
 import LocomotiveScroll from "locomotive-scroll";
-import Other from "./pages/Other";
 import './App.css';
 import IntercomComponent from './intercom';
-import DownloadPage from './pages/DownloadPage';
-import NewServicePage from './pages/NewServicePage';
 import data from './data';
 import ServiceFooter from './components/ServiceFooter';
 import DashboardLayout from "./components/DashboardLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Dashboard from "./pages/Dashboard";
-import MyOrders from "./pages/MyOrders";
-import Profile from "./pages/Profile";
 
-// Pages
-import SignUp from "./pages/SignUp";
-import Login from "./pages/Login";
-import OrderPlacement from "./pages/OrderPlacement";
-import OrderConfirmation from "./pages/OrderConfirmation";
+// Lazy Load Pages
+const LandingPage = lazy(() => import("./pages/LandingPage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const Working = lazy(() => import("./pages/Working"));
+const AndesAssured = lazy(() => import("./pages/AndesAssured"));
+const Other = lazy(() => import("./pages/Other"));
+const DownloadPage = lazy(() => import("./pages/DownloadPage"));
+const NewServicePage = lazy(() => import("./pages/NewServicePage"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const MyOrders = lazy(() => import("./pages/MyOrders"));
+const Profile = lazy(() => import("./pages/Profile"));
+const SignUp = lazy(() => import("./pages/SignUp"));
+const Login = lazy(() => import("./pages/Login"));
+const OrderPlacement = lazy(() => import("./pages/OrderPlacement"));
+const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation"));
+const NotFound = lazy(() => import("./pages/NotFound")); // Planned for next step
+
+// Loading Component
+const PageLoader = () => (
+  <div className="flex justify-center items-center min-h-screen">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+  </div>
+);
 
 function App() {
   const scrollRef = useRef(null);
@@ -58,18 +66,20 @@ function App() {
   if (location.pathname.startsWith('/dashboard')) {
     return (
       <>
-        <Routes>
-          <Route path="/dashboard" element={
-            <ProtectedRoute>
-              <DashboardLayout />
-            </ProtectedRoute>
-          }>
-            <Route index element={<Dashboard />} />
-            <Route path="orders" element={<MyOrders />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
-          </Route>
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<Dashboard />} />
+              <Route path="orders" element={<MyOrders />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            </Route>
+          </Routes>
+        </Suspense>
         <IntercomComponent />
       </>
     );
@@ -80,28 +90,26 @@ function App() {
       <Navbar />
       <div ref={scrollRef} className="flex flex-col min-h-screen scroll-container" data-scroll-container>
         <div className="flex-grow">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/working" element={<Working />} />
-            <Route path="/andes-assured" element={<AndesAssured />} />
-            <Route path="/other" element={<Other />} />
-            <Route path="/privacypolicy" element={<Other />} />
-            <Route path="/download" element={<DownloadPage />} />
-            <Route path="/services" element={<NewServicePage data={data} />} />
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/working" element={<Working />} />
+              <Route path="/andes-assured" element={<AndesAssured />} />
+              <Route path="/other" element={<Other />} />
+              <Route path="/privacypolicy" element={<Other />} />
+              <Route path="/download" element={<DownloadPage />} />
+              <Route path="/services" element={<NewServicePage data={data} />} />
 
-            {/* Public Auth Routes */}
-            <Route path="/signup" element={<div data-scroll-section><SignUp /></div>} />
-            <Route path="/login" element={<div data-scroll-section><Login /></div>} />
-            <Route path="/order" element={<div data-scroll-section><OrderPlacement /></div>} />
-            <Route path="/order-confirmation" element={<div data-scroll-section><OrderConfirmation /></div>} />
+              {/* Public Auth Routes */}
+              <Route path="/signup" element={<div data-scroll-section><SignUp /></div>} />
+              <Route path="/login" element={<div data-scroll-section><Login /></div>} />
+              <Route path="/order" element={<div data-scroll-section><OrderPlacement /></div>} />
+              <Route path="/order-confirmation" element={<div data-scroll-section><OrderConfirmation /></div>} />
 
-            <Route path="*" element={
-              <div className="flex justify-center items-center min-h-screen">
-                <h1 className="text-2xl font-bold">404 Not Found</h1>
-              </div>
-            } />
-          </Routes>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </div>
         <ServiceFooter />
       </div>

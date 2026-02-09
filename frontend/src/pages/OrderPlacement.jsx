@@ -24,9 +24,15 @@ const OrderPlacement = () => {
 
     const handlePlaceOrder = async () => {
         setLoading(true);
-        await placeOrder(selectedSlot);
-        setLoading(false);
-        navigate('/order-confirmation');
+        try {
+            await placeOrder(selectedSlot);
+            navigate('/order-confirmation');
+        } catch (error) {
+            console.error("Order placement failed:", error);
+            alert("Failed to place order. Please check your connection or try again.");
+        } finally {
+            setLoading(false); // This runs whether it succeeds or fails
+        }
     };
 
     return (
