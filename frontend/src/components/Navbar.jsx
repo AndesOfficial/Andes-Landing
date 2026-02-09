@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { currentUser, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,78 +19,83 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
+  //  Helper function to close the mobile menu
+  const closeMenu = () => setIsOpen(false);
+
   return (
-    <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-      isScrolled ? "bg-white shadow-lg py-2" : "bg-white/95 py-4"
-    }`}>
+    <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg py-2" : "bg-white/95 py-4"
+      }`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <a href="/" className="flex items-center space-x-3">
+            {/* Also close menu if clicking logo */}
+            <Link to="/" onClick={closeMenu} className="flex items-center space-x-3">
               <img src={logo} alt="Andes logo" className="h-16 w-16" />
-
-            </a>
+            </Link>
           </div>
 
-          {/* Desktop menu */}
+          
           <div className="hidden md:flex items-center space-x-8">
-            <a
-              href="/working"
-              className={`text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium text-lg ${
-                isActive("/working") ? "text-blue-600 font-semibold" : ""
-              }`}
+            <Link to="/working"
+              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/working") ? "text-indigo-600 font-semibold" : ""}`}
             >
               How it works
-            </a>
-            
-            <a
-              href="/services"
-              className={`text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium text-lg ${
-                isActive("/services") ? "text-blue-600 font-semibold" : ""
-              }`}
+            </Link>
+            <Link to="/services"
+              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/services") ? "text-indigo-600 font-semibold" : ""}`}
             >
               Services & Pricing
-            </a>
-            <a
-              href="/andes-assured"
-              className={`text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium text-lg ${
-                isActive("/andes-assured") ? "text-blue-600 font-semibold" : ""
-              }`}
+            </Link>
+            <Link to="/andes-assured"
+              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/andes-assured") ? "text-indigo-600 font-semibold" : ""}`}
             >
               Andes Assured
-            </a>
-            <a
-              href="/about"
-              className={`text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium text-lg ${
-                isActive("/about") ? "text-blue-600 font-semibold" : ""
-              }`}
+            </Link>
+            <Link to="/about"
+              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/about") ? "text-indigo-600 font-semibold" : ""}`}
             >
               About us
-            </a>
+            </Link>
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Buttons (Desktop) */}
           <div className="hidden md:flex items-center space-x-4">
-            <a
-              href="/download"
-              className="bg-white text-blue-600 border-2 border-blue-600 px-5 py-2.5 rounded-full font-semibold hover:bg-blue-50 transition duration-300 text-lg"
-            >
-              Download App
-            </a>
-            <a
-              href="https://play.google.com/store/apps/details?id=com.andes.laundry"
-              className="bg-blue-600 text-white px-7 py-2.5 rounded-full font-semibold hover:bg-blue-700 transition duration-300 flex items-center space-x-2 text-lg"
-            >
-              <span>Book Now</span>
-              <span className="text-lg">→</span>
-            </a>
+            {currentUser ? (
+              <>
+                <span className="text-gray-700 font-medium">
+                  Hi, {currentUser.fullName ? currentUser.fullName.split(' ')[0] : currentUser.name ? currentUser.name.split(' ')[0] : currentUser.displayName?.split(' ')[0] || "User"}
+                </span>
+                <button onClick={logout} className="text-gray-500 hover:text-indigo-600 font-medium">Logout</button>
+                <Link
+                  to="/order"
+                  className="bg-indigo-600 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 shadow-lg shadow-indigo-500/30"
+                >
+                  New Order
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-gray-700 hover:text-indigo-600 font-medium text-lg transition-colors"
+                >
+                  Log In
+                </Link>
+                <Link
+                  to="/signup"
+                  className="bg-indigo-600 text-white px-7 py-2.5 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 flex items-center space-x-2 text-lg shadow-lg shadow-indigo-500/30"
+                >
+                  <span>Sign Up</span>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-blue-600 focus:outline-none p-2"
+              className="text-gray-700 hover:text-indigo-600 focus:outline-none p-2"
             >
               <svg
                 className="h-8 w-8"
@@ -107,56 +114,74 @@ const Navbar = () => {
 
         {/* Mobile menu */}
         <div
-          className={`${
-            isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-          } md:hidden transition-all duration-300 ease-in-out overflow-hidden`}
+          className={`${isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+            } md:hidden transition-all duration-300 ease-in-out overflow-hidden`}
         >
           <div className="pt-4 pb-6 space-y-4">
-            <a
-              href="/working"
-              className={`block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors duration-300 text-lg ${
-                isActive("/working") ? "bg-blue-50 text-blue-600 font-semibold" : ""
-              }`}
+            
+            <Link to="/working"
+              onClick={closeMenu}
+              className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
             >
               How it works
-            </a>
-    
-            <a href="/services"
-              className={`block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors duration-300 text-lg ${
-                isActive("/services") ? "bg-blue-50 text-blue-600 font-semibold" : ""
-              }`}
+            </Link>
+            <Link to="/services"
+              onClick={closeMenu}
+              className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
             >
-               Services & Pricing
-            </a>
-            <a
-              href="/andes-assured"
-              className={`block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors duration-300 text-lg ${
-                isActive("/andes-assured") ? "bg-blue-50 text-blue-600 font-semibold" : ""
-              }`}
+              Services & Pricing
+            </Link>
+
+            <Link to="/andes-assured"
+              onClick={closeMenu}
+              className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
             >
               Andes Assured
-            </a>
-            <a
-              href="/about"
-              className={`block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors duration-300 text-lg ${
-                isActive("/about") ? "bg-blue-50 text-blue-600 font-semibold" : ""
-              }`}
+            </Link>
+
+            <Link to="/about"
+              onClick={closeMenu}
+              className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
             >
               About us
-            </a>
-            <div className="pt-4 space-y-3">
-              <a
-                href="https://play.google.com/store/apps/details?id=com.andes.laundry"
-                className="block text-center bg-blue-50 text-blue-600 px-4 py-3 rounded-lg font-semibold hover:bg-blue-100 transition duration-300 text-lg"
-              >
-                Download App
-              </a>
-              <a
-                href="https://play.google.com/store/apps/details?id=com.andes.laundry"
-                className="block text-center bg-blue-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 text-lg"
-              >
-                Book Now
-              </a>
+            </Link>
+
+            <div className="pt-4 space-y-3 border-t border-gray-100 mt-4">
+              {currentUser ? (
+                <>
+                  <div className="px-4 text-gray-700 font-medium">Logged in as {currentUser.fullName || currentUser.name || "User"}</div>
+                  <Link 
+                    to="/order" 
+                    onClick={closeMenu}
+                    className="block text-center bg-indigo-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 text-lg"
+                  >
+                    New Order
+                  </Link>
+                  <button 
+                    onClick={() => { logout(); closeMenu(); }} 
+                    className="block w-full text-center text-gray-500 py-2"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link 
+                    to="/login" 
+                    onClick={closeMenu}
+                    className="block text-center text-gray-700 font-medium py-2"
+                  >
+                    Log In
+                  </Link>
+                  <Link 
+                    to="/signup"
+                    onClick={closeMenu}
+                    className="block text-center bg-indigo-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 text-lg"
+                  >
+                    Sign Up Now
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

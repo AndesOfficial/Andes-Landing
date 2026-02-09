@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import LandingPage from "./pages/LandingPage";
 import AboutPage from "./pages/AboutPage";
@@ -9,21 +9,36 @@ import { useEffect, useRef } from "react";
 import LocomotiveScroll from "locomotive-scroll";
 import Other from "./pages/Other";
 import './App.css';
-import IntercomComponent from './intercom'; 
+import IntercomComponent from './intercom';
 import DownloadPage from './pages/DownloadPage';
 import NewServicePage from './pages/NewServicePage';
 import data from './data';
 import ServiceFooter from './components/ServiceFooter';
+import DashboardLayout from "./components/DashboardLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard from "./pages/Dashboard";
+import MyOrders from "./pages/MyOrders";
+import Profile from "./pages/Profile";
+
+// Pages
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import OrderPlacement from "./pages/OrderPlacement";
+import OrderConfirmation from "./pages/OrderConfirmation";
 
 function App() {
   const scrollRef = useRef(null);
   const location = useLocation();
 
   useEffect(() => {
+    if (!scrollRef.current) return;
+
     const scroll = new LocomotiveScroll({
       el: scrollRef.current,
       smooth: true,
-      resetNativeScroll: true // Add this
+      resetNativeScroll: true,
+      smartphone: { smooth: true },
+      tablet: { smooth: true }
     });
 
     const resizeObserver = new ResizeObserver(() => {
@@ -38,12 +53,32 @@ function App() {
       if (scroll) scroll.destroy();
       resizeObserver.disconnect();
     };
-  }, [location.pathname]);// Re-initialize on route change
+  }, [location.pathname]);
+
+  if (location.pathname.startsWith('/dashboard')) {
+    return (
+      <>
+        <Routes>
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }>
+            <Route index element={<Dashboard />} />
+            <Route path="orders" element={<MyOrders />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Route>
+        </Routes>
+        <IntercomComponent />
+      </>
+    );
+  }
 
   return (
     <>
       <Navbar />
-      <div ref={scrollRef} className="flex flex-col min-h-screen scroll-container">
+      <div ref={scrollRef} className="flex flex-col min-h-screen scroll-container" data-scroll-container>
         <div className="flex-grow">
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -54,6 +89,13 @@ function App() {
             <Route path="/privacypolicy" element={<Other />} />
             <Route path="/download" element={<DownloadPage />} />
             <Route path="/services" element={<NewServicePage data={data} />} />
+
+            {/* Public Auth Routes */}
+            <Route path="/signup" element={<div data-scroll-section><SignUp /></div>} />
+            <Route path="/login" element={<div data-scroll-section><Login /></div>} />
+            <Route path="/order" element={<div data-scroll-section><OrderPlacement /></div>} />
+            <Route path="/order-confirmation" element={<div data-scroll-section><OrderConfirmation /></div>} />
+
             <Route path="*" element={
               <div className="flex justify-center items-center min-h-screen">
                 <h1 className="text-2xl font-bold">404 Not Found</h1>
@@ -62,19 +104,11 @@ function App() {
           </Routes>
         </div>
         <ServiceFooter />
-
       </div>
 
-      {/* Intercom Component */}
       <IntercomComponent />
     </>
   );
 }
 
-export default function AppWrapper() {
-  return (
-    <Router>
-      <App />
-    </Router>
-  );
-}
+export default App;
