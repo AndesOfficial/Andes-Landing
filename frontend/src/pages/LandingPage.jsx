@@ -53,13 +53,13 @@ const LandingPage = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <div className="bg-brand-blue min-h-screen flex flex-col justify-center relative overflow-hidden pb-16 pt-32 md:pt-40">
+      <div className="bg-brand-blue min-h-screen flex flex-col justify-center relative overflow-hidden pb-16 pt-24 md:pt-32">
 
         <main className="container mx-auto px-4 flex flex-col lg:flex-row items-center relative z-10 gap-12 lg:gap-8">
           {/* Left Content - Text & Widget */}
-          <div className="w-full lg:w-1/2 text-white z-20">
-            <div className="mb-8">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
+          <div className="w-full lg:w-3/5 text-white z-20 flex flex-col items-start text-left lg:pl-20">
+            <div className="mb-8 w-full">
+              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight leading-[1] mb-6">
                 Laundry & dry <br /> cleaning with <br /> 24h delivery
               </h1>
 
@@ -71,37 +71,64 @@ const LandingPage = () => {
               </div>
             </div>
 
+            {/* Store links */}
+            <div className="flex flex-row gap-4 mb-10">
+              <a
+                href="https://play.google.com/store/apps/details?id=com.andes.laundry"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center bg-white text-black px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                <img src={playstore} alt="Play Store" className="w-8 h-8" />
+                <div className="ml-3 text-left">
+                  <p className="text-[10px] text-gray-600 font-medium leading-none mb-0.5">Get it on</p>
+                  <p className="text-sm font-bold leading-none">Google Play</p>
+                </div>
+              </a>
 
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center bg-white text-black px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                <img src={appstore} alt="App Store" className="w-8 h-8" />
+                <div className="ml-3 text-left">
+                  <p className="text-[10px] text-gray-600 font-medium leading-none mb-0.5">Download on the</p>
+                  <p className="text-sm font-bold leading-none">App Store</p>
+                </div>
+              </a>
+            </div>
 
             {/* Scheduling Widget Mockup */}
-            <div className="bg-white rounded-3xl p-6 shadow-2xl max-w-md border border-slate-100">
+            <div className="bg-white rounded-3xl p-6 shadow-2xl w-full max-w-xl border border-slate-100">
               <h3 className="text-slate-800 font-semibold mb-4 text-lg">Schedule your collection in <span className="text-brand-blue">Pune</span></h3>
 
-              <div className="space-y-3">
-                <div className="border border-gray-100 bg-gray-50/50 rounded-xl p-4 flex items-center justify-between cursor-pointer hover:border-brand-blue hover:bg-white transition-all group">
-                  <div className="flex items-center gap-4">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex-1 border border-gray-100 bg-gray-50/50 rounded-xl p-3 flex items-center justify-between cursor-pointer hover:border-brand-blue hover:bg-white transition-all group">
+                  <div className="flex items-center gap-3">
                     <FaBolt className="text-xl text-yellow-400" />
                     <div>
-                      <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Earliest</p>
-                      <p className="text-slate-800 font-bold text-lg group-hover:text-brand-blue transition-colors">12:00 - 15:00</p>
+                      <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-0.5">Earliest</p>
+                      <p className="text-slate-800 font-bold text-base group-hover:text-brand-blue transition-colors">12:00 - 15:00</p>
                     </div>
                   </div>
-                  <FaChevronRight className="text-gray-300 font-bold text-lg group-hover:text-brand-blue" />
+                  <FaChevronRight className="text-gray-300 font-bold text-sm group-hover:text-brand-blue" />
                 </div>
 
-                <div className="border border-gray-100 bg-gray-50/50 rounded-xl p-4 flex items-center justify-between cursor-pointer hover:border-brand-blue hover:bg-white transition-all group">
-                  <div className="flex items-center gap-4">
+                <div className="flex-1 border border-gray-100 bg-gray-50/50 rounded-xl p-3 flex items-center justify-between cursor-pointer hover:border-brand-blue hover:bg-white transition-all group">
+                  <div className="flex items-center gap-3">
                     <FaMoon className="text-xl text-slate-400" />
                     <div>
-                      <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Last</p>
-                      <p className="text-slate-800 font-bold text-lg group-hover:text-brand-blue transition-colors">20:00 - 23:00</p>
+                      <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-0.5">Last</p>
+                      <p className="text-slate-800 font-bold text-base group-hover:text-brand-blue transition-colors">20:00 - 23:00</p>
                     </div>
                   </div>
-                  <FaChevronRight className="text-gray-300 font-bold text-lg group-hover:text-brand-blue" />
+                  <FaChevronRight className="text-gray-300 font-bold text-sm group-hover:text-brand-blue" />
                 </div>
               </div>
 
-              <div className="mt-5 text-center">
+              <div className="mt-4 text-center">
                 <a href="#" className="text-brand-blue text-sm font-bold hover:underline">See all slots</a>
               </div>
             </div>
