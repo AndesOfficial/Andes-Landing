@@ -4,7 +4,9 @@ import {
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    GoogleAuthProvider,
+    signInWithPopup
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
@@ -103,12 +105,40 @@ export const AuthProvider = ({ children }) => {
         return sendPasswordResetEmail(auth, email);
     };
 
+    // 6. Google Sign In
+    const googleSignIn = async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+
+            // Check if user exists in Firestore
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+
+            if (!docSnap.exists()) {
+                await setDoc(docRef, {
+                    fullName: user.displayName,
+                    email: user.email,
+                    createdAt: new Date(),
+                    uid: user.uid,
+                    authProvider: "google"
+                });
+            }
+            return user;
+        } catch (error) {
+            console.error("Google Sign In Error:", error);
+            throw error;
+        }
+    };
+
     const value = {
         currentUser,
         signup,
         login,
         logout,
         resetPassword,
+        googleSignIn,
         loading
     };
 
