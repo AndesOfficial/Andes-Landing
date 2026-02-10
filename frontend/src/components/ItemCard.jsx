@@ -8,36 +8,40 @@ const ItemCard = ({
   returned,
   icon,
 }) => (
-  <div className="bg-blue-500 p-5 rounded-lg shadow-md transform transition-transform duration-300 md:hover:scale-105 w-full md:w-auto flex-shrink-0 md:ml-4 h-full flex flex-col justify-between">
-    <div>
-      <div className="flex justify-between items-center mb-3">
-        <div>
-          <h3 className="text-lg font-semibold text-white">{title}</h3>
-          <p className="text-xs text-blue-100">from {price}</p>
-        </div>
-        <div className="text-white bg-blue-600 p-2 rounded-full">{icon}</div>
+  <div className="bg-white p-5 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(37,99,235,0.15)] transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] w-full md:w-auto flex-shrink-0 md:ml-4 flex flex-col justify-between h-full border border-transparent hover:border-blue-50 group">
+    <div className="flex justify-between items-start mb-4">
+      <div className="text-4xl text-blue-500 bg-blue-50 p-3 rounded-2xl group-hover:scale-110 transition-transform duration-300 group-hover:bg-blue-600 group-hover:text-white">
+        {icon}
       </div>
-      <p className="text-sm text-gray-100 mb-3 leading-snug">{description}</p>
+      <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wide">Available</span>
+    </div>
+
+    <div>
+      <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-blue-600 transition-colors">{title}</h3>
+      <p className="text-gray-500 text-sm leading-relaxed mb-4">
+        {description}
+      </p>
+
       <div className="mb-3">
-        <p className="text-[10px] font-bold text-blue-100 mb-1 tracking-wider">INCLUDES</p>
+        <p className="text-[10px] font-bold text-gray-400 mb-2 tracking-wider uppercase">INCLUDES</p>
         <div className="flex flex-wrap gap-1">
           {includes.map((item, index) => (
-            <span key={index} className="text-[10px] bg-blue-600/50 text-white px-2 py-1 rounded border border-blue-400">
+            <span key={index} className="text-[10px] bg-gray-50 text-gray-600 px-2 py-1 rounded border border-gray-100 group-hover:border-blue-100 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
               {item}
             </span>
           ))}
         </div>
       </div>
     </div>
-    <div className="flex justify-between text-[10px] text-gray-100 mt-2 pt-3 border-t border-blue-400/30">
+
+    <div className="flex items-center justify-between border-t border-gray-50 pt-4 mt-auto">
       <div>
-        <p className="font-bold text-blue-100">SERVICE TIME</p>
-        <p>{serviceTime}</p>
+        <span className="text-xs text-gray-400 block font-medium">Starting from</span>
+        <span className="text-xl font-black text-gray-900">₹{price}</span>
       </div>
-      <div className="text-right">
-        <p className="font-bold text-blue-100">RETURNED</p>
-        <p>{returned}</p>
-      </div>
+      <button className="text-white font-bold text-sm bg-blue-600 px-5 py-2.5 rounded-xl shadow-lg shadow-blue-200 hover:shadow-blue-300 hover:bg-blue-700 active:scale-95 transition-all">
+        Book Now
+      </button>
     </div>
   </div>
 );

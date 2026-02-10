@@ -23,6 +23,7 @@ import { FaStar, FaStarHalfAlt, FaBell, FaClock, FaBox, FaDoorOpen, FaHeadset, F
 import Appsupport from "../components/Appsupport.jsx";
 import FAQ from "../components/Faq.jsx";
 import { Helmet } from "react-helmet-async";
+import MobileStickyBtn from "../components/MobileStickyBtn.jsx";
 
 const bulletPoints1 = [
   { icon: <FaBell className="text-brand-blue text-xl" />, text: "Get notified when your order is ready for pick-up" },
@@ -140,12 +141,31 @@ const LandingPage = () => {
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-white/20 rounded-full blur-xl -z-10"></div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-blue-400/30 rounded-full blur-2xl -z-20"></div>
 
-            <div className="relative w-full max-w-lg lg:max-w-xl aspect-square flex items-center justify-center">
+            <div className="relative w-full max-w-lg lg:max-w-xl aspect-square flex items-center justify-center group">
               <img
                 src={van}
                 alt="Andes Laundry Van"
-                className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500 relative z-10"
               />
+
+              {/* Floating Trust Badge */}
+              <div className="absolute -bottom-6 -right-4 lg:bottom-10 lg:right-0 bg-white p-4 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/40 backdrop-blur-sm animate-bounce-slow z-20 flex items-center gap-3">
+                <div className="bg-green-100 p-2 rounded-full text-green-600">
+                  <FaStar className="text-xl" />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-800 text-sm leading-tight">4.9/5 Rating</p>
+                  <p className="text-xs text-slate-500 font-medium">from 2k+ happy customers</p>
+                </div>
+              </div>
+
+              {/* 24h Delivery Badge */}
+              <div className="absolute top-0 -left-4 lg:top-10 lg:left-0 bg-white p-3 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/40 backdrop-blur-sm animate-float z-20 flex items-center gap-2">
+                <div className="bg-yellow-100 p-2 rounded-full text-yellow-600">
+                  <FaBolt className="text-lg" />
+                </div>
+                <p className="font-bold text-slate-800 text-xs">24hr Turnaround</p>
+              </div>
             </div>
           </div>
         </main>
@@ -232,6 +252,7 @@ const LandingPage = () => {
       </section>
 
       <FAQ />
+      <MobileStickyBtn />
     </div>
   );
 };
