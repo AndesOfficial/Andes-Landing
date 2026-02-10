@@ -115,17 +115,17 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden z-50 relative">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`${(isScrolled || isOpen) ? "text-gray-700" : "text-white"} hover:text-brand-blue focus:outline-none p-2`}
+              className={`${(isScrolled || isOpen) ? "text-slate-800" : "text-white"} hover:text-brand-blue focus:outline-none p-2 transition-colors duration-300`}
             >
               <svg
                 className="h-8 w-8"
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="2"
+                strokeWidth="2.5"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
@@ -136,83 +136,80 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
         </div>
 
         {/* Mobile menu */}
-        <div
-          className={`${isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-            } md:hidden transition-all duration-300 ease-in-out overflow-hidden`}
-        >
-          <div className="pt-4 pb-6 space-y-4">
+        <div className={`${isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"} fixed inset-0 z-40 bg-white/95 backdrop-blur-md transition-all duration-300 ease-in-out flex flex-col justify-center items-center md:hidden`}>
 
+          <div className="flex flex-col space-y-6 text-center w-full px-8">
             <Link to="/working"
               onClick={closeMenu}
-              className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
+              className="text-2xl font-bold text-slate-800 hover:text-brand-blue transition-colors"
             >
               How it works
             </Link>
             <Link to="/services"
               onClick={closeMenu}
-              className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
+              className="text-2xl font-bold text-slate-800 hover:text-brand-blue transition-colors"
             >
               Services & Pricing
             </Link>
 
             <Link to="/andes-assured"
               onClick={closeMenu}
-              className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
+              className="text-2xl font-bold text-slate-800 hover:text-brand-blue transition-colors"
             >
               Andes Assured
             </Link>
 
             <Link to="/about"
               onClick={closeMenu}
-              className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
+              className="text-2xl font-bold text-slate-800 hover:text-brand-blue transition-colors"
             >
               About us
             </Link>
 
-            <div className="pt-4 space-y-3 border-t border-gray-100 mt-4">
-              {currentUser ? (
-                <>
-                  <div className="px-4 text-gray-700 font-medium">Logged in as {currentUser.fullName || currentUser.name || "User"}</div>
-                  <Link
-                    to="/dashboard"
-                    onClick={closeMenu}
-                    className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-300 text-lg"
-                  >
-                    Dashboard
-                  </Link>
-                  <Link
-                    to="/order"
-                    onClick={closeMenu}
-                    className="block text-center bg-indigo-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 text-lg"
-                  >
-                    New Order
-                  </Link>
-                  <button
-                    onClick={() => { logout(); closeMenu(); }}
-                    className="block w-full text-center text-gray-500 py-2"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    to="/login"
-                    onClick={closeMenu}
-                    className="block text-center text-gray-700 font-medium py-2"
-                  >
-                    Log In
-                  </Link>
-                  <Link
-                    to="/signup"
-                    onClick={closeMenu}
-                    className="block text-center bg-indigo-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 text-lg"
-                  >
-                    Sign Up Now
-                  </Link>
-                </>
-              )}
-            </div>
+            <div className="w-16 h-1 bg-gray-100 mx-auto rounded-full"></div>
+
+            {currentUser ? (
+              <div className="flex flex-col space-y-4 w-full">
+                <div className="text-gray-500 font-medium text-lg">Hi, {currentUser.fullName || currentUser.name || "User"}</div>
+                <Link
+                  to="/dashboard"
+                  onClick={closeMenu}
+                  className="text-xl font-semibold text-slate-700 hover:text-brand-blue"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/order"
+                  onClick={closeMenu}
+                  className="bg-brand-blue text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-blue-700 transition-all"
+                >
+                  New Order
+                </Link>
+                <button
+                  onClick={() => { logout(); closeMenu(); }}
+                  className="text-slate-400 font-medium hover:text-red-500 transition-colors"
+                >
+                  Log Out
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col space-y-4 w-full">
+                <Link
+                  to="/login"
+                  onClick={closeMenu}
+                  className="text-xl font-semibold text-slate-700 hover:text-brand-blue"
+                >
+                  Log In
+                </Link>
+                <Link
+                  to="/signup"
+                  onClick={closeMenu}
+                  className="bg-brand-blue text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-blue-700 transition-all"
+                >
+                  Sign Up Free
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

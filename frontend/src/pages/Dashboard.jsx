@@ -3,19 +3,25 @@ import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import { FaPlus, FaListAlt, FaTags, FaHeadset, FaBox, FaChevronRight, FaClock, FaCheckCircle, FaSpinner } from 'react-icons/fa';
 
 // --- Reusable Components ---
 
+const QuickActionBtn = ({ to, icon, label, primary = false }) => (
+    <Link to={to} className={`flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 w-full ${primary ? 'bg-brand-blue text-white shadow-lg shadow-blue-200 hover:shadow-xl hover:bg-blue-700' : 'bg-white text-slate-600 border border-slate-100 hover:border-blue-200 hover:text-brand-blue hover:shadow-md'}`}>
+        <div className={`text-2xl mb-2 ${primary ? 'text-white' : 'text-brand-blue'}`}>{icon}</div>
+        <span className="text-xs font-bold tracking-wide">{label}</span>
+    </Link>
+);
+
 const StatCard = ({ title, value, icon, colorClass, bgClass }) => (
-    <div className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 flex flex-col justify-between h-40">
+    <div className="bg-white p-5 rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-50 flex items-center justify-between hover:scale-[1.02] transition-transform duration-300">
         <div>
-            <div className="flex items-center justify-between mb-4">
-                <h3 className="text-gray-500 text-sm font-semibold uppercase tracking-wider">{title}</h3>
-                <div className={`p-2 rounded-full ${bgClass} ${colorClass}`}>
-                    {icon}
-                </div>
-            </div>
-            <p className="text-4xl font-bold text-gray-800">{value}</p>
+            <p className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">{title}</p>
+            <p className="text-2xl font-black text-slate-800">{value}</p>
+        </div>
+        <div className={`p-3 rounded-xl ${bgClass} ${colorClass}`}>
+            {icon}
         </div>
     </div>
 );
@@ -24,77 +30,61 @@ const Dashboard = () => {
     const { currentUser } = useAuth();
     const [stats, setStats] = useState({ active: 0, completed: 0, saved: 0 });
     const [recentOrder, setRecentOrder] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!currentUser) return;
 
-
-
-        // query orders for the current user
         const q = query(collection(db, "orders"), where("userId", "==", currentUser.uid));
 
-        // Real-time listener
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
-            // console.log("Dashboard Snapshot:", querySnapshot.size);
-
             let activeCount = 0;
             let completedCount = 0;
             let totalSpent = 0;
             let orders = [];
 
-            // manually map the docs
             querySnapshot.docs.forEach(doc => {
                 orders.push({ id: doc.id, ...doc.data() });
             });
 
-            // sort newest first
             orders.sort((a, b) => {
                 const timeA = a.createdAt?.seconds || 0;
                 const timeB = b.createdAt?.seconds || 0;
                 return timeB - timeA;
             });
 
-            // calculate stats
             for (let i = 0; i < orders.length; i++) {
                 const order = orders[i];
                 const status = order.status || 'Processing';
 
-                // active statuses
-                if (status === 'Processing' || status === 'Pending' || status === 'Scheduled') {
-                    activeCount = activeCount + 1;
-                }
-                // completed statuses
-                else if (status === 'Delivered' || status === 'Completed') {
-                    completedCount = completedCount + 1;
+                if (['Processing', 'Pending', 'Scheduled', 'Out for Delivery', 'Admin Approved'].includes(status)) {
+                    activeCount++;
+                } else if (['Delivered', 'Completed'].includes(status)) {
+                    completedCount++;
                 }
 
-                // add up total price if it exists
                 if (order.totalPrice) {
-                    totalSpent = totalSpent + parseFloat(order.totalPrice);
+                    totalSpent += parseFloat(order.totalPrice);
                 }
             }
 
             setStats({
                 active: activeCount,
                 completed: completedCount,
-                saved: totalSpent.toFixed(2)
+                saved: totalSpent.toFixed(0) // No decimals for currency
             });
 
-            // get the most recent one
             let lastOrder = null;
             if (orders.length > 0) {
                 const first = orders[0];
                 let dateStr = 'Just now';
                 if (first.createdAt) {
-                    dateStr = first.createdAt.toDate().toLocaleDateString();
+                    dateStr = first.createdAt.toDate().toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
                 }
-
-                lastOrder = {
-                    ...first,
-                    date: dateStr
-                };
+                lastOrder = { ...first, date: dateStr };
             }
             setRecentOrder(lastOrder);
+            setLoading(false);
 
         }, (error) => console.log("Dashboard Error:", error));
 
@@ -109,115 +99,153 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="animate-fade-in-up">
+        <div className="animate-fade-in-up min-h-screen bg-slate-50/50 pb-20">
             {/* Header Section */}
-            <header className="mb-10">
-                <h1 className="text-3xl lg:text-4xl font-extrabold text-gray-900 tracking-tight">
-                    {getGreeting()}, <span className="text-blue-600">{currentUser?.fullName?.split(' ')[0] || 'User'}</span>!
-                </h1>
-                <p className="text-gray-500 mt-2 text-lg">Here's what's happening with your laundry today.</p>
+            <header className="bg-white px-4 pt-8 pb-6 shadow-sm border-b border-slate-100">
+                <div className="container mx-auto">
+                    <div className="flex justify-between items-end mb-6">
+                        <div>
+                            <p className="text-slate-400 text-sm font-semibold mb-1">{new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
+                            <h1 className="text-2xl lg:text-3xl font-bold text-slate-800">
+                                {getGreeting()}, <span className="text-brand-blue">{currentUser?.fullName?.split(' ')[0] || 'User'}</span>
+                            </h1>
+                        </div>
+                        <div className="hidden md:block">
+                            <Link to="/profile" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-brand-blue hover:text-white transition-colors">
+                                <span className="font-bold text-sm">{currentUser?.fullName?.charAt(0) || 'U'}</span>
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Quick Actions - The "App-like" feel */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                        <QuickActionBtn to="/order" icon={<FaPlus />} label="New Order" primary />
+                        <QuickActionBtn to="/dashboard/orders" icon={<FaListAlt />} label="My Orders" />
+                        <QuickActionBtn to="/services" icon={<FaTags />} label="Srvc & Pricing" />
+                        <QuickActionBtn to="/support" icon={<FaHeadset />} label="Help & Support" />
+                    </div>
+                </div>
             </header>
 
-            {/* Stats Overview */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                <StatCard
-                    title="Active Orders"
-                    value={stats.active}
-                    colorClass="text-blue-600"
-                    bgClass="bg-blue-50"
-                    icon={
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    }
-                />
+            <main className="container mx-auto px-4 py-8">
+                {/* Stats Overview */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <StatCard
+                        title="Active Orders"
+                        value={stats.active}
+                        colorClass="text-blue-600"
+                        bgClass="bg-blue-50"
+                        icon={<FaClock />}
+                    />
+                    <StatCard
+                        title="Completed"
+                        value={stats.completed}
+                        colorClass="text-green-600"
+                        bgClass="bg-green-50"
+                        icon={<FaCheckCircle />}
+                    />
+                    <StatCard
+                        title="Total Spent"
+                        value={`₹${stats.saved}`}
+                        colorClass="text-indigo-600"
+                        bgClass="bg-indigo-50"
+                        icon={<span className="text-xl font-bold">₹</span>}
+                    />
+                    {/* Placeholder for Balance/Credits if needed in future */}
+                    <StatCard
+                        title="Andes Credits"
+                        value="₹0"
+                        colorClass="text-yellow-600"
+                        bgClass="bg-yellow-50"
+                        icon={<span className="text-xl font-bold">C</span>}
+                    />
+                </div>
 
-                <StatCard
-                    title="Completed"
-                    value={stats.completed}
-                    colorClass="text-green-600"
-                    bgClass="bg-green-50"
-                    icon={
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                    }
-                />
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Recent Order "Ticket" */}
+                    <div className="lg:col-span-2 space-y-4">
+                        <div className="flex justify-between items-center px-1">
+                            <h2 className="text-lg font-bold text-slate-800">Recent Activity</h2>
+                            <Link to="/dashboard/orders" className="text-xs font-bold text-brand-blue hover:underline">View All</Link>
+                        </div>
 
-                <StatCard
-                    title="Total Spent"
-                    value={`₹${stats.saved}`}
-                    colorClass="text-yellow-600"
-                    bgClass="bg-yellow-50"
-                    icon={
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    }
-                />
+                        {loading ? (
+                            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex justify-center text-brand-blue">
+                                <FaSpinner className="animate-spin text-2xl" />
+                            </div>
+                        ) : recentOrder ? (
+                            <div className="bg-white rounded-3xl p-0 overflow-hidden shadow-md border border-slate-100 relative group cursor-pointer hover:shadow-lg transition-all duration-300">
+                                {/* Status Top Bar */}
+                                <div className={`h-2 w-full ${['Delivered', 'Completed'].includes(recentOrder.status) ? 'bg-green-500' : 'bg-brand-blue'}`}></div>
 
-                {/* New Order Action Card */}
-                <Link to="/order" className="bg-gradient-to-br from-blue-600 to-indigo-700 p-6 rounded-2xl shadow-lg border border-transparent text-white flex flex-col justify-center items-center text-center h-40 group hover:shadow-xl transition-all duration-300">
-                    <div className="mb-2 group-hover:scale-110 transition-transform duration-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                    </div>
-                    <span className="font-bold text-lg">New Order</span>
-                </Link>
-            </div>
+                                <div className="p-6">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div>
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">Order ID</span>
+                                                <span className="text-xs font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md">{recentOrder.id.slice(0, 8)}...</span>
+                                            </div>
+                                            <h3 className="text-xl font-bold text-slate-900">
+                                                {recentOrder.serviceType || 'Laundry Service'}
+                                            </h3>
+                                            <p className="text-sm text-slate-500">{recentOrder.items?.length || 0} items • {recentOrder.date}</p>
+                                        </div>
+                                        <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide ${['Delivered', 'Completed'].includes(recentOrder.status) ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>
+                                            {recentOrder.status || 'Processing'}
+                                        </div>
+                                    </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Recent Orders Panel */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div className="p-6 border-b border-gray-50 flex justify-between items-center">
-                        <h2 className="text-xl font-bold text-gray-800">Recent Activity</h2>
-                        <Link to="/dashboard/orders" className="text-sm font-medium text-blue-600 hover:text-blue-800">View All</Link>
-                    </div>
-                    <div className="p-6">
-                        {recentOrder ? (
-                            <div className="flex items-center p-4 bg-gray-50 rounded-xl mb-4 hover:bg-gray-100 transition-colors">
-                                <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                                    </svg>
+                                    {/* Mini Progress Visual */}
+                                    <div className="w-full bg-slate-100 h-2 rounded-full mb-4 overflow-hidden">
+                                        <div
+                                            className={`h-full rounded-full ${['Delivered', 'Completed'].includes(recentOrder.status) ? 'bg-green-500 w-full' : 'bg-brand-blue w-1/3 animate-pulse'}`}
+                                        ></div>
+                                    </div>
+
+                                    <div className="flex justify-between items-center pt-2 border-t border-slate-50 mt-2">
+                                        <div className="flex items-center gap-2 text-slate-500 text-sm">
+                                            <FaBox />
+                                            <span>Est. Delivery: Tomorrow</span>
+                                        </div>
+                                        <Link to={`/order-confirmation`} state={{ orderId: recentOrder.id }} className="text-brand-blue font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                            Track Order <FaChevronRight />
+                                        </Link>
+                                    </div>
                                 </div>
-                                <div className="flex-1">
-                                    <h4 className="font-bold text-gray-800">{recentOrder.orderId}</h4>
-                                    <p className="text-sm text-gray-500">Placed on {recentOrder.date}</p>
-                                </div>
-                                <span className={`px-3 py-1 text-xs font-bold rounded-full ${recentOrder.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
-                                    }`}>
-                                    {recentOrder.status}
-                                </span>
                             </div>
                         ) : (
-                            <div className="text-center py-8 text-gray-500">
-                                <p>No recent orders found.</p>
-                                <Link to="/services" className="text-blue-600 text-sm mt-2 inline-block hover:underline">Start your first order</Link>
+                            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center py-12">
+                                <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-300 text-2xl">
+                                    <FaBox />
+                                </div>
+                                <h3 className="text-slate-800 font-bold mb-2">No orders yet</h3>
+                                <p className="text-slate-500 text-sm mb-6">Your recent orders will appear here.</p>
+                                <Link to="/services" className="text-brand-blue font-bold text-sm hover:underline">Start your first order</Link>
                             </div>
                         )}
                     </div>
-                </div>
 
-                {/* Promotional Panel */}
-                <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-lg text-white p-8 flex flex-col justify-between relative overflow-hidden">
-                    <div className="relative z-10">
-                        <h2 className="text-2xl font-bold mb-2">Invite a Friend</h2>
-                        <p className="text-gray-300 mb-6">Get ₹200 credit for every friend you refer to Andes.</p>
-                        <button className="px-6 py-3 bg-white text-gray-900 font-bold rounded-lg hover:bg-gray-100 transition-colors">
-                            Copy Referral Link
-                        </button>
-                    </div>
+                    {/* Promo / Invite Card */}
+                    <div className="lg:col-span-1 mt-6 lg:mt-0">
+                        <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl shadow-xl text-white p-8 relative overflow-hidden h-full min-h-[250px] flex flex-col justify-between group">
+                            <div className="relative z-10">
+                                <div className="bg-white/10 w-fit px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-4 border border-white/10 backdrop-blur-sm">Refer & Earn</div>
+                                <h2 className="text-2xl font-bold mb-2 leading-tight">Get ₹200 Free Credit</h2>
+                                <p className="text-slate-400 text-sm mb-6">Invite friends to Andes. You get ₹200, they get 20% off.</p>
+                            </div>
 
-                    {/* Decorative Background Graphic */}
-                    <div className="absolute right-0 bottom-0 opacity-10 transform translate-x-10 translate-y-10 pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-64 w-64" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
+                            <button className="relative z-10 w-full py-3 bg-white text-slate-900 font-bold rounded-xl hover:bg-slate-100 transition-colors shadow-lg active:scale-95 duration-200">
+                                Invite Friends
+                            </button>
+
+                            {/* Decorative Background */}
+                            <div className="absolute -right-6 -bottom-6 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+                                <FaCheckCircle className="text-[150px]" />
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </main>
         </div>
     );
 };

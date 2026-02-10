@@ -2,15 +2,15 @@ import { FaTshirt, FaWater, FaTruck } from "react-icons/fa";
 
 const ServiceFeatures = () => {
   return (
-    <div className="text-center py-16 bg-white-100 md:mb-32">
+    <div className="text-center py-8 bg-white-100 md:mb-12">
       {/* Main Heading */}
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-gray-800">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-800">
         We Collect, Clean, and Deliver
         <br className="hidden lg:inline" /> your laundry and dry cleaning.
       </h1>
 
       {/* Icon Section */}
-      <div className="flex flex-col md:flex-row justify-center items-center space-y-12 md:space-y-0 md:space-x-16 mt-12">
+      <div className="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-16 mt-6">
         {/* Icon 1 */}
         <div className="flex flex-row items-center gap-2 text-3xl md:text-4xl">
           <FaTruck className="text-blue-500 mb-2 md:mb-0 mr-2 md:mr-4" />
