@@ -12,6 +12,7 @@ const AboutPage = () => {
         <title> Andes Laundry - About Us</title>
         <meta name="description" content="Learn more about Andes Laundry, your trusted laundry partner in Pune." />
       </Helmet>
+      
       <WhoWeAre />
       <TeamSection />
       <AppPromo />

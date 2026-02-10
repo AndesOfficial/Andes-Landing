@@ -19,29 +19,29 @@ import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import card4 from "../assets/card4.png";
-import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { FaStar, FaStarHalfAlt, FaBell, FaClock, FaBox, FaDoorOpen, FaHeadset, FaCommentDots, FaCheck, FaBolt, FaMoon, FaChevronRight } from "react-icons/fa";
 import Appsupport from "../components/Appsupport.jsx";
 import FAQ from "../components/Faq.jsx";
 import { Helmet } from "react-helmet-async";
 
 const bulletPoints1 = [
-  { icon: "🔔", text: "Get notified when your order is ready for pick-up" },
-  { icon: "⏱️", text: "Schedule collection at your convenience" },
+  { icon: <FaBell className="text-brand-blue text-xl" />, text: "Get notified when your order is ready for pick-up" },
+  { icon: <FaClock className="text-brand-blue text-xl" />, text: "Schedule collection at your convenience" },
 ];
 
 const bulletPoints2 = [
-  { icon: "📦", text: "Track your delivery in real-time" },
-  { icon: "🚪", text: "Know exactly when your laundry will arrive" },
+  { icon: <FaBox className="text-brand-blue text-xl" />, text: "Track your delivery in real-time" },
+  { icon: <FaDoorOpen className="text-brand-blue text-xl" />, text: "Know exactly when your laundry will arrive" },
 ];
 
 const bulletPoints3 = [
-  { icon: "📞", text: "24/7 customer support available" },
-  { icon: "💬", text: "Reach us via call or chat in the app" },
+  { icon: <FaHeadset className="text-brand-blue text-xl" />, text: "24/7 customer support available" },
+  { icon: <FaCommentDots className="text-brand-blue text-xl" />, text: "Reach us via call or chat in the app" },
 ];
 
 const bulletPoints4 = [
-  { icon: "✅", text: "Order scheduled and delivered promptly" },
-  { icon: "📦", text: "Enjoy freshly cleaned clothes at your doorstep" },
+  { icon: <FaCheck className="text-brand-blue text-xl" />, text: "Order scheduled and delivered promptly" },
+  { icon: <FaBox className="text-brand-blue text-xl" />, text: "Enjoy freshly cleaned clothes at your doorstep" },
 ];
 
 const LandingPage = () => {
@@ -53,67 +53,67 @@ const LandingPage = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-blue-600 to-indigo-700 min-h-[90vh] flex flex-col justify-center relative overflow-hidden pb-16">
-        {/* Background Decorative Elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-10 pointer-events-none">
-          <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-white blur-3xl"></div>
-          <div className="absolute top-[30%] right-[10%] w-[30%] h-[30%] rounded-full bg-yellow-300 blur-3xl"></div>
-        </div>
+      <div className="bg-brand-blue min-h-screen flex flex-col justify-center relative overflow-hidden pb-16 pt-32 md:pt-40">
 
-        <main className="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10 pt-20 md:pt-0 flex-grow">
-          {/* Text Section */}
-          <div className="w-full md:w-1/2 text-white md:pr-12 animate-slide-up text-center md:text-left">
-            <div className="space-y-4 md:space-y-2">
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight">
-                Laundry & dry
+        <main className="container mx-auto px-4 flex flex-col lg:flex-row items-center relative z-10 gap-12 lg:gap-8">
+          {/* Left Content - Text & Widget */}
+          <div className="w-full lg:w-1/2 text-white z-20">
+            <div className="mb-8">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
+                Laundry & dry <br /> cleaning with <br /> 24h delivery
               </h1>
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight">
-                cleaning within
-              </h1>
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight text-blue-200">
-                24h delivery
-              </h1>
+
+              {/* Location - Just Yellow Text */}
+              <div className="flex items-baseline gap-3">
+                <h2 className="text-yellow-400 font-bold text-3xl md:text-5xl tracking-wide">
+                  Kothrud, Pune
+                </h2>
+              </div>
             </div>
 
-            <div className="mt-8 mb-8 flex items-center justify-center md:justify-start">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-yellow-300">
-                Kothrud, Pune
-              </h1>
-            </div>
 
-            {/* Store links */}
-            <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center md:justify-start">
-              <a
-                href="https://play.google.com/store/apps/details?id=com.andes.laundry"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center bg-white text-black p-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 max-w-[200px] mx-auto sm:mx-0"
-              >
-                <img src={playstore} alt="Play Store" className="w-8 h-8 md:w-10 md:h-10" />
-                <div className="ml-3 text-left">
-                  <p className="text-xs text-gray-600 font-medium">Get it on</p>
-                  <p className="text-sm md:text-lg font-bold leading-none">Google Play</p>
-                </div>
-              </a>
 
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center bg-white text-black p-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 max-w-[200px] mx-auto sm:mx-0"
-              >
-                <img src={appstore} alt="App Store" className="w-8 h-8 md:w-10 md:h-10" />
-                <div className="ml-3 text-left">
-                  <p className="text-xs text-gray-600 font-medium">Download on the</p>
-                  <p className="text-sm md:text-lg font-bold leading-none">App Store</p>
+            {/* Scheduling Widget Mockup */}
+            <div className="bg-white rounded-3xl p-6 shadow-2xl max-w-md border border-slate-100">
+              <h3 className="text-slate-800 font-semibold mb-4 text-lg">Schedule your collection in <span className="text-brand-blue">Pune</span></h3>
+
+              <div className="space-y-3">
+                <div className="border border-gray-100 bg-gray-50/50 rounded-xl p-4 flex items-center justify-between cursor-pointer hover:border-brand-blue hover:bg-white transition-all group">
+                  <div className="flex items-center gap-4">
+                    <FaBolt className="text-xl text-yellow-400" />
+                    <div>
+                      <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Earliest</p>
+                      <p className="text-slate-800 font-bold text-lg group-hover:text-brand-blue transition-colors">12:00 - 15:00</p>
+                    </div>
+                  </div>
+                  <FaChevronRight className="text-gray-300 font-bold text-lg group-hover:text-brand-blue" />
                 </div>
-              </a>
+
+                <div className="border border-gray-100 bg-gray-50/50 rounded-xl p-4 flex items-center justify-between cursor-pointer hover:border-brand-blue hover:bg-white transition-all group">
+                  <div className="flex items-center gap-4">
+                    <FaMoon className="text-xl text-slate-400" />
+                    <div>
+                      <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Last</p>
+                      <p className="text-slate-800 font-bold text-lg group-hover:text-brand-blue transition-colors">20:00 - 23:00</p>
+                    </div>
+                  </div>
+                  <FaChevronRight className="text-gray-300 font-bold text-lg group-hover:text-brand-blue" />
+                </div>
+              </div>
+
+              <div className="mt-5 text-center">
+                <a href="#" className="text-brand-blue text-sm font-bold hover:underline">See all slots</a>
+              </div>
             </div>
           </div>
 
-          {/* Image Section */}
-          <div className="w-full md:w-1/2 flex justify-center mt-12 md:mt-0 animate-fade-in animation-delay-200">
-            <div className="relative w-full max-w-md lg:max-w-lg aspect-square">
+          {/* Right Content - Image with Blob */}
+          <div className="w-full lg:w-1/2 flex justify-center relative mt-12 lg:mt-0">
+            {/* Blob Background */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-white/20 rounded-full blur-xl -z-10"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-blue-400/30 rounded-full blur-2xl -z-20"></div>
+
+            <div className="relative w-full max-w-lg lg:max-w-xl aspect-square flex items-center justify-center">
               <img
                 src={van}
                 alt="Andes Laundry Van"
@@ -124,30 +124,7 @@ const LandingPage = () => {
         </main>
       </div>
 
-      {/* Stats Banner */}
-      <div className="bg-blue-900 text-white py-12 shadow-xl relative z-20 -mt-8 mx-4 md:mx-16 rounded-2xl transform translate-y-0">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
-          <div className="mb-6 md:mb-0 text-center md:text-left">
-            <h2 className="text-2xl md:text-3xl font-bold text-yellow-300 mb-2">
-              The #1 Smart Laundry Service
-            </h2>
-            <p className="text-gray-300 text-lg">
-              in Dry Cleaning, Laundry Service & Laundrette
-            </p>
-          </div>
 
-          <div className="flex flex-col items-center md:items-end">
-            <div className="flex items-center gap-1 text-3xl text-yellow-400 mb-1">
-              <FaStar />
-              <FaStar />
-              <FaStar />
-              <FaStar />
-              <FaStarHalfAlt />
-            </div>
-            <span className="text-lg font-medium opacity-90">4.5/5 Customer Rating</span>
-          </div>
-        </div>
-      </div>
 
       {/* Features Grid */}
       {/* Features Grid */}

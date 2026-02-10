@@ -50,23 +50,47 @@ export const AuthProvider = ({ children }) => {
 
     // 2. Sign Up 
     const signup = async (name, email, password) => {
-        const result = await createUserWithEmailAndPassword(auth, email, password);
-        const user = result.user;
+        try {
+            console.log("Attempting to sign up user with email:", email);
+            const result = await createUserWithEmailAndPassword(auth, email, password);
+            const user = result.user;
+            console.log("User created successfully:", user.uid);
 
-        // Save the extra "Name" field to Firestore
-        await setDoc(doc(db, "users", user.uid), {
-            fullName: name,
-            email: email,
-            createdAt: new Date(),
-            uid: user.uid
-        });
+            // Save the extra "Name" field to Firestore
+            await setDoc(doc(db, "users", user.uid), {
+                fullName: name,
+                email: email,
+                createdAt: new Date(),
+                uid: user.uid
+            });
+            console.log("User profile saved to Firestore");
 
-        return user;
+            return user;
+        } catch (error) {
+            console.error("Signup Error Details:", {
+                code: error.code,
+                message: error.message,
+                fullError: error
+            });
+            throw error;
+        }
     };
 
     // 3. Login
-    const login = (email, password) => {
-        return signInWithEmailAndPassword(auth, email, password);
+    const login = async (email, password) => {
+        try {
+            console.log("Attempting to login user:", email);
+            const result = await signInWithEmailAndPassword(auth, email, password);
+            console.log("User logged in successfully:", result.user.uid);
+            return result;
+        } catch (error) {
+            console.error("Login Error Details:", {
+                code: error.code,
+                message: error.message,
+                fullError: error
+            });
+            throw error;
+        }
     };
 
     // 4. Logout

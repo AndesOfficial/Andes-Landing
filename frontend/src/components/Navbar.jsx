@@ -3,105 +3,110 @@ import { useLocation, Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useAuth } from "../context/AuthContext";
 import { useOrder } from "../context/OrderContext";
+import { FaShoppingCart, FaUser, FaSignOutAlt } from "react-icons/fa";
 
-const Navbar = () => {
+const Navbar = ({ isScrolled: externalIsScrolled }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [internalIsScrolled, setInternalIsScrolled] = useState(false);
   const location = useLocation();
   const { currentUser, logout } = useAuth();
   const { totalItems } = useOrder();
 
+  // Use external prop if available, otherwise fallback to internal state
+  const isScrolled = externalIsScrolled !== undefined ? externalIsScrolled : internalIsScrolled;
+
   useEffect(() => {
+    // If external control is provided, don't set up internal listener (or do it as backup? Better not to conflict)
+    if (externalIsScrolled !== undefined) return;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setInternalIsScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [externalIsScrolled]);
 
   const isActive = (path) => location.pathname === path;
+  const isLanding = location.pathname === "/";
 
   //  Helper function to close the mobile menu
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg py-2" : "bg-white/95 py-4"
+    <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${(isScrolled || isOpen) ? "bg-white shadow-md py-2" : (isLanding ? "bg-transparent py-4" : "bg-brand-blue py-4")
       }`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             {/* Also close menu if clicking logo */}
             <Link to="/" onClick={closeMenu} className="flex items-center space-x-3">
-              <img src={logo} alt="Andes logo" className="h-16 w-16" />
+              <img
+                src={logo}
+                alt="Andes logo"
+                className={`h-16 w-16 transition-all duration-300 ${(isScrolled || isOpen) ? "" : "brightness-0 invert"}`}
+              />
             </Link>
           </div>
 
 
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/working"
-              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/working") ? "text-indigo-600 font-semibold" : ""}`}
+              className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand-blue" : "text-white hover:text-yellow-300"} ${isActive("/working") ? "font-bold" : ""}`}
             >
               How it works
             </Link>
             <Link to="/services"
-              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/services") ? "text-indigo-600 font-semibold" : ""}`}
+              className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand-blue" : "text-white hover:text-yellow-300"} ${isActive("/services") ? "font-bold" : ""}`}
             >
               Services & Pricing
             </Link>
             <Link to="/andes-assured"
-              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/andes-assured") ? "text-indigo-600 font-semibold" : ""}`}
+              className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand-blue" : "text-white hover:text-yellow-300"} ${isActive("/andes-assured") ? "font-bold" : ""}`}
             >
               Andes Assured
             </Link>
             <Link to="/about"
-              className={`text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium text-lg ${isActive("/about") ? "text-indigo-600 font-semibold" : ""}`}
+              className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand-blue" : "text-white hover:text-yellow-300"} ${isActive("/about") ? "font-bold" : ""}`}
             >
               About us
             </Link>
           </div>
 
           {/* Action Buttons (Desktop) */}
-          <div className="hidden md:flex items-center space-x-4">
-            {/* Cart Icon */}
-            {currentUser && (
-              <Link to="/order" className="relative p-2 text-gray-600 hover:text-indigo-600 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                {/* Badge */}
-                {totalItems > 0 && (
-                  <span className="absolute top-0 right-0 inline-flex items-center justify-center p-1 w-5 h-5 text-xs font-bold leading-none text-red-100 transform translate-x-1/4 -translate-y-1/4 bg-red-600 rounded-full">
-                    {totalItems}
-                  </span>
-                )}
-              </Link>
-            )}
-
+          <div className="hidden md:flex items-center space-x-6">
             {currentUser ? (
               <>
-                <span className="text-gray-700 font-medium">
-                  Hi, {currentUser.fullName ? currentUser.fullName.split(' ')[0] : currentUser.name ? currentUser.name.split(' ')[0] : currentUser.displayName?.split(' ')[0] || "User"}
-                </span>
-                <Link to="/dashboard" className="text-gray-500 hover:text-indigo-600 font-medium">Dashboard</Link>
-                <button onClick={logout} className="text-gray-500 hover:text-indigo-600 font-medium">Logout</button>
-                <Link
-                  to="/order"
-                  className="bg-indigo-600 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 shadow-lg shadow-indigo-500/30"
-                >
-                  New Order
+                {/* Cart Icon */}
+                <Link to="/order" title="Cart" className="relative group p-1">
+                  <FaShoppingCart className={`text-2xl transition-colors duration-300 ${(isScrolled || isOpen) ? "text-gray-700 group-hover:text-brand-blue" : "text-white group-hover:text-yellow-300"}`} />
+                  {totalItems > 0 && (
+                    <span className="absolute -top-2 -right-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none text-white bg-red-600 rounded-full border-2 border-white">
+                      {totalItems}
+                    </span>
+                  )}
                 </Link>
+
+                {/* Dashboard / User Icon */}
+                <Link to="/dashboard" title="Dashboard" className="group p-1">
+                  <FaUser className={`text-2xl transition-colors duration-300 ${(isScrolled || isOpen) ? "text-gray-700 group-hover:text-brand-blue" : "text-white group-hover:text-yellow-300"}`} />
+                </Link>
+
+                {/* Logout Icon */}
+                <button onClick={logout} title="Logout" className="group p-1">
+                  <FaSignOutAlt className={`text-2xl transition-colors duration-300 ${(isScrolled || isOpen) ? "text-gray-700 group-hover:text-brand-blue" : "text-white group-hover:text-yellow-300"}`} />
+                </button>
               </>
             ) : (
               <>
                 <Link
                   to="/login"
-                  className="text-gray-700 hover:text-indigo-600 font-medium text-lg transition-colors"
+                  className={`font-medium text-lg transition-colors ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand-blue" : "text-white hover:text-yellow-300"}`}
                 >
                   Log In
                 </Link>
                 <Link
                   to="/signup"
-                  className="bg-indigo-600 text-white px-7 py-2.5 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 flex items-center space-x-2 text-lg shadow-lg shadow-indigo-500/30"
+                  className="bg-white text-brand-blue px-7 py-2.5 rounded hover:bg-gray-100 transition duration-300 flex items-center space-x-2 text-lg shadow-md font-bold"
                 >
                   <span>Sign Up</span>
                 </Link>
@@ -113,7 +118,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-indigo-600 focus:outline-none p-2"
+              className={`${(isScrolled || isOpen) ? "text-gray-700" : "text-white"} hover:text-brand-blue focus:outline-none p-2`}
             >
               <svg
                 className="h-8 w-8"

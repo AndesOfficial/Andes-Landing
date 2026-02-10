@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import "./locomotive-scroll.css";
-import { useEffect, useRef, Suspense, lazy } from "react";
+import { useEffect, useRef, Suspense, lazy, useState } from "react";
 import LocomotiveScroll from "locomotive-scroll";
 import './App.css';
 import IntercomComponent from './intercom';
@@ -37,6 +37,7 @@ const PageLoader = () => (
 function App() {
   const scrollRef = useRef(null);
   const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     if (!scrollRef.current) return;
@@ -47,6 +48,10 @@ function App() {
       resetNativeScroll: true,
       smartphone: { smooth: true },
       tablet: { smooth: true }
+    });
+
+    scroll.on('scroll', (args) => {
+      setIsScrolled(args.scroll.y > 20);
     });
 
     const resizeObserver = new ResizeObserver(() => {
@@ -87,7 +92,7 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar isScrolled={isScrolled} />
       <div ref={scrollRef} className="flex flex-col min-h-screen scroll-container" data-scroll-container>
         <div className="flex-grow">
           <Suspense fallback={<PageLoader />}>
