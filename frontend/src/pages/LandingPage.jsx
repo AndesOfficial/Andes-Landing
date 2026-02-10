@@ -87,7 +87,7 @@ const LandingPage = () => {
               </a>
 
               <a
-                href="#"
+                href="https://apps.apple.com/in/app/andes/id6747010488"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center bg-white text-black px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
