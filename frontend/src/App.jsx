@@ -1,10 +1,8 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import "./locomotive-scroll.css";
-import { useEffect, useRef, Suspense, lazy } from "react";
-import LocomotiveScroll from "locomotive-scroll";
+import { useEffect, useRef, Suspense, lazy, useState } from "react";
 import './App.css';
-import IntercomComponent from './intercom';
+// import IntercomComponent from './intercom';
 import data from './data';
 import ServiceFooter from './components/ServiceFooter';
 import DashboardLayout from "./components/DashboardLayout";
@@ -35,33 +33,17 @@ const PageLoader = () => (
 );
 
 function App() {
-  const scrollRef = useRef(null);
   const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    if (!scrollRef.current) return;
-
-    const scroll = new LocomotiveScroll({
-      el: scrollRef.current,
-      smooth: true,
-      resetNativeScroll: true,
-      smartphone: { smooth: true },
-      tablet: { smooth: true }
-    });
-
-    const resizeObserver = new ResizeObserver(() => {
-      scroll.update();
-    });
-
-    if (scrollRef.current) {
-      resizeObserver.observe(scrollRef.current);
-    }
-
-    return () => {
-      if (scroll) scroll.destroy();
-      resizeObserver.disconnect();
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
     };
-  }, [location.pathname]);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   if (location.pathname.startsWith('/dashboard')) {
     return (
@@ -80,15 +62,15 @@ function App() {
             </Route>
           </Routes>
         </Suspense>
-        <IntercomComponent />
+        {/* <IntercomComponent /> */}
       </>
     );
   }
 
   return (
     <>
-      <Navbar />
-      <div ref={scrollRef} className="flex flex-col min-h-screen scroll-container" data-scroll-container>
+      <Navbar isScrolled={isScrolled} />
+      <div className="flex flex-col min-h-screen">
         <div className="flex-grow">
           <Suspense fallback={<PageLoader />}>
             <Routes>
@@ -114,7 +96,7 @@ function App() {
         <ServiceFooter />
       </div>
 
-      <IntercomComponent />
+      {/* <IntercomComponent /> */}
     </>
   );
 }

@@ -1,5 +1,5 @@
 import ItemCard from "./ItemCard.jsx";
-import { FaRegComment } from "react-icons/fa";
+import { FaRegComment, FaTshirt, FaSoap, FaShoePrints, FaShoppingBasket } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Services = () => {
@@ -34,7 +34,7 @@ const Services = () => {
           includes={["WASH", "TUMBLE-DRY"]}
           serviceTime="24H - 48H"
           returned="IN A LAUNDRY/ANDES BAG"
-          icon="🧺"
+          icon={<FaShoppingBasket size={40} className="text-blue-600" />}
         />
         <ItemCard
           title="Wash & Iron"
@@ -43,7 +43,7 @@ const Services = () => {
           includes={["WASH", "TUMBLE-DRY", "IRONING"]}
           serviceTime="24H - 48H"
           returned="ON HANGERS"
-          icon="👚"
+          icon={<FaTshirt size={40} className="text-blue-600" />}
         />
         <ItemCard
           title="Dry Cleaning"
@@ -52,7 +52,7 @@ const Services = () => {
           includes={["DRY CLEANING", "IRONING"]}
           serviceTime="24H - 48H"
           returned="ON HANGERS"
-          icon="🧼"
+          icon={<FaSoap size={40} className="text-blue-600" />}
         />
         <ItemCard
           title="Shoes Cleaning"
@@ -61,7 +61,7 @@ const Services = () => {
           includes={["CUSTOM CLEANING"]}
           serviceTime="24H - 48H"
           returned="IN A LAUNDRY/ANDES BAG"
-          icon="👞"
+          icon={<FaShoePrints size={40} className="text-blue-600" />}
         />
       </div>
     </div>

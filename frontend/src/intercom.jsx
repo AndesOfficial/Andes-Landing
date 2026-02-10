@@ -8,7 +8,7 @@ export default function IntercomComponent() {
       app_id: APP_ID,
     });
   } else {
-    console.log("Intercom not initialized: VITE_INTERCOM_APP_ID missing in .env");
+    console.warn("Intercom not initialized: VITE_INTERCOM_APP_ID missing in .env");
   }
 
 

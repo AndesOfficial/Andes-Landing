@@ -27,7 +27,7 @@ const ServicesPage = ({ data }) => {
         <meta name="description" content="Explore our new laundry services and pricing." />
       </Helmet>
       <div className="min-h-screen bg-gray-50 pb-24"> {/* Added padding bottom for floating button */}
-        <div className="py-12 px-4 sm:px-6 lg:px-8">
+        <div className="pt-32 pb-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {/* Page Header */}
             <div className="text-center mb-12">
