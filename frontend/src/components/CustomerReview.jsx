@@ -13,7 +13,15 @@ const CustomerReviews = () => {
     const currentBatchIndex = Math.floor(Date.now() / interval) % totalBatches;
     const start = currentBatchIndex * batchSize;
 
-    return reviewsData.slice(start, start + batchSize);
+    let batch = reviewsData.slice(start, start + batchSize);
+
+    // If we reach the end and have fewer than batchSize, wrap around
+    if (batch.length < batchSize) {
+      const remaining = batchSize - batch.length;
+      batch = [...batch, ...reviewsData.slice(0, remaining)];
+    }
+
+    return batch;
   };
 
   const [visibleReviews, setVisibleReviews] = useState([]);
