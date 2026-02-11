@@ -57,10 +57,16 @@ const Profile = () => {
                     </div>
 
                     <div className="pt-6 border-t border-gray-100 flex gap-4">
-                        <button className="flex-1 bg-brand text-white px-4 py-2 rounded-lg font-medium hover:bg-brand-dark transition-colors">
+                        <button
+                            onClick={() => alert("Edit Profile feature coming soon!")}
+                            className="flex-1 bg-brand text-white px-4 py-2 rounded-lg font-medium hover:bg-brand-dark transition-colors"
+                        >
                             Edit Profile
                         </button>
-                        <button className="flex-1 bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+                        <button
+                            onClick={() => alert("Change Password feature coming soon!")}
+                            className="flex-1 bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                        >
                             Change Password
                         </button>
                     </div>

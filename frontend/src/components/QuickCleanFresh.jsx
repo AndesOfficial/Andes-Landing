@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const QuickCleanFresh = () => {
   const handleButtonClick = () => {
     window.open("https://play.google.com/store/apps/details?id=com.andes.laundry", "_blank");
@@ -24,9 +26,9 @@ const QuickCleanFresh = () => {
         <p className="text-lg md:text-xl text-white mb-10">
           Your laundry delivered in 24h
         </p>
-        <button
-          onClick={handleButtonClick}
-          className="bg-white mt-8 text-[#3B82F6] font-semibold rounded-lg shadow-md flex items-center justify-center h-12 w-full md:w-auto px-4 md:px-8 hover:bg-gray-100 transition"
+        <Link
+          to="/services"
+          className="bg-white mt-8 text-[#3B82F6] font-semibold rounded-lg shadow-md flex items-center justify-center h-12 w-full md:w-auto px-4 md:px-8 hover:bg-gray-100 transition mx-auto"
         >
           <span className="mr-2">
             {/* Icon or SVG for the button */}
@@ -46,7 +48,7 @@ const QuickCleanFresh = () => {
             </svg>
           </span>
           <span>Schedule your pickup</span>
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -7,12 +7,26 @@ import { FaPlus, FaListAlt, FaTags, FaHeadset, FaBox, FaChevronRight, FaClock, F
 
 // --- Reusable Components ---
 
-const QuickActionBtn = ({ to, icon, label, primary = false }) => (
-    <Link to={to} className={`flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 w-full ${primary ? 'bg-brand text-white shadow-lg shadow-brand/20 hover:shadow-xl hover:bg-brand-dark' : 'bg-brand/5 text-brand-dark border border-brand/10 hover:border-brand/30 hover:bg-brand/10 hover:shadow-md'}`}>
-        <div className={`text-2xl mb-2 ${primary ? 'text-white' : 'text-brand-blue'}`}>{icon}</div>
-        <span className="text-xs font-bold tracking-wide">{label}</span>
-    </Link>
-);
+const QuickActionBtn = ({ to, icon, label, primary = false }) => {
+    const baseClass = `flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 w-full ${primary ? 'bg-brand text-white shadow-lg shadow-brand/20 hover:shadow-xl hover:bg-brand-dark' : 'bg-brand/5 text-brand-dark border border-brand/10 hover:border-brand/30 hover:bg-brand/10 hover:shadow-md'}`;
+    const iconClass = `text-2xl mb-2 ${primary ? 'text-white' : 'text-brand-blue'}`;
+
+    if (to.startsWith('http') || to.startsWith('mailto')) {
+        return (
+            <a href={to} className={baseClass}>
+                <div className={iconClass}>{icon}</div>
+                <span className="text-xs font-bold tracking-wide">{label}</span>
+            </a>
+        );
+    }
+
+    return (
+        <Link to={to} className={baseClass}>
+            <div className={iconClass}>{icon}</div>
+            <span className="text-xs font-bold tracking-wide">{label}</span>
+        </Link>
+    );
+};
 
 const StatCard = ({ title, value, icon, colorClass, bgClass }) => (
     <div className="bg-white p-5 rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-50 flex items-center justify-between hover:scale-[1.02] transition-transform duration-300 hover:shadow-brand/10 hover:border-brand/20 group">
@@ -111,7 +125,7 @@ const Dashboard = () => {
                             </h1>
                         </div>
                         <div className="hidden md:block">
-                            <Link to="/profile" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-brand-blue hover:text-white transition-colors">
+                            <Link to="/dashboard/profile" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-brand-blue hover:text-white transition-colors">
                                 <span className="font-bold text-sm">{currentUser?.fullName?.charAt(0) || 'U'}</span>
                             </Link>
                         </div>
@@ -122,7 +136,7 @@ const Dashboard = () => {
                         <QuickActionBtn to="/order" icon={<FaPlus />} label="New Order" primary />
                         <QuickActionBtn to="/dashboard/orders" icon={<FaListAlt />} label="My Orders" />
                         <QuickActionBtn to="/services" icon={<FaTags />} label="Srvc & Pricing" />
-                        <QuickActionBtn to="/support" icon={<FaHeadset />} label="Help & Support" />
+                        <QuickActionBtn to="mailto:care@andes.co.in" icon={<FaHeadset />} label="Help & Support" />
                     </div>
                 </div>
             </header>
@@ -234,7 +248,13 @@ const Dashboard = () => {
                                 <p className="text-slate-400 text-sm mb-6">Invite friends to Andes. You get ₹200, they get 20% off.</p>
                             </div>
 
-                            <button className="relative z-10 w-full py-3 bg-white text-slate-900 font-bold rounded-xl hover:bg-slate-100 transition-colors shadow-lg active:scale-95 duration-200">
+                            <button
+                                onClick={() => {
+                                    navigator.clipboard.writeText("FIRST20");
+                                    alert("Referral code 'FIRST20' copied to clipboard!");
+                                }}
+                                className="relative z-10 w-full py-3 bg-white text-slate-900 font-bold rounded-xl hover:bg-slate-100 transition-colors shadow-lg active:scale-95 duration-200"
+                            >
                                 Invite Friends
                             </button>
 

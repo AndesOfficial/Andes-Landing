@@ -11,7 +11,7 @@ const BookNow = () => {
         Book your slot now
       </h2>
 
-      <Link to="/schedule-pickup">
+      <Link to="/services">
         <button
           className="bg-white text-brand-dark font-semibold py-3 px-8 rounded-lg shadow-md flex items-center space-x-2 hover:bg-brand/10 transition self-center"
         >

@@ -25,12 +25,16 @@ const AppPromo = () => {
             <h3 className="text-xl font-bold text-slate-900">Download our App</h3>
             <p className="text-gray-600">Get exclusive offers and track your orders on the go!</p>
             <div className="mt-2 flex space-x-2">
-              <button className="bg-brand text-white px-3 py-1 rounded hover:bg-brand-dark transition">
-                App Store
-              </button>
-              <button className="bg-brand text-white px-3 py-1 rounded hover:bg-brand-dark transition">
-                Play Store
-              </button>
+              <a href="https://apps.apple.com/in/app/andes/id6747010488" target="_blank" rel="noopener noreferrer">
+                <button className="bg-brand text-white px-3 py-1 rounded hover:bg-brand-dark transition">
+                  App Store
+                </button>
+              </a>
+              <a href="https://play.google.com/store/apps/details?id=com.andes.laundry" target="_blank" rel="noopener noreferrer">
+                <button className="bg-brand text-white px-3 py-1 rounded hover:bg-brand-dark transition">
+                  Play Store
+                </button>
+              </a>
             </div>
           </div>
         </div>

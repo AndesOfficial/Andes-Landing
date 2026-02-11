@@ -14,6 +14,7 @@ import './CustomerReview.css';
 
 const CustomerReviews = () => {
   const swiperRef = useRef(null);
+  // Force re-render for reviews data update
 
   return (
     <section className="bg-slate-50 py-10 overflow-hidden relative">

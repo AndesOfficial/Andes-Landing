@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';
 import { useAuth } from '../context/AuthContext';
@@ -63,10 +64,9 @@ const MyOrders = () => {
         <div className="animate-fade-in-up">
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-3xl font-extrabold text-gray-900">My Orders</h1>
-                <div className="flex gap-2">
-                    <button className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">Filter</button>
-                    <button className="px-4 py-2 bg-brand rounded-lg text-sm font-medium text-white hover:bg-brand-dark">New Order</button>
-                </div>
+                <Link to="/order" className="px-4 py-2 bg-brand rounded-lg text-sm font-medium text-white hover:bg-brand-dark transition-colors shadow-sm">
+                    New Order
+                </Link>
             </div>
 
             {loading ? (
@@ -111,7 +111,13 @@ const MyOrders = () => {
                                             ₹{order.totalPrice}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <button className="text-brand hover:text-brand-dark font-semibold">Details</button>
+                                            <Link
+                                                to="/order-confirmation"
+                                                state={{ orderId: order.id }}
+                                                className="text-brand hover:text-brand-dark font-semibold hover:underline"
+                                            >
+                                                Details
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))}

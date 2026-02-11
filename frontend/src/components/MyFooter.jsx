@@ -13,7 +13,7 @@ const MyFooter = () => {
               Premium laundry and dry cleaning delivered to your doorstep. We give you back your free time.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-brand transition-colors">
+              <a href="https://www.instagram.com/andes.now/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-brand transition-colors">
                 <FaInstagram />
               </a>
               <a href="https://www.linkedin.com/company/andesnow/" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-brand transition-colors">
@@ -66,7 +66,7 @@ const MyFooter = () => {
 
         {/* Bottom Section */}
         <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs">
-          <p>© 2024 Andes Laundry Inc. All rights reserved.</p>
+          <p>© 2026 Andes Laundry Inc. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
 
           </div>
