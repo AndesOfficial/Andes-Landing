@@ -29,7 +29,7 @@ const Services = () => {
       <div className="flex overflow-x-auto md:overflow-x-visible overflow-y-hidden space-x-4 md:space-x-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto pb-4 md:pb-0">
         <ItemCard
           title="Wash"
-          price="₹55/Kg"
+          price="55/Kg"
           description="For everyday laundry, bedsheets and towels."
           includes={["WASH", "TUMBLE-DRY"]}
           serviceTime="24H - 48H"
@@ -38,7 +38,7 @@ const Services = () => {
         />
         <ItemCard
           title="Wash & Iron"
-          price="₹75/Kg"
+          price="75/Kg"
           description="For everyday laundry & ironing."
           includes={["WASH", "TUMBLE-DRY", "IRONING"]}
           serviceTime="24H - 48H"

@@ -5,7 +5,7 @@ const ServiceList = ({ services }) => {
   if (services.length === 0) {
     return (
       <div className="bg-white rounded-xl shadow-md p-8 text-center ">
-        <div className="text-gray-500 text-lg mb-4">😕</div>
+        <div className="text-gray-500 text-lg mb-4"></div>
         <h3 className="text-xl font-semibold text-gray-700 mb-2">No services found</h3>
         <p className="text-gray-500">Try adjusting your filters to find what you're looking for.</p>
       </div>
