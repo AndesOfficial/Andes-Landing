@@ -35,7 +35,7 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
   return (
     <>
       <nav className={`fixed w-full top-0 z-[100] transition-all duration-300 ${(isScrolled || isOpen)
-        ? "bg-white/90 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.03)] border-b border-white/20 py-2"
+        ? "bg-white/75 backdrop-blur-lg shadow-sm border-b border-slate-200/50 py-2"
         : (isLanding ? "bg-transparent py-4" : "bg-brand py-4")
         }`}>
         <div className="container mx-auto px-4">
@@ -54,22 +54,22 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
 
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/working"
-                className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/working") ? "font-bold" : ""}`}
+                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${(isScrolled || isOpen) ? "text-slate-600 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/working") ? "font-bold text-brand" : ""}`}
               >
                 How it works
               </Link>
               <Link to="/services"
-                className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/services") ? "font-bold" : ""}`}
+                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${(isScrolled || isOpen) ? "text-slate-600 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/services") ? "font-bold text-brand" : ""}`}
               >
                 Services & Pricing
               </Link>
               <Link to="/andes-assured"
-                className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/andes-assured") ? "font-bold" : ""}`}
+                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${(isScrolled || isOpen) ? "text-slate-600 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/andes-assured") ? "font-bold text-brand" : ""}`}
               >
                 Andes Assured
               </Link>
               <Link to="/about"
-                className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/about") ? "font-bold" : ""}`}
+                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${(isScrolled || isOpen) ? "text-slate-600 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/about") ? "font-bold text-brand" : ""}`}
               >
                 About us
               </Link>
@@ -81,7 +81,7 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
                 <>
                   {/* Cart Icon */}
                   <Link to="/order" title="Cart" className="relative group p-1">
-                    <FaShoppingCart className={`text-2xl transition-colors duration-300 ${(isScrolled || isOpen) ? "text-gray-700 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
+                    <FaShoppingCart className={`text-2xl transition-colors duration-300 ease-in-out ${(isScrolled || isOpen) ? "text-slate-600 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
                     {totalItems > 0 && (
                       <span className="absolute -top-2 -right-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none text-white bg-red-600 rounded-full border-2 border-white">
                         {totalItems}
@@ -91,25 +91,25 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
 
                   {/* Dashboard / User Icon */}
                   <Link to="/dashboard" title="Dashboard" className="group p-1">
-                    <FaUser className={`text-2xl transition-colors duration-300 ${(isScrolled || isOpen) ? "text-gray-700 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
+                    <FaUser className={`text-2xl transition-colors duration-300 ease-in-out ${(isScrolled || isOpen) ? "text-slate-600 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
                   </Link>
 
                   {/* Logout Icon */}
                   <button onClick={logout} title="Logout" className="group p-1">
-                    <FaSignOutAlt className={`text-2xl transition-colors duration-300 ${(isScrolled || isOpen) ? "text-gray-700 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
+                    <FaSignOutAlt className={`text-2xl transition-colors duration-300 ease-in-out ${(isScrolled || isOpen) ? "text-slate-600 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
                   </button>
                 </>
               ) : (
                 <>
                   <Link
                     to="/login"
-                    className={`font-medium text-lg transition-colors ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand" : "text-white hover:text-yellow-300"}`}
+                    className={`font-medium text-lg transition-colors duration-300 ease-in-out ${(isScrolled || isOpen) ? "text-slate-600 hover:text-brand" : "text-white hover:text-yellow-300"}`}
                   >
                     Log In
                   </Link>
                   <Link
                     to="/signup"
-                    className="bg-white text-brand px-7 py-2.5 rounded hover:bg-gray-100 transition duration-300 flex items-center space-x-2 text-lg shadow-md font-bold"
+                    className="bg-brand text-white px-7 py-2.5 rounded hover:bg-brand-dark transition duration-300 ease-in-out flex items-center space-x-2 text-lg shadow-md font-bold"
                   >
                     <span>Sign Up</span>
                   </Link>
@@ -140,81 +140,89 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
         </div>
       </nav>
 
-      {/* Mobile menu - Moved outside nav to avoid containment/clipping issues */}
-      <div className={`${isOpen ? "translate-x-0 opacity-100 pointer-events-auto" : "translate-x-full opacity-0 pointer-events-none"} fixed inset-0 z-[90] bg-white transition-all duration-300 ease-in-out flex flex-col justify-center items-center md:hidden`}>
+      {/* Mobile menu overlay */}
+      <div
+        className={`fixed inset-0 bg-black/50 z-[80] transition-opacity duration-300 md:hidden ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        onClick={closeMenu}
+      />
 
-        <div className="flex flex-col space-y-6 text-center w-full px-8">
-          <Link to="/working"
-            onClick={closeMenu}
-            className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
-          >
-            How it works
-          </Link>
-          <Link to="/services"
-            onClick={closeMenu}
-            className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
-          >
-            Services & Pricing
-          </Link>
+      {/* Mobile menu drawer */}
+      <div className={`fixed top-0 right-0 h-full w-full sm:w-[400px] z-[90] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
+        <div className="flex flex-col h-full justify-center items-center text-center px-8 relative">
 
-          <Link to="/andes-assured"
-            onClick={closeMenu}
-            className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
-          >
-            Andes Assured
-          </Link>
+          <div className="flex flex-col space-y-6 w-full">
+            <Link to="/working"
+              onClick={closeMenu}
+              className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
+            >
+              How it works
+            </Link>
+            <Link to="/services"
+              onClick={closeMenu}
+              className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
+            >
+              Services & Pricing
+            </Link>
 
-          <Link to="/about"
-            onClick={closeMenu}
-            className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
-          >
-            About us
-          </Link>
+            <Link to="/andes-assured"
+              onClick={closeMenu}
+              className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
+            >
+              Andes Assured
+            </Link>
 
-          <div className="w-16 h-1 bg-gray-100 mx-auto rounded-full"></div>
+            <Link to="/about"
+              onClick={closeMenu}
+              className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
+            >
+              About us
+            </Link>
 
-          {currentUser ? (
-            <div className="flex flex-col space-y-4 w-full">
-              <div className="text-gray-500 font-medium text-lg">Hi, {currentUser.fullName || currentUser.name || "User"}</div>
-              <Link
-                to="/dashboard"
-                onClick={closeMenu}
-                className="text-xl font-semibold text-slate-700 hover:text-brand"
-              >
-                Dashboard
-              </Link>
-              <Link
-                to="/order"
-                onClick={closeMenu}
-                className="bg-brand text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-brand-dark transition-all"
-              >
-                New Order
-              </Link>
-              <button
-                onClick={() => { logout(); closeMenu(); }}
-                className="text-slate-400 font-medium hover:text-red-500 transition-colors"
-              >
-                Log Out
-              </button>
-            </div>
-          ) : (
-            <div className="flex flex-col space-y-4 w-full">
-              <Link
-                to="/login"
-                onClick={closeMenu}
-                className="text-xl font-semibold text-slate-700 hover:text-brand"
-              >
-                Log In
-              </Link>
-              <Link
-                to="/signup"
-                onClick={closeMenu}
-                className="bg-brand text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-brand-dark transition-all"
-              >
-                Sign Up Free
-              </Link>
-            </div>
-          )}
+            <div className="w-16 h-1 bg-gray-100 mx-auto rounded-full my-4"></div>
+
+            {currentUser ? (
+              <div className="flex flex-col space-y-4 w-full">
+                <div className="text-gray-500 font-medium text-lg">Hi, {currentUser.fullName || currentUser.name || "User"}</div>
+                <Link
+                  to="/dashboard"
+                  onClick={closeMenu}
+                  className="text-xl font-semibold text-slate-700 hover:text-brand"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/order"
+                  onClick={closeMenu}
+                  className="bg-brand text-white flex items-center justify-center w-full h-14 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-brand-dark transition-all"
+                >
+                  New Order
+                </Link>
+                <button
+                  onClick={() => { logout(); closeMenu(); }}
+                  className="text-slate-400 font-medium hover:text-red-500 transition-colors"
+                >
+                  Log Out
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col space-y-4 w-full">
+                <Link
+                  to="/login"
+                  onClick={closeMenu}
+                  className="text-xl font-semibold text-slate-700 hover:text-brand"
+                >
+                  Log In
+                </Link>
+                <Link
+                  to="/signup"
+                  onClick={closeMenu}
+                  className="bg-brand text-white flex items-center justify-center w-full h-14 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-brand-dark transition-all"
+                >
+                  Sign Up Free
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

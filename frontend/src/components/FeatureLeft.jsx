@@ -28,7 +28,7 @@ const FeatureLeft = ({ title, subtitle, description, imageSrc, bulletPoints }) =
         <ul className="space-y-3">
           {bulletPoints.map((point, index) => (
             <li key={index} className="flex items-start">
-              <span className="bg-brand/15 text-brand p-2 rounded-xl mr-3 shadow-sm shrink-0 mt-0.5">
+              <span className="bg-brand/10 text-brand p-2 rounded-full mr-3 shadow-sm shrink-0 mt-0.5">
                 {/* You can replace this with an actual icon */}
                 {point.icon}
               </span>

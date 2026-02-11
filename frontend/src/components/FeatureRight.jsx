@@ -21,7 +21,7 @@ const FeatureRight = ({ title, subtitle, description, imageSrc, bulletPoints }) 
         <ul className="space-y-3">
           {bulletPoints.map((point, index) => (
             <li key={index} className="flex items-start">
-              <span className="bg-brand/15 text-brand p-2 rounded-xl mr-3 shadow-sm shrink-0 mt-0.5">
+              <span className="bg-brand/10 text-brand p-2 rounded-full mr-3 shadow-sm shrink-0 mt-0.5">
                 {point.icon}
               </span>
               <span className="text-slate-700 font-medium text-sm md:text-base">{point.text}</span>

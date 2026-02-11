@@ -9,7 +9,7 @@ const Button = ({
   type = 'button',
   ...props
 }) => {
-  const baseStyles = "relative inline-flex items-center justify-center px-6 py-3 font-semibold rounded-xl transition-all duration-300 focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98]";
+  const baseStyles = "relative inline-flex items-center justify-center px-6 py-3 font-semibold rounded-xl transition-all duration-300 ease-in-out focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98]";
 
   const variants = {
     primary: "bg-brand text-white hover:bg-brand-dark shadow-lg shadow-brand/30 hover:shadow-brand/40",
