@@ -1,102 +1,122 @@
-
-import { useState, useEffect } from 'react';
-import { FaStar, FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
+import { useRef } from 'react';
+import { FaStar, FaQuoteLeft, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { reviewsData } from '../data/reviewsData';
 
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+import './CustomerReview.css';
+
 const CustomerReviews = () => {
-  // Logic to rotate reviews every 2 hours so users see fresh content
-  const getReviewBatch = () => {
-    const batchSize = 3;
-    const interval = 2 * 60 * 60 * 1000;
-    const totalBatches = Math.ceil(reviewsData.length / batchSize);
-
-    const currentBatchIndex = Math.floor(Date.now() / interval) % totalBatches;
-    const start = currentBatchIndex * batchSize;
-
-    let batch = reviewsData.slice(start, start + batchSize);
-
-    // If we reach the end and have fewer than batchSize, wrap around
-    if (batch.length < batchSize) {
-      const remaining = batchSize - batch.length;
-      batch = [...batch, ...reviewsData.slice(0, remaining)];
-    }
-
-    return batch;
-  };
-
-  const [visibleReviews, setVisibleReviews] = useState([]);
-
-  // Handle hydration mismatch by setting state in useEffect
-  useEffect(() => {
-    setVisibleReviews(getReviewBatch());
-
-    const intervalId = setInterval(() => {
-      setVisibleReviews(getReviewBatch());
-    }, 60000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+  const swiperRef = useRef(null);
 
   return (
-    <section className="bg-slate-50 py-24">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="bg-slate-50 py-10 overflow-hidden relative">
+      <div className="max-w-7xl mx-auto px-4">
 
-
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">
+        {/* Header */}
+        <div className="text-center mb-6 relative z-10">
+          <FaQuoteLeft className="text-4xl text-blue-200 mx-auto mb-2 opacity-50" />
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
             Loved by Locals
           </h2>
-          <div className="flex items-center justify-center gap-2 text-yellow-500 text-xl mb-4">
-            <div className="flex">
-              {[...Array(5)].map((_, i) => (
-                <FaStar key={i} />
-              ))}
-            </div>
-          </div>
-          <p className="text-slate-500 text-lg">
-            Don't just take our word for it. Here is what our customers in Pune have to say.
+          <p className="text-slate-500 text-lg max-w-2xl mx-auto">
+            See what our happy customers in Pune have to say about their fresh laundry experience.
           </p>
         </div>
 
-        {/* Reviews Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {visibleReviews.map((review, index) => (
-            <div
-              key={index}
-              className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center relative group"
-            >
-              {/* Profile Image */}
-              <div className="w-20 h-20 mb-6 rounded-full p-1 border-2 border-blue-100">
-                <img
-                  src={review.imageUrl}
-                  alt={review.name}
-                  className="w-full h-full object-cover rounded-full"
-                />
-              </div>
+        {/* Swiper Container */}
+        <div className="relative">
 
-              {/* Star Rating */}
-              <div className="flex gap-1 text-yellow-400 text-sm mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar key={i} className={i < review.rating ? "opacity-100" : "opacity-30"} />
-                ))}
-              </div>
+          {/* Custom Navigation Buttons */}
+          <button
+            className="absolute left-4 md:left-20 top-1/2 -translate-y-1/2 z-30 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg text-slate-400 hover:text-blue-500 hover:scale-110 transition-all hidden md:flex items-center justify-center w-12 h-12 border border-slate-100"
+            onClick={() => swiperRef.current?.slidePrev()}
+            aria-label="Previous Review"
+          >
+            <FaChevronLeft size={20} />
+          </button>
 
-              {/* Quote & Text */}
-              <div className="relative mb-6">
-                <FaQuoteLeft className="absolute -top-4 -left-4 text-blue-100 text-3xl opacity-50" />
-                <p className="text-slate-600 italic leading-relaxed relative z-10 px-2">
-                  "{review.text}"
-                </p>
-                <FaQuoteRight className="absolute -bottom-4 -right-4 text-blue-100 text-3xl opacity-50" />
-              </div>
+          <button
+            className="absolute right-4 md:right-20 top-1/2 -translate-y-1/2 z-30 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg text-slate-400 hover:text-blue-500 hover:scale-110 transition-all hidden md:flex items-center justify-center w-12 h-12 border border-slate-100"
+            onClick={() => swiperRef.current?.slideNext()}
+            aria-label="Next Review"
+          >
+            <FaChevronRight size={20} />
+          </button>
 
-              {/* Name */}
-              <h4 className="text-lg font-bold text-slate-900 mt-auto">
-                {review.name}
-              </h4>
-              <span className="text-sm text-slate-400 font-medium">Verified Customer</span>
-            </div>
-          ))}
+          <Swiper
+            effect={'coverflow'}
+            grabCursor={true}
+            centeredSlides={true}
+            slidesPerView={'auto'}
+            loop={true}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true
+            }}
+            coverflowEffect={{
+              rotate: 0,
+              stretch: 0,
+              depth: 100,
+              modifier: 2.5,
+              slideShadows: false,
+            }}
+            pagination={{ clickable: true, dynamicBullets: true }}
+            modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
+            onBeforeInit={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            className="mySwiper py-4"
+          >
+            {reviewsData.map((review, index) => (
+              <SwiperSlide key={index} className="w-[85%] md:w-[600px] h-auto">
+                {({ isActive }) => (
+                  <div className={`
+                                transition-all duration-300
+                                flex flex-col items-center text-center
+                                bg-white rounded-3xl p-4 md:p-6
+                                border border-slate-100
+                                ${isActive ? 'shadow-2xl scale-100 opacity-100' : 'shadow-sm scale-95 opacity-50 blur-[1px]'}
+                            `}>
+                    {/* Stars */}
+                    <div className="flex gap-1 text-yellow-400 text-lg mb-1">
+                      {[...Array(5)].map((_, i) => (
+                        <FaStar key={i} className={i < review.rating ? "opacity-100" : "opacity-30"} />
+                      ))}
+                    </div>
+
+                    {/* Review Text */}
+                    <p className={`text-slate-700 leading-snug mb-2 font-medium italic ${isActive ? "text-base md:text-lg" : "text-sm"}`}>
+                      "{review.text}"
+                    </p>
+
+                    {/* User Profile (No Divider) */}
+                    <div className="mt-auto flex flex-col items-center">
+                      <div className={`rounded-full p-1 border-2 border-blue-100 mb-1 transition-all duration-300 ${isActive ? "w-12 h-12 border-blue-500 shadow-lg" : "w-10 h-10"}`}>
+                        <img
+                          src={review.imageUrl}
+                          alt={review.name}
+                          className="w-full h-full object-cover rounded-full"
+                        />
+                      </div>
+
+                      <h4 className={`font-bold text-slate-900 transition-all ${isActive ? "text-base" : "text-sm"}`}>
+                        {review.name}
+                      </h4>
+                      <span className="text-xs text-slate-400 font-medium">Verified Customer</span>
+                    </div>
+                  </div>
+                )}
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </section>

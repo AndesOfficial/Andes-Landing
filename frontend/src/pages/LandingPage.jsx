@@ -23,6 +23,7 @@ import { FaStar, FaStarHalfAlt, FaBell, FaClock, FaBox, FaDoorOpen, FaHeadset, F
 import Appsupport from "../components/Appsupport.jsx";
 import FAQ from "../components/Faq.jsx";
 import { Helmet } from "react-helmet-async";
+import MobileStickyBtn from "../components/MobileStickyBtn.jsx";
 
 const bulletPoints1 = [
   { icon: <FaBell className="text-brand-blue text-xl" />, text: "Get notified when your order is ready for pick-up" },
@@ -52,37 +53,37 @@ const LandingPage = () => {
         <meta name="description" content="Welcome to Andes Laundry, your trusted laundry partner in Pune." />
       </Helmet>
 
-      {/* Hero Section */}
-      <div className="bg-brand-blue min-h-screen flex flex-col justify-center relative overflow-hidden pb-16 pt-24 md:pt-32">
+      {/* Hero Section - Compacted for mobile density */}
+      <div className="bg-brand-blue min-h-[80vh] flex flex-col justify-center relative overflow-hidden pb-8 pt-16 md:pt-24">
 
-        <main className="container mx-auto px-4 flex flex-col lg:flex-row items-center relative z-10 gap-12 lg:gap-8">
+        <main className="container mx-auto px-4 flex flex-col lg:flex-row items-center relative z-10 gap-6 lg:gap-8">
           {/* Left Content - Text & Widget */}
           <div className="w-full lg:w-3/5 text-white z-20 flex flex-col items-start text-left lg:pl-20">
-            <div className="mb-8 w-full">
-              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight leading-[1] mb-6">
+            <div className="mb-4 w-full">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-[1] mb-3">
                 Laundry & dry <br /> cleaning with <br /> 24h delivery
               </h1>
 
               {/* Location - Just Yellow Text */}
               <div className="flex items-baseline gap-3">
-                <h2 className="text-yellow-400 font-bold text-3xl md:text-5xl tracking-wide">
+                <h2 className="text-yellow-400 font-bold text-2xl md:text-4xl tracking-wide">
                   Kothrud, Pune
                 </h2>
               </div>
             </div>
 
-            {/* Store links */}
-            <div className="flex flex-row gap-4 mb-10">
+            {/* Store links - Compact */}
+            <div className="flex flex-row gap-3 mb-6">
               <a
                 href="https://play.google.com/store/apps/details?id=com.andes.laundry"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center bg-white text-black px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
+                className="flex items-center bg-white text-black px-3 py-2 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
               >
-                <img src={playstore} alt="Play Store" className="w-8 h-8" />
-                <div className="ml-3 text-left">
-                  <p className="text-[10px] text-gray-600 font-medium leading-none mb-0.5">Get it on</p>
-                  <p className="text-sm font-bold leading-none">Google Play</p>
+                <img src={playstore} alt="Play Store" className="w-6 h-6" />
+                <div className="ml-2 text-left">
+                  <p className="text-[9px] text-gray-600 font-medium leading-none mb-0.5">Get it on</p>
+                  <p className="text-xs font-bold leading-none">Google Play</p>
                 </div>
               </a>
 
@@ -90,62 +91,81 @@ const LandingPage = () => {
                 href="https://apps.apple.com/in/app/andes/id6747010488"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center bg-white text-black px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
+                className="flex items-center bg-white text-black px-3 py-2 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
               >
-                <img src={appstore} alt="App Store" className="w-8 h-8" />
-                <div className="ml-3 text-left">
-                  <p className="text-[10px] text-gray-600 font-medium leading-none mb-0.5">Download on the</p>
-                  <p className="text-sm font-bold leading-none">App Store</p>
+                <img src={appstore} alt="App Store" className="w-6 h-6" />
+                <div className="ml-2 text-left">
+                  <p className="text-[9px] text-gray-600 font-medium leading-none mb-0.5">Download on the</p>
+                  <p className="text-xs font-bold leading-none">App Store</p>
                 </div>
               </a>
             </div>
 
-            {/* Scheduling Widget Mockup */}
-            <div className="bg-white rounded-3xl p-6 shadow-2xl w-full max-w-xl border border-slate-100">
-              <h3 className="text-slate-800 font-semibold mb-4 text-lg">Schedule your collection in <span className="text-brand-blue">Pune</span></h3>
+            {/* Scheduling Widget Mockup - Compact Padding */}
+            <div className="bg-white rounded-3xl p-5 shadow-2xl w-full max-w-xl border border-slate-100">
+              <h3 className="text-slate-800 font-semibold mb-3 text-base">Schedule your collection in <span className="text-brand-blue">Pune</span></h3>
 
-              <div className="flex flex-col sm:flex-row gap-3">
-                <div className="flex-1 border border-gray-100 bg-gray-50/50 rounded-xl p-3 flex items-center justify-between cursor-pointer hover:border-brand-blue hover:bg-white transition-all group">
-                  <div className="flex items-center gap-3">
-                    <FaBolt className="text-xl text-yellow-400" />
+              <div className="flex flex-col sm:flex-row gap-2">
+                <div className="flex-1 border border-gray-100 bg-gray-50/50 rounded-xl p-2 flex items-center justify-between cursor-pointer hover:border-brand-blue hover:bg-white transition-all group">
+                  <div className="flex items-center gap-2">
+                    <FaBolt className="text-lg text-yellow-400" />
                     <div>
-                      <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-0.5">Earliest</p>
-                      <p className="text-slate-800 font-bold text-base group-hover:text-brand-blue transition-colors">12:00 - 15:00</p>
+                      <p className="text-[9px] text-gray-500 font-bold uppercase tracking-wider mb-0.5">Earliest</p>
+                      <p className="text-slate-800 font-bold text-sm group-hover:text-brand-blue transition-colors">12:00 - 15:00</p>
                     </div>
                   </div>
-                  <FaChevronRight className="text-gray-300 font-bold text-sm group-hover:text-brand-blue" />
+                  <FaChevronRight className="text-gray-300 font-bold text-xs group-hover:text-brand-blue" />
                 </div>
 
-                <div className="flex-1 border border-gray-100 bg-gray-50/50 rounded-xl p-3 flex items-center justify-between cursor-pointer hover:border-brand-blue hover:bg-white transition-all group">
-                  <div className="flex items-center gap-3">
-                    <FaMoon className="text-xl text-slate-400" />
+                <div className="flex-1 border border-gray-100 bg-gray-50/50 rounded-xl p-2 flex items-center justify-between cursor-pointer hover:border-brand-blue hover:bg-white transition-all group">
+                  <div className="flex items-center gap-2">
+                    <FaMoon className="text-lg text-slate-400" />
                     <div>
-                      <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-0.5">Last</p>
-                      <p className="text-slate-800 font-bold text-base group-hover:text-brand-blue transition-colors">20:00 - 23:00</p>
+                      <p className="text-[9px] text-gray-500 font-bold uppercase tracking-wider mb-0.5">Last</p>
+                      <p className="text-slate-800 font-bold text-sm group-hover:text-brand-blue transition-colors">20:00 - 23:00</p>
                     </div>
                   </div>
-                  <FaChevronRight className="text-gray-300 font-bold text-sm group-hover:text-brand-blue" />
+                  <FaChevronRight className="text-gray-300 font-bold text-xs group-hover:text-brand-blue" />
                 </div>
               </div>
 
-              <div className="mt-4 text-center">
-                <a href="#" className="text-brand-blue text-sm font-bold hover:underline">See all slots</a>
+              <div className="mt-3 text-center">
+                <a href="#" className="text-brand-blue text-xs font-bold hover:underline">See all slots</a>
               </div>
             </div>
           </div>
 
-          {/* Right Content - Image with Blob */}
-          <div className="w-full lg:w-1/2 flex justify-center relative mt-12 lg:mt-0">
+          {/* Right Content - Image with Blob - Reduced Top Margin */}
+          <div className="w-full lg:w-1/2 flex justify-center relative mt-6 lg:mt-0">
             {/* Blob Background */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-white/20 rounded-full blur-xl -z-10"></div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-blue-400/30 rounded-full blur-2xl -z-20"></div>
 
-            <div className="relative w-full max-w-lg lg:max-w-xl aspect-square flex items-center justify-center">
+            <div className="relative w-full max-w-lg lg:max-w-xl aspect-square flex items-center justify-center group">
               <img
                 src={van}
                 alt="Andes Laundry Van"
-                className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500 relative z-10"
               />
+
+              {/* Floating Trust Badge */}
+              <div className="absolute -bottom-6 -right-4 lg:bottom-10 lg:right-0 bg-white p-4 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/40 backdrop-blur-sm animate-bounce-slow z-20 flex items-center gap-3">
+                <div className="bg-green-100 p-2 rounded-full text-green-600">
+                  <FaStar className="text-xl" />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-800 text-sm leading-tight">4.9/5 Rating</p>
+                  <p className="text-xs text-slate-500 font-medium">from 2k+ happy customers</p>
+                </div>
+              </div>
+
+              {/* 24h Delivery Badge */}
+              <div className="absolute top-0 -left-4 lg:top-10 lg:left-0 bg-white p-3 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/40 backdrop-blur-sm animate-float z-20 flex items-center gap-2">
+                <div className="bg-yellow-100 p-2 rounded-full text-yellow-600">
+                  <FaBolt className="text-lg" />
+                </div>
+                <p className="font-bold text-slate-800 text-xs">24hr Turnaround</p>
+              </div>
             </div>
           </div>
         </main>
@@ -153,14 +173,13 @@ const LandingPage = () => {
 
 
 
-      {/* Features Grid */}
-      {/* Features Grid */}
-      <section className="container mx-auto px-4 py-20 space-y-12">
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      {/* Features Grid - Reduced Padding & Spacing */}
+      <section className="container mx-auto px-4 py-8 space-y-4">
+        <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
           <ServiceFeatures />
         </div>
 
-        <div className="space-y-12">
+        <div className="space-y-4">
           <div className="bg-white p-0 rounded-3xl overflow-hidden shadow-sm border border-gray-100">
             <LaundryService />
           </div>
@@ -173,22 +192,22 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Services Section */}
-      <div className="bg-gray-50 py-20">
+      {/* Services Section - Reduced Padding */}
+      <div className="bg-gray-50 py-8">
         <div className="container mx-auto px-4">
           <Services />
         </div>
       </div>
 
-      <div className="text-center mt-12 bg-white py-12 px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-800">
+      <div className="text-center mt-2 bg-white py-4 px-4">
+        <h2 className="text-2xl md:text-3xl font-bold text-slate-800">
           How it Works
         </h2>
-        <p className="text-slate-500 mt-4 text-lg">Simple steps to get your laundry done</p>
+        <p className="text-slate-500 mt-1 text-base">Simple steps to get your laundry done</p>
       </div>
 
-      {/* Enhanced Feature Rows */}
-      <section className="container mx-auto px-4 py-12 space-y-24">
+      {/* Enhanced Feature Rows - Reduced Spacing */}
+      <section className="container mx-auto px-4 py-6 space-y-8">
         <FeatureLeft
           title="FLEXIBLE SCHEDULING"
           subtitle="1. Schedule Your Collection"
@@ -219,7 +238,7 @@ const LandingPage = () => {
         />
       </section>
 
-      <div className="bg-gray-50 py-20">
+      <div className="bg-gray-50 py-6">
         <CustomerReviews />
       </div>
 
@@ -228,11 +247,12 @@ const LandingPage = () => {
       <BookNow />
       <TeamSection />
 
-      <section className="py-20">
+      <section className="py-6">
         <Appsupport />
       </section>
 
       <FAQ />
+      <MobileStickyBtn />
     </div>
   );
 };
