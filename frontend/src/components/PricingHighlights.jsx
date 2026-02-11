@@ -18,7 +18,7 @@ const PricingHighlights = () => {
         </div>
         <div className="flex flex-col items-center p-4">
           <FaTruck className="text-brand text-3xl mb-2" />
-          <h3 className="font-semibold text-gray-800">Free 48h Delivery</h3>
+          <h3 className="font-semibold text-gray-800">Free 24h Delivery</h3>
           <p className="text-gray-600 text-sm text-center">Fast and reliable</p>
         </div>
         <div className="flex flex-col items-center p-4">
