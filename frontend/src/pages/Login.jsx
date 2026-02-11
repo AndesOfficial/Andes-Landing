@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
@@ -16,11 +16,13 @@ const Login = () => {
 
     const { login, resetPassword, googleSignIn, currentUser } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/dashboard';
 
     const handleGoogleSignIn = async () => {
         try {
             await googleSignIn();
-            navigate('/dashboard');
+            navigate(from, { replace: true });
         } catch (error) {
             setError('Failed to sign in with Google');
         }
@@ -29,9 +31,9 @@ const Login = () => {
 
     useEffect(() => {
         if (currentUser) {
-            navigate('/dashboard');
+            navigate(from, { replace: true });
         }
-    }, [currentUser, navigate]);
+    }, [currentUser, navigate, from]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,7 +57,7 @@ const Login = () => {
             } else {
                 // Handle Login
                 await login(email, password);
-
+                // Navigation handled by useEffect when currentUser changes
             }
         } catch (err) {
             if (showReset) {

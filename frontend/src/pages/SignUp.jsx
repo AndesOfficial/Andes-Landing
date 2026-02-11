@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
@@ -15,11 +15,13 @@ const SignUp = () => {
 
     const { signup, googleSignIn } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/dashboard';
 
     const handleGoogleSignIn = async () => {
         try {
             await googleSignIn();
-            navigate('/dashboard');
+            navigate(from, { replace: true });
         } catch (error) {
             setError('Failed to sign in with Google');
         }
@@ -36,7 +38,7 @@ const SignUp = () => {
         setLoading(true);
         try {
             await signup(name, email, password);
-            navigate('/dashboard'); // Redirect to dashboard after signup
+            navigate(from, { replace: true }); // Redirect to origin or dashboard
         } catch (err) {
             setError('Failed to create an account');
         }

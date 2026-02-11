@@ -1,60 +1,91 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUsers, faMapMarkerAlt, faLeaf } from "@fortawesome/free-solid-svg-icons";
-import vanImage from '../assets/van.png'; // Import the image
+import { FaUsers, FaMapMarkedAlt, FaLeaf, FaCheckCircle } from "react-icons/fa";
+import vanImage from '../assets/van-removebg-preview.png';
+
+const FeatureItem = ({ icon, title, description }) => (
+  <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300 group h-full">
+    <div className="flex items-center gap-4 mb-3">
+      <div className="bg-brand/10 p-3 rounded-xl flex-shrink-0 group-hover:bg-brand group-hover:text-white transition-colors duration-300">
+        <div className="text-xl text-brand group-hover:text-white transition-colors duration-300">
+          {icon}
+        </div>
+      </div>
+      <h3 className="text-lg font-bold text-slate-800">{title}</h3>
+    </div>
+    <p className="text-slate-600 leading-relaxed text-sm">
+      {description}
+    </p>
+  </div>
+);
 
 const WhoWeAre = () => {
   return (
-    <div className="flex flex-col lg:flex-row items-center p-6 lg:p-12 bg-white md:h-screen">
-      {/* Text Section */}
-      <div className="flex-1 mb-6 pt-20 lg:mb-0 lg:mr-10">
-        <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight text-brand">
-          <FontAwesomeIcon icon={faUsers} className="mr-6" />
-          Who We Are ?
-        </h3>
-        <p className="text-base lg:text-lg mb-6 leading-relaxed text-gray-600">
-          Andes is the #1 fastest and safest on-demand laundry service platform.
-          You can schedule a laundry pickup with just a few taps, and we’ll take
-          care of the rest. From pickup to cleaning, ironing, or dry cleaning to
-          delivery – all within 48 hours. Need just ironing? We’ll have your
-          clothes back to you in as fast as 120 minutes. Every service is backed
-          by Andes Assured.
-        </p>
-        {/* Subsection: Current Availability */}
-        <div className="mb-6">
-          <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight text-brand">
-            <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-6" />
-            Currently Available in Pune
-          </h3>
-          <p className="text-sm lg:text-base leading-relaxed text-gray-600">
-            We are an early-stage startup, starting in Pune with a vision to
-            provide convenient, efficient, and reliable laundry services. While
-            we are currently serving Pune, we are actively working to expand to
-            other cities in India and beyond. Stay tuned as we grow and bring
-            our on-demand laundry service to more locations.
-          </p>
-        </div>
-        {/* Subsection: Environmental Protection */}
-        <div className="mb-6">
-          <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight text-brand">
-            <FontAwesomeIcon icon={faLeaf} className="mr-6" />
-            We Protect Our Environment
-          </h3>
-          <p className="text-sm lg:text-base leading-relaxed text-gray-600">
-            Social and environmental sustainability is at the heart of what we
-            do. We are building the largest fleet of electric delivery vehicles
-            and are committed to reducing water, electricity consumption, and
-            the amount of packaging.
-          </p>
-        </div>
-      </div>
+    <div className="bg-slate-50 py-16 lg:py-24 overflow-hidden relative">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-brand/5 to-transparent hidden lg:block"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-blue/5 rounded-full blur-3xl -z-10"></div>
 
-      {/* Image Section */}
-      <div className="flex-1 hidden md:block">
-        <img
-          src={vanImage} // Use the imported image
-          alt="Andes Delivery Van"
-          className="w-full md:max-h md:pt-10 object-cover rounded-lg shadow-lg"
-        />
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+
+          {/* Left Content - Text */}
+          <div className="flex-1 lg:w-1/2 order-2 lg:order-1">
+            <div className="bg-white border border-brand/20 inline-block px-4 py-1.5 rounded-full text-brand font-bold text-sm tracking-wide uppercase mb-6 shadow-sm">
+              About Andes
+            </div>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+              Redefining Laundry in <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-blue">Pune</span>
+            </h2>
+            <p className="text-lg text-slate-600 mb-10 leading-relaxed font-medium">
+              Andes is the fastest and safest on-demand laundry platform. We combine technology with premium care to give you back your free time.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+              <div className="md:col-span-2">
+                <FeatureItem
+                  icon={<FaUsers />}
+                  title="Who We Are"
+                  description="We handle everything from pickup to cleaning, ironing, and delivery within 48 hours. Need it faster? Our express ironing service takes just 120 minutes."
+                />
+              </div>
+              <FeatureItem
+                icon={<FaMapMarkedAlt />}
+                title="Available in Pune"
+                description="Starting in Pune with a vision to expand across India. Dedicated to convenient local service."
+              />
+              <FeatureItem
+                icon={<FaLeaf />}
+                title="Eco-Friendly"
+                description="Building a fleet of electric vehicles and using sustainable practices to reduce our footprint."
+              />
+            </div>
+          </div>
+
+          {/* Right Content - Image */}
+          <div className="flex-1 lg:w-1/2 relative flex justify-center lg:justify-end order-1 lg:order-2 w-full">
+            {/* Background Blob - Adjusted for Mobile */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-brand/20 to-brand-blue/5 rounded-full blur-3xl opacity-70 -z-10 animate-pulse-slow"></div>
+
+            <div className="relative z-10 w-full max-w-lg mx-auto lg:mx-0">
+              <img
+                src={vanImage}
+                alt="Andes Delivery Van"
+                className="w-full drop-shadow-2xl hover:scale-105 transition-transform duration-500 ease-in-out"
+              />
+
+              {/* Floating Stat Card */}
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:-left-6 bg-white p-4 lg:p-6 rounded-2xl shadow-xl border border-slate-100 w-max animate-float flex items-center gap-4">
+                <div className="bg-green-100 p-2 rounded-full text-green-600">
+                  <FaCheckCircle className="text-xl" />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-800 text-sm lg:text-base">Verified Quality</p>
+                  <p className="text-slate-500 text-xs hidden sm:block">Premium care guaranteed.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   );

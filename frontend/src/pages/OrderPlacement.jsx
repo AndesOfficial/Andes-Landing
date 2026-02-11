@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useOrder } from '../context/OrderContext';
+import { useAuth } from '../context/AuthContext';
 import Button from '../components/common/Button';
 import { FaTshirt, FaCalendarAlt, FaCheck, FaTruck, FaArrowLeft, FaTrash, FaMinus, FaPlus } from 'react-icons/fa';
 
@@ -20,6 +21,15 @@ const OrderPlacement = () => {
     const [loading, setLoading] = useState(false);
     const [selectedSlot, setSelectedSlot] = useState(null);
     const navigate = useNavigate();
+    const { currentUser } = useAuth();
+
+    const handleProceedToSchedule = () => {
+        if (!currentUser) {
+            navigate('/login', { state: { from: '/order' } });
+            return;
+        }
+        setStep(2);
+    };
 
     // checking what's in the cart for debugging
     console.log("Current Cart Items:", cart);
@@ -151,7 +161,7 @@ const OrderPlacement = () => {
                                 <Link to="/services" className="px-6 py-3 border border-gray-200 rounded-xl font-semibold text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all">
                                     Add More
                                 </Link>
-                                <button onClick={() => setStep(2)} className="px-8 py-3 rounded-xl font-bold bg-brand text-white hover:bg-brand-dark shadow-lg hover:shadow-brand/30 transition-all">
+                                <button onClick={handleProceedToSchedule} className="px-8 py-3 rounded-xl font-bold bg-brand text-white hover:bg-brand-dark shadow-lg hover:shadow-brand/30 transition-all">
                                     Proceed to Schedule
                                 </button>
                             </div>

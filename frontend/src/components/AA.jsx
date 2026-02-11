@@ -3,7 +3,7 @@ import { FaCheckCircle, FaShippingFast, FaShieldAlt, FaLeaf } from 'react-icons/
 const AndesAssured = () => {
   return (
     <div className="bg-brand py-12 mt-9">
-      <div className="container mx-auto px-6 md:px-12 md:pt-24 md:pb-24">
+      <div className="container mx-auto px-6 md:px-12 md:pt-12 md:pb-12">
         <h1 className="text-4xl font-bold text-center text-white mb-12">
           why andes only?
         </h1>
@@ -49,9 +49,9 @@ const AndesAssured = () => {
             </p>
           </div>
         </div>
-        <div className="text-center mt-20">
+        <div className="text-center mt-8">
           <h2 className="text-xl md:text-2xl font-serif text-white">
-            &quot;Got your clothes dirty? Andes now!&quot;
+            &quot;Quality laundry, delivered in hours.&quot;
           </h2>
         </div>
       </div>

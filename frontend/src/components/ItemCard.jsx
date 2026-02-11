@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { Link } from 'react-router-dom';
 const ItemCard = ({
   title,
   price,
@@ -39,9 +40,11 @@ const ItemCard = ({
         <span className="text-xs text-gray-400 block font-medium">Starting from</span>
         <span className="text-xl font-black text-gray-900">₹{price}</span>
       </div>
-      <button className="text-white font-bold text-sm bg-brand px-5 py-2.5 rounded-xl shadow-lg shadow-brand/20 hover:shadow-brand/30 hover:bg-brand-dark active:scale-95 transition-all">
-        Book Now
-      </button>
+      <Link to="/order" className="w-full md:w-auto">
+        <button className="text-white font-bold text-sm bg-brand px-5 py-2.5 rounded-xl shadow-lg shadow-brand/20 hover:shadow-brand/30 hover:bg-brand-dark active:scale-95 transition-all whitespace-nowrap w-full md:w-auto">
+          Book Now
+        </button>
+      </Link>
     </div>
   </div>
 );

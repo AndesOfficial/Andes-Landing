@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
 // import useTypewriter from "../hooks/useTypewriter";
-import van from "../assets/van.png"; // Import the van image
+import van from "../assets/van-removebg-preview.png"; // Import the van image
 import LaundryService from "../components/LaundryService.jsx";
 import LaundryStatus from "../components/LaundryStatus.jsx";
 import CustomerSupport from "../components/CustomerSupport.jsx";
@@ -133,22 +134,24 @@ const LandingPage = () => {
               </div>
 
               <div className="mt-4 text-center">
-                <a href="#" className="text-brand font-bold text-sm hover:underline hover:text-brand-dark transition-colors duration-300 ease-in-out">See all slots</a>
+                <Link to="/order" className="text-brand font-bold text-sm hover:underline hover:text-brand-dark transition-colors duration-300 ease-in-out">See all slots</Link>
               </div>
             </div>
           </div>
 
           {/* Right Content - Image with Blob */}
           <div className="w-full lg:w-1/2 flex justify-center relative mt-12 lg:mt-0">
-            {/* Blob Backgrounds */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-brand/20 rounded-full blur-3xl -z-10 animate-pulse"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-blue-400/10 rounded-full blur-2xl -z-20"></div>
+            {/* Blob Backgrounds Removed */}
 
             <div className="relative w-full max-w-lg lg:max-w-xl aspect-square flex items-center justify-center group perspective-1000">
               <img
                 src={van}
                 alt="Andes Laundry Van"
-                className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500 relative z-10"
+                style={{
+                  maskImage: 'radial-gradient(circle, black 50%, transparent 100%)',
+                  WebkitMaskImage: 'radial-gradient(circle, black 50%, transparent 100%)',
+                  mixBlendMode: 'lighten'
+                }}
               />
 
               {/* Floating Trust Badge */}

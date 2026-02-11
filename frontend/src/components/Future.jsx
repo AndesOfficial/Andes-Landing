@@ -6,7 +6,7 @@ const Future = () => {
   };
 
   return (
-    <div className="bg-brand flex items-center justify-center min-h-screen p-6">
+    <div className="bg-brand flex items-center justify-center py-12 px-6">
       <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-12 max-w-6xl">
         <div className="relative w-full md:w-1/2">
           <div className="overflow-hidden rounded-full md:rounded-xl">

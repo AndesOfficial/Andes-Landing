@@ -10,20 +10,20 @@ const WorkWithUs = () => {
       title: "Cleaning partners",
       description: "Want to grow your customer base completely hassle free?",
       linkText: "Learn more",
-      href: "#",
+      href: "mailto:care@andes.co.in",
     },
     {
       title: "Partner drivers",
       description: "Get flexible slots and fair, competitive fees.",
       linkText: "Learn more",
-      href: "#",
+      href: "mailto:care@andes.co.in",
     },
     {
       title: "Hotel partnerships",
       description:
         "Offer laundry, ironing & dry cleaning services to your guests.",
       linkText: "Learn more",
-      href: "#",
+      href: "mailto:care@andes.co.in",
     },
   ];
 

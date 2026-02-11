@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import scheduleImage from "../assets/Schedule.jpeg"; // Adjust the path according to your setup
+import logo from "../assets/logo.png";
 
 const Schedule = () => {
   return (
@@ -8,11 +8,11 @@ const Schedule = () => {
       <div className="flex flex-col md:flex-row items-center md:space-x-12 max-w-5xl mx-auto">
         {/* Image Section */}
         <div className="flex-shrink-0 mb-8 md:mb-0">
-          <div className="w-64 h-64 bg-cover bg-center rounded-tl-[120px] rounded-tr-[120px] rounded-bl-[120px] rounded-br-[120px] overflow-hidden">
+          <div className="w-64 h-64 flex items-center justify-center">
             <img
-              src={scheduleImage}
-              alt="Schedule your pickup"
-              className="w-full h-full object-cover"
+              src={logo}
+              alt="Andes Logo"
+              className="w-full h-full object-contain"
             />
           </div>
         </div>
@@ -25,7 +25,7 @@ const Schedule = () => {
           <p className="text-lg text-brand mb-6">
             Schedule a pickup and get your clothes cleaned in no time!
           </p>
-          <Link to="/schedule-pickup">
+          <Link to="/services">
             <button
               className="inline-block bg-white text-brand font-semibold py-3 px-6 rounded-md shadow-lg hover:bg-brand/10 transition-colors"
             >
