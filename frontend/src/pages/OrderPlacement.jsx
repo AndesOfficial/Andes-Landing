@@ -57,14 +57,14 @@ const OrderPlacement = () => {
             <div className="min-h-screen bg-gray-50 pt-32 pb-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-2xl mx-auto text-center">
                     <div className="bg-white rounded-2xl shadow-sm p-12">
-                        <div className="mb-6 bg-indigo-50 w-24 h-24 rounded-full flex items-center justify-center mx-auto">
-                            <FaTshirt className="text-4xl text-indigo-300" />
+                        <div className="mb-6 bg-brand/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto">
+                            <FaTshirt className="text-4xl text-brand/50" />
                         </div>
                         <h2 className="text-3xl font-bold text-gray-900 mb-4">Your Cart is Empty</h2>
                         <p className="text-gray-500 mb-8 text-lg">Looks like you haven't added any services yet.</p>
                         <Link
                             to="/services"
-                            className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition-all hover:shadow-lg hover:-translate-y-1"
+                            className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-brand hover:bg-brand-dark transition-all hover:shadow-lg hover:-translate-y-1"
                         >
                             Browse Services
                         </Link>
@@ -86,15 +86,15 @@ const OrderPlacement = () => {
 
                 <div className="flex justify-center mb-12">
                     <div className="flex items-center space-x-4">
-                        <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold transition-all ${step >= 1 ? 'bg-indigo-600 text-white shadow-lg' : 'bg-gray-200 text-gray-500'}`}>1</div>
+                        <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold transition-all ${step >= 1 ? 'bg-brand text-white shadow-lg' : 'bg-gray-200 text-gray-500'}`}>1</div>
                         <div className="w-16 h-1 bg-gray-200 rounded-full overflow-hidden">
-                            <div className={`h-full bg-indigo-600 transition-all duration-500 ${step >= 2 ? 'w-full' : 'w-0'}`}></div>
+                            <div className={`h-full bg-brand transition-all duration-500 ${step >= 2 ? 'w-full' : 'w-0'}`}></div>
                         </div>
-                        <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold transition-all ${step >= 2 ? 'bg-indigo-600 text-white shadow-lg' : 'bg-gray-200 text-gray-500'}`}>2</div>
+                        <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold transition-all ${step >= 2 ? 'bg-brand text-white shadow-lg' : 'bg-gray-200 text-gray-500'}`}>2</div>
                         <div className="w-16 h-1 bg-gray-200 rounded-full overflow-hidden">
-                            <div className={`h-full bg-indigo-600 transition-all duration-500 ${step >= 3 ? 'w-full' : 'w-0'}`}></div>
+                            <div className={`h-full bg-brand transition-all duration-500 ${step >= 3 ? 'w-full' : 'w-0'}`}></div>
                         </div>
-                        <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold transition-all ${step >= 3 ? 'bg-indigo-600 text-white shadow-lg' : 'bg-gray-200 text-gray-500'}`}>3</div>
+                        <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold transition-all ${step >= 3 ? 'bg-brand text-white shadow-lg' : 'bg-gray-200 text-gray-500'}`}>3</div>
                     </div>
                 </div>
 
@@ -104,7 +104,7 @@ const OrderPlacement = () => {
 
                         <div className="space-y-6 mb-8">
                             {cart.map((item) => (
-                                <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between p-4 border border-gray-100 rounded-xl hover:border-indigo-100 transition-colors bg-gray-50/50">
+                                <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between p-4 border border-gray-100 rounded-xl hover:border-brand/20 transition-colors bg-gray-50/50">
                                     <div className="flex items-center w-full sm:w-auto mb-4 sm:mb-0">
                                         <div className="h-16 w-16 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
                                             {item.image ? (
@@ -127,7 +127,7 @@ const OrderPlacement = () => {
                                                 <FaMinus size={10} />
                                             </button>
                                             <span className="px-3 font-medium text-gray-900">{item.quantity}</span>
-                                            <button onClick={() => handleIncrement(item)} className="px-3 py-1 hover:bg-gray-50 text-indigo-600">
+                                            <button onClick={() => handleIncrement(item)} className="px-3 py-1 hover:bg-gray-50 text-brand">
                                                 <FaPlus size={10} />
                                             </button>
                                         </div>
@@ -145,13 +145,13 @@ const OrderPlacement = () => {
                         <div className="flex flex-col sm:flex-row justify-between items-center pt-6 border-t border-gray-100">
                             <div className="mb-4 sm:mb-0 text-center sm:text-left">
                                 <span className="text-gray-500 text-sm block">Subtotal</span>
-                                <span className="text-3xl font-black text-indigo-600">₹{totalPrice.toFixed(2)}</span>
+                                <span className="text-3xl font-black text-brand">₹{totalPrice.toFixed(2)}</span>
                             </div>
                             <div className="flex space-x-4">
                                 <Link to="/services" className="px-6 py-3 border border-gray-200 rounded-xl font-semibold text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all">
                                     Add More
                                 </Link>
-                                <button onClick={() => setStep(2)} className="px-8 py-3 rounded-xl font-bold bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-indigo-500/30 transition-all">
+                                <button onClick={() => setStep(2)} className="px-8 py-3 rounded-xl font-bold bg-brand text-white hover:bg-brand-dark shadow-lg hover:shadow-brand/30 transition-all">
                                     Proceed to Schedule
                                 </button>
                             </div>
@@ -167,23 +167,23 @@ const OrderPlacement = () => {
                             <label className="block text-sm font-semibold text-slate-700 uppercase tracking-wide">Tomorrow</label>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div
-                                    className={`relative border-2 rounded-xl p-5 cursor-pointer transition-all ${selectedSlot === 'morning' ? 'border-indigo-500 bg-indigo-50 ring-1 ring-indigo-500' : 'border-gray-100 hover:border-gray-300'}`}
+                                    className={`relative border-2 rounded-xl p-5 cursor-pointer transition-all ${selectedSlot === 'morning' ? 'border-brand bg-brand/10 ring-1 ring-brand' : 'border-gray-100 hover:border-gray-300 hover:bg-gray-50'}`}
                                     onClick={() => setSelectedSlot('morning')}
                                 >
                                     <div className="flex items-center justify-between mb-1">
                                         <span className="font-bold text-slate-900">Morning</span>
-                                        {selectedSlot === 'morning' && <FaCheck className="text-indigo-600" />}
+                                        {selectedSlot === 'morning' && <FaCheck className="text-brand" />}
                                     </div>
                                     <div className="text-sm text-slate-500">9:00 AM - 12:00 PM</div>
                                 </div>
 
                                 <div
-                                    className={`relative border-2 rounded-xl p-5 cursor-pointer transition-all ${selectedSlot === 'afternoon' ? 'border-indigo-500 bg-indigo-50 ring-1 ring-indigo-500' : 'border-gray-100 hover:border-gray-300'}`}
+                                    className={`relative border-2 rounded-xl p-5 cursor-pointer transition-all ${selectedSlot === 'afternoon' ? 'border-brand bg-brand/10 ring-1 ring-brand' : 'border-gray-100 hover:border-gray-300 hover:bg-gray-50'}`}
                                     onClick={() => setSelectedSlot('afternoon')}
                                 >
                                     <div className="flex items-center justify-between mb-1">
                                         <span className="font-bold text-slate-900">Afternoon</span>
-                                        {selectedSlot === 'afternoon' && <FaCheck className="text-indigo-600" />}
+                                        {selectedSlot === 'afternoon' && <FaCheck className="text-brand" />}
                                     </div>
                                     <div className="text-sm text-slate-500">2:00 PM - 5:00 PM</div>
                                 </div>
@@ -197,7 +197,7 @@ const OrderPlacement = () => {
                             <button
                                 onClick={() => setStep(3)}
                                 disabled={!selectedSlot}
-                                className={`px-8 py-3 rounded-xl font-bold transition-all ${!selectedSlot ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg'}`}
+                                className={`px-8 py-3 rounded-xl font-bold transition-all ${!selectedSlot ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-brand text-white hover:bg-brand-dark shadow-lg'}`}
                             >
                                 Review Order
                             </button>
@@ -213,14 +213,14 @@ const OrderPlacement = () => {
                             <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200">
                                 <div className="flex items-center">
                                     <div className="bg-white p-2 rounded-lg shadow-sm mr-3">
-                                        <FaTruck className="text-indigo-600" />
+                                        <FaTruck className="text-brand" />
                                     </div>
                                     <div>
                                         <p className="font-bold text-slate-900">Pickup Tomorrow</p>
                                         <p className="text-sm text-slate-500">{selectedSlot === 'morning' ? '9:00 AM - 12:00 PM' : '2:00 PM - 5:00 PM'}</p>
                                     </div>
                                 </div>
-                                <button onClick={() => setStep(2)} className="text-xs text-indigo-600 font-bold hover:underline">CHANGE</button>
+                                <button onClick={() => setStep(2)} className="text-xs text-brand font-bold hover:underline">CHANGE</button>
                             </div>
 
                             <div className="space-y-3">
@@ -237,7 +237,7 @@ const OrderPlacement = () => {
 
                             <div className="mt-4 pt-4 border-t border-gray-200 flex justify-between items-center">
                                 <span className="font-bold text-slate-700">Total To Pay</span>
-                                <span className="text-xl font-black text-indigo-600">₹{totalPrice.toFixed(2)}</span>
+                                <span className="text-xl font-black text-brand">₹{totalPrice.toFixed(2)}</span>
                             </div>
                         </div>
 
@@ -245,7 +245,7 @@ const OrderPlacement = () => {
                             <button onClick={() => setStep(2)} className="px-6 py-2 text-slate-500 font-medium hover:text-slate-800">
                                 Back
                             </button>
-                            <Button onClick={handlePlaceOrder} isLoading={loading} className="w-full sm:w-auto px-8 py-3 rounded-xl font-bold bg-indigo-600 text-white hover:bg-indigo-700 shadow-xl hover:shadow-indigo-500/30">
+                            <Button onClick={handlePlaceOrder} isLoading={loading} className="w-full sm:w-auto px-8 py-3 rounded-xl font-bold bg-brand text-white hover:bg-brand-dark shadow-xl hover:shadow-brand/30">
                                 Confirm Pickup
                             </Button>
                         </div>

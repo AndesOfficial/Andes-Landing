@@ -40,7 +40,7 @@ const WorkWithUs = () => {
                 {item.title}
               </h3>
               <p className="text-gray-600 mb-4">{item.description}</p>
-              <a href={item.href} className="text-blue-600 hover:underline">
+              <a href={item.href} className="text-brand hover:underline">
                 {item.linkText}
               </a>
             </div>

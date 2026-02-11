@@ -36,7 +36,7 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
     <>
       <nav className={`fixed w-full top-0 z-[100] transition-all duration-300 ${(isScrolled || isOpen)
         ? "bg-white/90 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.03)] border-b border-white/20 py-2"
-        : (isLanding ? "bg-transparent py-4" : "bg-brand-blue py-4")
+        : (isLanding ? "bg-transparent py-4" : "bg-brand py-4")
         }`}>
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
@@ -54,22 +54,22 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
 
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/working"
-                className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand-blue" : "text-white hover:text-yellow-300"} ${isActive("/working") ? "font-bold" : ""}`}
+                className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/working") ? "font-bold" : ""}`}
               >
                 How it works
               </Link>
               <Link to="/services"
-                className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand-blue" : "text-white hover:text-yellow-300"} ${isActive("/services") ? "font-bold" : ""}`}
+                className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/services") ? "font-bold" : ""}`}
               >
                 Services & Pricing
               </Link>
               <Link to="/andes-assured"
-                className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand-blue" : "text-white hover:text-yellow-300"} ${isActive("/andes-assured") ? "font-bold" : ""}`}
+                className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/andes-assured") ? "font-bold" : ""}`}
               >
                 Andes Assured
               </Link>
               <Link to="/about"
-                className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand-blue" : "text-white hover:text-yellow-300"} ${isActive("/about") ? "font-bold" : ""}`}
+                className={`transition-colors duration-300 font-medium text-lg ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/about") ? "font-bold" : ""}`}
               >
                 About us
               </Link>
@@ -81,7 +81,7 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
                 <>
                   {/* Cart Icon */}
                   <Link to="/order" title="Cart" className="relative group p-1">
-                    <FaShoppingCart className={`text-2xl transition-colors duration-300 ${(isScrolled || isOpen) ? "text-gray-700 group-hover:text-brand-blue" : "text-white group-hover:text-yellow-300"}`} />
+                    <FaShoppingCart className={`text-2xl transition-colors duration-300 ${(isScrolled || isOpen) ? "text-gray-700 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
                     {totalItems > 0 && (
                       <span className="absolute -top-2 -right-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none text-white bg-red-600 rounded-full border-2 border-white">
                         {totalItems}
@@ -91,25 +91,25 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
 
                   {/* Dashboard / User Icon */}
                   <Link to="/dashboard" title="Dashboard" className="group p-1">
-                    <FaUser className={`text-2xl transition-colors duration-300 ${(isScrolled || isOpen) ? "text-gray-700 group-hover:text-brand-blue" : "text-white group-hover:text-yellow-300"}`} />
+                    <FaUser className={`text-2xl transition-colors duration-300 ${(isScrolled || isOpen) ? "text-gray-700 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
                   </Link>
 
                   {/* Logout Icon */}
                   <button onClick={logout} title="Logout" className="group p-1">
-                    <FaSignOutAlt className={`text-2xl transition-colors duration-300 ${(isScrolled || isOpen) ? "text-gray-700 group-hover:text-brand-blue" : "text-white group-hover:text-yellow-300"}`} />
+                    <FaSignOutAlt className={`text-2xl transition-colors duration-300 ${(isScrolled || isOpen) ? "text-gray-700 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
                   </button>
                 </>
               ) : (
                 <>
                   <Link
                     to="/login"
-                    className={`font-medium text-lg transition-colors ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand-blue" : "text-white hover:text-yellow-300"}`}
+                    className={`font-medium text-lg transition-colors ${(isScrolled || isOpen) ? "text-gray-700 hover:text-brand" : "text-white hover:text-yellow-300"}`}
                   >
                     Log In
                   </Link>
                   <Link
                     to="/signup"
-                    className="bg-white text-brand-blue px-7 py-2.5 rounded hover:bg-gray-100 transition duration-300 flex items-center space-x-2 text-lg shadow-md font-bold"
+                    className="bg-white text-brand px-7 py-2.5 rounded hover:bg-gray-100 transition duration-300 flex items-center space-x-2 text-lg shadow-md font-bold"
                   >
                     <span>Sign Up</span>
                   </Link>
@@ -121,7 +121,7 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
             <div className="md:hidden z-50 relative">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`${(isScrolled || isOpen) ? "text-slate-800" : "text-white"} hover:text-brand-blue focus:outline-none p-2 transition-colors duration-300`}
+                className={`${(isScrolled || isOpen) ? "text-slate-800" : "text-white"} hover:text-brand focus:outline-none p-2 transition-colors duration-300`}
               >
                 <svg
                   className="h-8 w-8"
@@ -146,27 +146,27 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
         <div className="flex flex-col space-y-6 text-center w-full px-8">
           <Link to="/working"
             onClick={closeMenu}
-            className="text-2xl font-bold text-slate-800 hover:text-brand-blue transition-colors"
+            className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
           >
             How it works
           </Link>
           <Link to="/services"
             onClick={closeMenu}
-            className="text-2xl font-bold text-slate-800 hover:text-brand-blue transition-colors"
+            className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
           >
             Services & Pricing
           </Link>
 
           <Link to="/andes-assured"
             onClick={closeMenu}
-            className="text-2xl font-bold text-slate-800 hover:text-brand-blue transition-colors"
+            className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
           >
             Andes Assured
           </Link>
 
           <Link to="/about"
             onClick={closeMenu}
-            className="text-2xl font-bold text-slate-800 hover:text-brand-blue transition-colors"
+            className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
           >
             About us
           </Link>
@@ -179,14 +179,14 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
               <Link
                 to="/dashboard"
                 onClick={closeMenu}
-                className="text-xl font-semibold text-slate-700 hover:text-brand-blue"
+                className="text-xl font-semibold text-slate-700 hover:text-brand"
               >
                 Dashboard
               </Link>
               <Link
                 to="/order"
                 onClick={closeMenu}
-                className="bg-brand-blue text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-blue-700 transition-all"
+                className="bg-brand text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-brand-dark transition-all"
               >
                 New Order
               </Link>
@@ -202,14 +202,14 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
               <Link
                 to="/login"
                 onClick={closeMenu}
-                className="text-xl font-semibold text-slate-700 hover:text-brand-blue"
+                className="text-xl font-semibold text-slate-700 hover:text-brand"
               >
                 Log In
               </Link>
               <Link
                 to="/signup"
                 onClick={closeMenu}
-                className="bg-brand-blue text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-blue-700 transition-all"
+                className="bg-brand text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-brand-dark transition-all"
               >
                 Sign Up Free
               </Link>

@@ -146,7 +146,7 @@ const Login = () => {
                                         setError('');
                                         setMessage('');
                                     }}
-                                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                                    className="font-medium text-brand hover:text-brand-dark"
                                 >
                                     Forgot your password?
                                 </button>
@@ -184,7 +184,7 @@ const Login = () => {
                         <div className="text-center">
                             <p className="text-sm text-slate-600">
                                 Don't have an account?{' '}
-                                <Link to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
+                                <Link to="/signup" className="font-medium text-brand hover:text-brand-dark transition-colors">
                                     Sign up
                                 </Link>
                             </p>

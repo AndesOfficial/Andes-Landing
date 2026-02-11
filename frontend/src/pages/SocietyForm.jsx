@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {Helmet} from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 const SocietyForm = () => {
   const [society, setSociety] = useState("");
   const [wingHouseNumber, setWingHouseNumber] = useState("");
@@ -21,7 +21,7 @@ const SocietyForm = () => {
       navigate('/');
     } catch (error) {
       console.error("There was an error submitting the form!", error);
-      
+
       // Show toast notification on error
       toast.error("Failed to submit the form. Please try again.");
     }
@@ -33,7 +33,7 @@ const SocietyForm = () => {
         <title>Andes Laundry - Society Form</title>
         <meta name="description" content="Submit your society details to join Andes Laundry." />
       </Helmet>
-      <div className="flex flex-col md:flex-row justify-center items-center min-h-screen bg-blue-100">
+      <div className="flex flex-col md:flex-row justify-center items-center min-h-screen bg-brand/5">
         <div className="md:w-1/2 w-full p-6 mt-16 md:ml-36">
           <form
             onSubmit={handleSubmit}
@@ -50,7 +50,7 @@ const SocietyForm = () => {
                 id="society"
                 value={society}
                 onChange={(e) => setSociety(e.target.value)}
-                className="mt-2 block w-full px-4 py-3 text-lg bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-2 block w-full px-4 py-3 text-lg bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand focus:border-brand"
                 required
               >
                 <option value="" disabled>
@@ -73,7 +73,7 @@ const SocietyForm = () => {
                 id="wingHouseNumber"
                 value={wingHouseNumber}
                 onChange={(e) => setWingHouseNumber(e.target.value)}
-                className="mt-2 block w-full px-4 py-3 text-lg border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-2 block w-full px-4 py-3 text-lg border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand focus:border-brand"
                 placeholder="e.g., B-201"
                 required
               />
@@ -91,7 +91,7 @@ const SocietyForm = () => {
                 id="phoneNumber"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className="mt-2 block w-full px-4 py-3 text-lg border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-2 block w-full px-4 py-3 text-lg border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand focus:border-brand"
                 placeholder="e.g., 1234567890"
                 required
               />
@@ -100,7 +100,7 @@ const SocietyForm = () => {
             <div>
               <button
                 type="submit"
-                className="w-full px-4 py-3 text-lg font-semibold bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 text-lg font-semibold bg-brand text-white rounded-md shadow-sm hover:bg-brand-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand"
               >
                 Submit
               </button>
@@ -115,7 +115,7 @@ const SocietyForm = () => {
             className="max-w-full h-auto rounded-lg shadow-lg"
           />
         </div>
-        
+
         {/* Toast Container */}
         <ToastContainer />
       </div>

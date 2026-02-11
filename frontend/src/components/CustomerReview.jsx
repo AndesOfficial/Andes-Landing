@@ -21,7 +21,7 @@ const CustomerReviews = () => {
 
         {/* Header */}
         <div className="text-center mb-6 relative z-10">
-          <FaQuoteLeft className="text-4xl text-blue-200 mx-auto mb-2 opacity-50" />
+          <FaQuoteLeft className="text-4xl text-brand/30 mx-auto mb-2 opacity-50" />
           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
             Loved by Locals
           </h2>
@@ -35,7 +35,7 @@ const CustomerReviews = () => {
 
           {/* Custom Navigation Buttons */}
           <button
-            className="absolute left-4 md:left-20 top-1/2 -translate-y-1/2 z-30 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg text-slate-400 hover:text-blue-500 hover:scale-110 transition-all hidden md:flex items-center justify-center w-12 h-12 border border-slate-100"
+            className="absolute left-4 md:left-20 top-1/2 -translate-y-1/2 z-30 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg text-slate-400 hover:text-brand hover:scale-110 transition-all hidden md:flex items-center justify-center w-12 h-12 border border-slate-100"
             onClick={() => swiperRef.current?.slidePrev()}
             aria-label="Previous Review"
           >
@@ -43,7 +43,7 @@ const CustomerReviews = () => {
           </button>
 
           <button
-            className="absolute right-4 md:right-20 top-1/2 -translate-y-1/2 z-30 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg text-slate-400 hover:text-blue-500 hover:scale-110 transition-all hidden md:flex items-center justify-center w-12 h-12 border border-slate-100"
+            className="absolute right-4 md:right-20 top-1/2 -translate-y-1/2 z-30 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg text-slate-400 hover:text-brand hover:scale-110 transition-all hidden md:flex items-center justify-center w-12 h-12 border border-slate-100"
             onClick={() => swiperRef.current?.slideNext()}
             aria-label="Next Review"
           >
@@ -99,7 +99,7 @@ const CustomerReviews = () => {
 
                     {/* User Profile (No Divider) */}
                     <div className="mt-auto flex flex-col items-center">
-                      <div className={`rounded-full p-1 border-2 border-blue-100 mb-1 transition-all duration-300 ${isActive ? "w-12 h-12 border-blue-500 shadow-lg" : "w-10 h-10"}`}>
+                      <div className={`rounded-full p-1 border-2 border-brand/20 mb-1 transition-all duration-300 ${isActive ? "w-12 h-12 border-brand shadow-lg" : "w-10 h-10"}`}>
                         <img
                           src={review.imageUrl}
                           alt={review.name}

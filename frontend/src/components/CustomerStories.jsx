@@ -1,8 +1,10 @@
 import React from "react";
+import { FaStar } from "react-icons/fa";
 
 const CustomerStories = () => {
   const stories = [
     {
+      id: 1,
       title: "Priya's Experience",
       tags: ["Express Service", "Fabric Care Expert", "Monthly Package"],
       description:
@@ -12,6 +14,7 @@ const CustomerStories = () => {
       location: "Mumbai, Maharashtra",
     },
     {
+      id: 2,
       title: "Rahul's Journey",
       tags: ["Premium Dry Clean", "Door-Step Pickup", "Quality Service"],
       description:
@@ -21,6 +24,7 @@ const CustomerStories = () => {
       location: "Bangalore, Karnataka",
     },
     {
+      id: 3,
       title: "Anjali's Story",
       tags: ["Student Discount", "Quick Service", "Affordable"],
       description:
@@ -38,47 +42,46 @@ const CustomerStories = () => {
   return (
     <section className="bg-gradient-to-b from-yellow-100 to-yellow-200 py-16">
       <div className="container mx-auto px-4">
-        <h2 className="text-center text-4xl font-bold mb-12 text-blue-900">
-          हमारे खुश ग्राहक | Our Happy Customers
+        <h2 className="text-center text-4xl font-bold mb-12 text-slate-900">
+          Customer Stories
         </h2>
-        <div className="flex flex-wrap justify-center gap-8">
-          {stories.map((story, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {stories.map((story) => (
             <div
-              key={index}
-              className="bg-white rounded-xl shadow-xl p-8 w-96 transform hover:scale-105 transition-transform duration-300"
+              key={story.id}
+              className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
-              <div className="flex justify-center mb-6">
-                <div className="w-32 h-32 bg-cover bg-center rounded-full border-4 border-yellow-300 overflow-hidden">
-                  <img
-                    src={story.image}
-                    alt={`${story.title} image`}
-                    className="w-full h-full object-cover"
-                  />
+              <div className="flex items-center mb-4">
+                <img
+                  src={story.image}
+                  alt={story.name}
+                  className="w-16 h-16 rounded-full mr-4 object-cover"
+                />
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">{story.title}</h3>
+                  <p className="text-gray-500 text-sm">{story.location}</p>
                 </div>
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-center text-blue-900">
-                {story.title}
-              </h3>
-              <div className="text-center text-yellow-500 mb-3">
-                {renderStars(story.rating)}
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex text-yellow-500">
+                  {[...Array(story.rating)].map((_, i) => (
+                    <FaStar key={i} />
+                  ))}
+                </div>
               </div>
-              <p className="text-gray-500 text-sm text-center mb-3">
-                {story.location}
-              </p>
-              <div className="flex flex-wrap justify-center mb-4 gap-2">
-                {story.tags.map((tag, index) => (
+              <div className="flex flex-wrap gap-2 mb-4">
+                {story.tags && story.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="bg-blue-100 text-blue-800 px-3 py-1 text-sm rounded-full font-medium"
+                    className="bg-brand/10 text-brand-dark px-3 py-1 text-sm rounded-full font-medium"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
-              <p className="text-gray-700 mb-6 text-center leading-relaxed">
+              <p className="text-gray-700 text-center leading-relaxed">
                 {story.description}
               </p>
-           
             </div>
           ))}
         </div>

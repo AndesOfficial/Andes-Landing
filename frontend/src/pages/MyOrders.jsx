@@ -65,7 +65,7 @@ const MyOrders = () => {
                 <h1 className="text-3xl font-extrabold text-gray-900">My Orders</h1>
                 <div className="flex gap-2">
                     <button className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">Filter</button>
-                    <button className="px-4 py-2 bg-blue-600 rounded-lg text-sm font-medium text-white hover:bg-blue-700">New Order</button>
+                    <button className="px-4 py-2 bg-brand rounded-lg text-sm font-medium text-white hover:bg-brand-dark">New Order</button>
                 </div>
             </div>
 
@@ -102,7 +102,7 @@ const MyOrders = () => {
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
                                                 ${order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                                                    order.status === 'Processing' ? 'bg-blue-100 text-blue-800' :
+                                                    order.status === 'Processing' ? 'bg-brand/10 text-brand-dark' :
                                                         'bg-red-100 text-red-800'}`}>
                                                 {order.status}
                                             </span>
@@ -111,7 +111,7 @@ const MyOrders = () => {
                                             ₹{order.totalPrice}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <button className="text-blue-600 hover:text-blue-900 font-semibold">Details</button>
+                                            <button className="text-brand hover:text-brand-dark font-semibold">Details</button>
                                         </td>
                                     </tr>
                                 ))}

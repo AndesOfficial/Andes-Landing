@@ -3,7 +3,7 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa"; // Importing star icons 
 
 const ServiceInfo = () => {
   return (
-    <div className="bg-blue-900 text-white p-8 shadow-md">
+    <div className="bg-brand text-white p-8 shadow-md">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
         {/* Title and Subtitle Section */}
         <div className="mb-4 md:mb-0">

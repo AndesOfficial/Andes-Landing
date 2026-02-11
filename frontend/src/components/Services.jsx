@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Services = () => {
   return (
-    <div className="bg-blue-700 text-white py-8 px-4 transition-all duration-300 ease-in-out">
+    <div className="bg-brand text-white py-8 px-4 transition-all duration-300 ease-in-out">
       <h2 className="text-3xl font-bold text-center mb-2">
         Explore our services
       </h2>
@@ -14,13 +14,13 @@ const Services = () => {
       <div className="flex justify-center gap-4 mb-6">
         <Link to="/services">
           <button
-            className="bg-white text-blue-700 px-4 py-2 rounded hover:bg-blue-700 hover:text-white hover:border hover:border-white transition-all duration-300 ease-in-out"
+            className="bg-white text-brand px-4 py-2 rounded hover:bg-brand-dark hover:text-white hover:border hover:border-white transition-all duration-300 ease-in-out"
           >
             See price list
           </button>
         </Link>
         <a href="mailto:care@andes.co.in" className="no-underline">
-          <button className="bg-transparent border border-white px-4 py-2 rounded flex items-center gap-2 hover:border-white hover:bg-white hover:text-blue-700 transition-all duration-300 ease-in-out">
+          <button className="bg-transparent border border-white px-4 py-2 rounded flex items-center gap-2 hover:border-white hover:bg-white hover:text-brand transition-all duration-300 ease-in-out">
             <FaRegComment size={20} />
             Ask us anything
           </button>
@@ -34,7 +34,7 @@ const Services = () => {
           includes={["WASH", "TUMBLE-DRY"]}
           serviceTime="24H - 48H"
           returned="IN A LAUNDRY/ANDES BAG"
-          icon={<FaShoppingBasket size={36} className="text-blue-600" />}
+          icon={<FaShoppingBasket size={36} className="text-brand" />}
         />
         <ItemCard
           title="Wash & Iron"
@@ -43,7 +43,7 @@ const Services = () => {
           includes={["WASH", "TUMBLE-DRY", "IRONING"]}
           serviceTime="24H - 48H"
           returned="ON HANGERS"
-          icon={<FaTshirt size={36} className="text-blue-600" />}
+          icon={<FaTshirt size={36} className="text-brand" />}
         />
         <ItemCard
           title="Dry Cleaning"
@@ -52,7 +52,7 @@ const Services = () => {
           includes={["DRY CLEANING", "IRONING"]}
           serviceTime="24H - 48H"
           returned="ON HANGERS"
-          icon={<FaSoap size={36} className="text-blue-600" />}
+          icon={<FaSoap size={36} className="text-brand" />}
         />
         <ItemCard
           title="Shoes Cleaning"
@@ -61,7 +61,7 @@ const Services = () => {
           includes={["CUSTOM CLEANING"]}
           serviceTime="24H - 48H"
           returned="IN A LAUNDRY/ANDES BAG"
-          icon={<FaShoePrints size={36} className="text-blue-600" />}
+          icon={<FaShoePrints size={36} className="text-brand" />}
         />
       </div>
     </div>

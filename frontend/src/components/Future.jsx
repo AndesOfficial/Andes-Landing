@@ -6,7 +6,7 @@ const Future = () => {
   };
 
   return (
-    <div className="bg-teal-500 flex items-center justify-center min-h-screen p-6">
+    <div className="bg-brand flex items-center justify-center min-h-screen p-6">
       <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-12 max-w-6xl">
         <div className="relative w-full md:w-1/2">
           <div className="overflow-hidden rounded-full md:rounded-xl">
@@ -23,7 +23,7 @@ const Future = () => {
           </h2>
           <ul className="text-lg md:text-xl space-y-4 mb-6">
             <li className="flex items-center">
-              <span className="inline-block w-6 h-6 mr-2 text-teal-100">
+              <span className="inline-block w-6 h-6 mr-2 text-white/80">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -42,7 +42,7 @@ const Future = () => {
               Zero-emission delivery vehicles
             </li>
             <li className="flex items-center">
-              <span className="inline-block w-6 h-6 mr-2 text-teal-100">
+              <span className="inline-block w-6 h-6 mr-2 text-white/80">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -61,7 +61,7 @@ const Future = () => {
               Efficient water use
             </li>
             <li className="flex items-center">
-              <span className="inline-block w-6 h-6 mr-2 text-teal-100">
+              <span className="inline-block w-6 h-6 mr-2 text-white/80">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -82,7 +82,7 @@ const Future = () => {
           </ul>
           <button
             onClick={handleButtonClick}
-            className="bg-white text-teal-500 font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-teal-100 transition"
+            className="bg-white text-brand font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-brand/10 transition"
           >
             About us
           </button>

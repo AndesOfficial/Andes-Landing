@@ -8,14 +8,14 @@ import { FaPlus, FaListAlt, FaTags, FaHeadset, FaBox, FaChevronRight, FaClock, F
 // --- Reusable Components ---
 
 const QuickActionBtn = ({ to, icon, label, primary = false }) => (
-    <Link to={to} className={`flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 w-full ${primary ? 'bg-brand-blue text-white shadow-lg shadow-blue-200 hover:shadow-xl hover:bg-blue-700' : 'bg-white text-slate-600 border border-slate-100 hover:border-blue-200 hover:text-brand-blue hover:shadow-md'}`}>
+    <Link to={to} className={`flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 w-full ${primary ? 'bg-brand text-white shadow-lg shadow-brand/20 hover:shadow-xl hover:bg-brand-dark' : 'bg-brand/5 text-brand-dark border border-brand/10 hover:border-brand/30 hover:bg-brand/10 hover:shadow-md'}`}>
         <div className={`text-2xl mb-2 ${primary ? 'text-white' : 'text-brand-blue'}`}>{icon}</div>
         <span className="text-xs font-bold tracking-wide">{label}</span>
     </Link>
 );
 
 const StatCard = ({ title, value, icon, colorClass, bgClass }) => (
-    <div className="bg-white p-5 rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-50 flex items-center justify-between hover:scale-[1.02] transition-transform duration-300">
+    <div className="bg-white p-5 rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-50 flex items-center justify-between hover:scale-[1.02] transition-transform duration-300 hover:shadow-brand/10 hover:border-brand/20 group">
         <div>
             <p className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">{title}</p>
             <p className="text-2xl font-black text-slate-800">{value}</p>
@@ -133,8 +133,8 @@ const Dashboard = () => {
                     <StatCard
                         title="Active Orders"
                         value={stats.active}
-                        colorClass="text-blue-600"
-                        bgClass="bg-blue-50"
+                        colorClass="text-brand"
+                        bgClass="bg-brand/10"
                         icon={<FaClock />}
                     />
                     <StatCard
@@ -147,8 +147,8 @@ const Dashboard = () => {
                     <StatCard
                         title="Total Spent"
                         value={`₹${stats.saved}`}
-                        colorClass="text-indigo-600"
-                        bgClass="bg-indigo-50"
+                        colorClass="text-brand"
+                        bgClass="bg-brand/10"
                         icon={<span className="text-xl font-bold">₹</span>}
                     />
                     {/* Placeholder for Balance/Credits if needed in future */}
@@ -190,7 +190,7 @@ const Dashboard = () => {
                                             </h3>
                                             <p className="text-sm text-slate-500">{recentOrder.items?.length || 0} items • {recentOrder.date}</p>
                                         </div>
-                                        <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide ${['Delivered', 'Completed'].includes(recentOrder.status) ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>
+                                        <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide ${['Delivered', 'Completed'].includes(recentOrder.status) ? 'bg-green-100 text-green-700' : 'bg-brand/10 text-brand'}`}>
                                             {recentOrder.status || 'Processing'}
                                         </div>
                                     </div>

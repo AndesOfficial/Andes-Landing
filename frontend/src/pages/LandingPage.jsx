@@ -67,7 +67,7 @@ const LandingPage = () => {
               {/* Location - Just Yellow Text */}
               <div className="flex items-baseline gap-3">
                 <h2 className="text-yellow-400 font-bold text-2xl md:text-4xl tracking-wide">
-                  Kothrud, Pune
+                  Pune,India
                 </h2>
               </div>
             </div>
@@ -139,7 +139,7 @@ const LandingPage = () => {
           <div className="w-full lg:w-1/2 flex justify-center relative mt-6 lg:mt-0">
             {/* Blob Background */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-white/20 rounded-full blur-xl -z-10"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-blue-400/30 rounded-full blur-2xl -z-20"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-brand/30 rounded-full blur-2xl -z-20"></div>
 
             <div className="relative w-full max-w-lg lg:max-w-xl aspect-square flex items-center justify-center group">
               <img
@@ -154,8 +154,8 @@ const LandingPage = () => {
                   <FaStar className="text-xl" />
                 </div>
                 <div>
-                  <p className="font-bold text-slate-800 text-sm leading-tight">4.9/5 Rating</p>
-                  <p className="text-xs text-slate-500 font-medium">from 2k+ happy customers</p>
+                  <p className="font-bold text-slate-800 text-sm leading-tight">4.5/5 Rating</p>
+
                 </div>
               </div>
 
@@ -173,7 +173,7 @@ const LandingPage = () => {
 
 
 
-      {/* Features Grid - Reduced Padding & Spacing */}
+
       <section className="container mx-auto px-4 py-8 space-y-4">
         <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
           <ServiceFeatures />
