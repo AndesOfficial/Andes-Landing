@@ -13,7 +13,7 @@ const Input = ({ label, error, type = "text", className = "", ...props }) => {
                 className={`w-full px-4 py-3 rounded-xl border bg-white text-slate-900 placeholder:text-slate-400 transition-all duration-200 outline-none
           ${error
                         ? 'border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-500/10'
-                        : 'border-slate-200 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-600/10 hover:border-slate-300'
+                        : 'border-slate-200 focus:border-brand focus:ring-4 focus:ring-brand/10 hover:border-slate-300'
                     } ${className}`}
                 {...props}
             />

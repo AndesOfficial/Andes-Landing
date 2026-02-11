@@ -16,11 +16,11 @@ const teamMembers = [
 
 const TeamSection = () => {
   return (
-    <div className="bg-gradient-to-b from-blue-900 to-blue-800 text-white py-16">
+    <div className="bg-brand text-white py-16">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">Meet Our Team</h2>
-          <p className="mt-4 text-lg text-blue-100 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-white/90 max-w-2xl mx-auto">
             We're a global team of laundry, tech, and logistics experts on a mission to free people
             from laundry so that they can spend more time doing what they <span className="text-yellow-400">💛</span>
           </p>
@@ -37,11 +37,11 @@ const TeamSection = () => {
                 alt={teamMembers[0].name}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-900 to-transparent 
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent 
                             opacity-0 group-hover:opacity-90 transition-opacity duration-300 
                             flex flex-col justify-end p-6">
                 <h3 className="text-2xl font-bold">{teamMembers[0].name}</h3>
-                <p className="text-blue-200">{teamMembers[0].title}</p>
+                <p className="text-white/80">{teamMembers[0].title}</p>
               </div>
             </div>
           </div>
@@ -58,11 +58,11 @@ const TeamSection = () => {
                   alt={member.name}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-900 to-transparent 
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent 
                               opacity-0 group-hover:opacity-90 transition-opacity duration-300 
                               flex flex-col justify-end p-4">
                   <h3 className="text-lg font-bold">{member.name}</h3>
-                  <p className="text-blue-200 text-sm">{member.title}</p>
+                  <p className="text-white/80 text-sm">{member.title}</p>
                 </div>
               </div>
             </div>

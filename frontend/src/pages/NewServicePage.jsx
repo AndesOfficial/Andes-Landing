@@ -61,7 +61,7 @@ const ServicesPage = ({ data }) => {
         {/* Floating Cart Button */}
         {cart.length > 0 && (
           <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-11/12 max-w-md z-50 animate-bounce-in">
-            <Link to="/order" className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-2xl shadow-2xl p-4 flex items-center justify-between hover:scale-105 transition-transform duration-300">
+            <Link to="/order" className="bg-gradient-to-r from-brand to-brand-dark text-white rounded-2xl shadow-2xl p-4 flex items-center justify-between hover:scale-105 transition-transform duration-300">
               <div className="flex items-center space-x-3">
                 <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
                   <FaShoppingCart className="text-xl" />

@@ -4,7 +4,7 @@ import playstore from "../assets/playstoreicon.svg";
 import mockup1 from "../assets/DownloadPage1.jpg"; // Add these mockup images to your assets
 import mockup2 from "../assets/DownloadPage2.jpg";
 
-import {Helmet} from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 
 const DownloadPage = () => {
   return (
@@ -14,7 +14,7 @@ const DownloadPage = () => {
         <meta name="description" content="Download the Andes Laundry app to start your laundry journey." />
       </Helmet>
       {/* Main Content */}
-      <div className="flex-grow bg-gradient-to-b from-blue-600 to-blue-700">
+      <div className="flex-grow bg-gradient-to-b from-brand to-brand-dark">
         <div className="container mx-auto px-4 pt-24 pb-16">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             {/* App Screenshots - Left Side */}
@@ -46,14 +46,14 @@ const DownloadPage = () => {
                 <br />
                 YOURSELF?
               </h1>
-              
+
               <p className="text-xl md:text-2xl mb-8 opacity-90">
                 Let us take off the load from your hands and
                 <br className="hidden md:block" />
                 deliver them back spotless to your door
               </p>
-              
-              <div className="bg-blue-500/30 backdrop-blur-sm rounded-xl p-6 mb-8">
+
+              <div className="bg-brand/30 backdrop-blur-sm rounded-xl p-6 mb-8">
                 <p className="text-lg mb-4">
                   Join thousands of happy customers who have already made the smart choice.
                 </p>
@@ -72,7 +72,7 @@ const DownloadPage = () => {
                   </li>
                 </ul>
               </div>
-              
+
               {/* Download Buttons */}
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
                 <a
@@ -85,7 +85,7 @@ const DownloadPage = () => {
                     <p className="text-black font-semibold text-lg">App Store</p>
                   </div>
                 </a>
-                
+
                 <a
                   href="https://play.google.com/store/apps/details?id=com.andes.laundry"
                   target="_blank"

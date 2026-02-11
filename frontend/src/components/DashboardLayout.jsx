@@ -20,7 +20,7 @@ const DashboardLayout = () => {
     };
 
     const isActive = (path) => {
-        return location.pathname === path ? "bg-blue-50 text-blue-600 border-r-4 border-blue-600" : "text-gray-600 hover:bg-gray-50 hover:text-blue-600";
+        return location.pathname === path ? "bg-brand/10 text-brand border-r-4 border-brand" : "text-gray-600 hover:bg-gray-50 hover:text-brand";
     };
 
     return (
@@ -37,7 +37,7 @@ const DashboardLayout = () => {
             <div className={`fixed lg:static inset-y-0 left-0 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 transition-transform duration-200 ease-in-out w-64 bg-white shadow-xl flex flex-col z-30`}>
                 <div className="p-6 border-b border-gray-100 flex justify-between items-center">
                     <Link to="/" className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">A</div>
+                        <div className="w-8 h-8 bg-brand rounded-lg flex items-center justify-center text-white font-bold text-xl">A</div>
                         <span className="text-2xl font-bold text-gray-800">Andes</span>
                     </Link>
                     <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-gray-500 hover:text-gray-700">
@@ -48,8 +48,8 @@ const DashboardLayout = () => {
                 </div>
 
                 <div className="mt-6 px-6">
-                    <div className="p-4 bg-blue-50 rounded-xl">
-                        <p className="text-xs text-blue-500 font-semibold uppercase tracking-wider">Welcome Back</p>
+                    <div className="p-4 bg-brand/10 rounded-xl">
+                        <p className="text-xs text-brand font-semibold uppercase tracking-wider">Welcome Back</p>
                         <p className="text-sm font-bold text-gray-800 truncate mt-1">{currentUser?.fullName || currentUser?.email}</p>
                     </div>
                 </div>
@@ -105,7 +105,7 @@ const DashboardLayout = () => {
                         </button>
                         <span className="font-bold text-lg text-gray-800">Andes Dashboard</span>
                     </div>
-                    <div className="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold">
+                    <div className="h-8 w-8 bg-brand/10 rounded-full flex items-center justify-center text-brand font-bold">
                         {currentUser?.fullName?.[0] || 'U'}
                     </div>
                 </header>

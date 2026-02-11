@@ -4,7 +4,7 @@ import { useEffect, useRef, Suspense, lazy, useState } from "react";
 import './App.css';
 // import IntercomComponent from './intercom';
 import data from './data';
-import ServiceFooter from './components/ServiceFooter';
+import MyFooter from './components/MyFooter';
 import DashboardLayout from "./components/DashboardLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -27,8 +27,11 @@ const NotFound = lazy(() => import("./pages/NotFound")); // Planned for next ste
 
 // Loading Component
 const PageLoader = () => (
-  <div className="flex justify-center items-center min-h-screen">
-    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+  <div className="flex justify-center items-center min-h-screen bg-slate-50">
+    <div className="relative h-16 w-16">
+      <div className="absolute inset-0 rounded-full border-4 border-brand/20"></div>
+      <div className="absolute inset-0 rounded-full border-4 border-brand border-t-transparent animate-spin"></div>
+    </div>
   </div>
 );
 
@@ -93,7 +96,7 @@ function App() {
             </Routes>
           </Suspense>
         </div>
-        <ServiceFooter />
+        <MyFooter />
       </div>
 
       {/* <IntercomComponent /> */}

@@ -1,9 +1,9 @@
 import { FaClock, FaShoppingBag } from "react-icons/fa";
-import third from "../assets/card3.png"; 
+import third from "../assets/card3.png";
 
 const CustomerSupport = () => {
   return (
-    <div className="flex flex-col md:flex-row bg-white p-6 rounded-lg md:h-auto md:mb-40">
+    <div className="flex flex-col md:flex-row w-full h-full">
       {/* Right Section */}
       <div className="md:w-1/2 mt-6 md:mt-0 relative flex flex-col justify-center items-center">
         <img

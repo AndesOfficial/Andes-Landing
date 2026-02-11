@@ -3,7 +3,7 @@ import second from "../assets/card4.png";
 
 const LaundryStatus = () => {
   return (
-    <div className="flex flex-col md:flex-row bg-white p-6 md:p-0 rounded-lg md:h-auto border-b border-gray-300">
+    <div className="flex flex-col md:flex-row w-full h-full">
       {/* Left Section */}
       <div className="md:w-1/2 pr-6 flex flex-col justify-center">
         <h2 className="text-xl text-gray-500 uppercase mb-2">
@@ -33,8 +33,8 @@ const LaundryStatus = () => {
         <img
           src={second}
           alt="Man in coat carrying documents"
-          className="hidden md:block w-full h-500 object-cover rounded-lg"        />
-       
+          className="hidden md:block w-full h-500 object-cover rounded-lg" />
+
       </div>
     </div>
   );

@@ -53,7 +53,7 @@ const ServiceCard = ({ service }) => {
   };
 
   return (
-    <div className="relative bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group">
+    <div className="relative bg-white hover:bg-brand/5 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group border border-transparent hover:border-brand/20">
       {/* Discount Badge */}
       <div className="absolute top-4 right-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10 animate-pulse">
         {service.discount}% OFF
@@ -102,7 +102,7 @@ const ServiceCard = ({ service }) => {
               </span>
               <button
                 onClick={handleIncrement}
-                className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white transition-colors focus:outline-none active:bg-indigo-800"
+                className="px-3 py-2 bg-brand hover:bg-brand-dark text-white transition-colors focus:outline-none active:bg-brand-dark"
               >
                 <FaPlus size={10} />
               </button>
@@ -112,8 +112,8 @@ const ServiceCard = ({ service }) => {
               onClick={handleAddToCart}
               disabled={isAdding}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${isAdding
-                  ? 'bg-green-500 text-white scale-95'
-                  : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:shadow-md hover:scale-105'
+                ? 'bg-green-500 text-white scale-95'
+                : 'bg-gradient-to-r from-brand to-brand-light text-white hover:shadow-md hover:scale-105'
                 }`}
             >
               {isAdding ? 'Added!' : 'Add'}

@@ -7,10 +7,10 @@ const WhoWeAre = () => {
     <div className="flex flex-col lg:flex-row items-center p-6 lg:p-12 bg-white md:h-screen">
       {/* Text Section */}
       <div className="flex-1 mb-6 pt-20 lg:mb-0 lg:mr-10">
-        <h2 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight text-blue-500">
+        <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight text-brand">
           <FontAwesomeIcon icon={faUsers} className="mr-6" />
           Who We Are ?
-        </h2>
+        </h3>
         <p className="text-base lg:text-lg mb-6 leading-relaxed text-gray-600">
           Andes is the #1 fastest and safest on-demand laundry service platform.
           You can schedule a laundry pickup with just a few taps, and we’ll take
@@ -21,7 +21,7 @@ const WhoWeAre = () => {
         </p>
         {/* Subsection: Current Availability */}
         <div className="mb-6">
-          <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight text-blue-500">
+          <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight text-brand">
             <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-6" />
             Currently Available in Pune
           </h3>
@@ -35,7 +35,7 @@ const WhoWeAre = () => {
         </div>
         {/* Subsection: Environmental Protection */}
         <div className="mb-6">
-          <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight text-blue-500">
+          <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight text-brand">
             <FontAwesomeIcon icon={faLeaf} className="mr-6" />
             We Protect Our Environment
           </h3>

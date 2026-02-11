@@ -18,7 +18,7 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-indigo-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition-all duration-300 shadow-lg hover:shadow-indigo-500/30 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed;
+    @apply bg-brand text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-brand-dark transition-all duration-300 shadow-lg hover:shadow-brand/30 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed;
   }
 
   .btn-secondary {
@@ -26,7 +26,7 @@
   }
 
   .input-field {
-    @apply w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-300 outline-none bg-white text-slate-700 placeholder:text-slate-400;
+    @apply w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-brand focus:ring-4 focus:ring-brand/10 transition-all duration-300 outline-none bg-white text-slate-700 placeholder:text-slate-400;
   }
 
 
@@ -75,10 +75,10 @@
   }
 
   .bg-brand-blue {
-    background-color: #00aeff;
+    background-color: #0890f1;
   }
 
   .text-brand-blue {
-    color: #00aeff;
+    color: #0890f1;
   }
 }

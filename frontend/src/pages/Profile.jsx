@@ -21,15 +21,15 @@ const Profile = () => {
             <h1 className="text-3xl font-extrabold text-gray-900 mb-8">My Profile</h1>
 
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-8 text-white">
-                    <div className="flex items-center gap-6">
-                        <div className="h-24 w-24 bg-white rounded-full flex items-center justify-center text-blue-600 text-3xl font-bold shadow-lg">
+                <div className="bg-gradient-to-r from-brand to-brand-dark p-8 text-white">
+                    <div className="flex items-center space-x-6">
+                        <div className="h-24 w-24 bg-white rounded-full flex items-center justify-center text-brand text-3xl font-bold shadow-lg">
                             {currentUser?.fullName?.[0]?.toUpperCase() || 'U'}
                         </div>
                         <div>
                             <h2 className="text-2xl font-bold">{currentUser?.fullName || 'User'}</h2>
-                            <p className="text-blue-100">{currentUser?.email}</p>
-                            <span className="inline-block mt-2 px-3 py-1 bg-blue-700 bg-opacity-50 rounded-full text-xs font-medium tracking-wide">Standard Member</span>
+                            <p className="text-white/80">{currentUser?.email}</p>
+                            <span className="inline-block mt-2 px-3 py-1 bg-brand-dark bg-opacity-50 rounded-full text-xs font-medium tracking-wide">Standard Member</span>
                         </div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@ const Profile = () => {
                     </div>
 
                     <div className="pt-6 border-t border-gray-100 flex gap-4">
-                        <button className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                        <button className="flex-1 bg-brand text-white px-4 py-2 rounded-lg font-medium hover:bg-brand-dark transition-colors">
                             Edit Profile
                         </button>
                         <button className="flex-1 bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors">

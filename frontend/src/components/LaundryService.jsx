@@ -2,7 +2,7 @@ import first from "../assets/first.png";
 
 const LaundryService = () => {
   return (
-    <div className="flex flex-col md:flex-row bg-white p-6 md:p-0 rounded-lg md:h-auto border-b border-gray-300">
+    <div className="flex flex-col md:flex-row w-full h-full">
       {" "}
       {/* Image and Instructions Section */}
       <div className="md:w-1/2 md:pr-4 flex flex-col justify-center items-center relative">

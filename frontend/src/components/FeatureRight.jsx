@@ -13,15 +13,15 @@ const FeatureRight = ({ title, subtitle, description, imageSrc, bulletPoints }) 
         </div>
 
         <div className="absolute left-0 top-6 w-12 h-0.5 bg-slate-200 md:hidden"></div>
-        <div className="absolute left-[-5px] top-[22px] w-3 h-3 rounded-full bg-brand-blue md:hidden ring-4 ring-white"></div>
+        <div className="absolute left-[-5px] top-[22px] w-3 h-3 rounded-full bg-brand md:hidden ring-4 ring-white"></div>
 
-        <h2 className="text-xs font-bold text-brand-blue uppercase tracking-wider mb-2">{title}</h2>
+        <h2 className="text-xs font-bold text-brand uppercase tracking-wider mb-2">{title}</h2>
         <h3 className="text-2xl font-bold text-slate-800 mb-3 leading-tight">{subtitle}</h3>
         <p className="text-slate-600 mb-6 leading-relaxed text-sm md:text-base">{description}</p>
         <ul className="space-y-3">
           {bulletPoints.map((point, index) => (
             <li key={index} className="flex items-start">
-              <span className="bg-blue-50 text-brand-blue p-2 rounded-xl mr-3 shadow-sm shrink-0 mt-0.5">
+              <span className="bg-brand/10 text-brand p-2 rounded-full mr-3 shadow-sm shrink-0 mt-0.5">
                 {point.icon}
               </span>
               <span className="text-slate-700 font-medium text-sm md:text-base">{point.text}</span>
