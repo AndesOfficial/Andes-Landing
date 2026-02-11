@@ -35,16 +35,16 @@ const ItemCard = ({
       </div>
     </div>
 
-    <div className="flex items-center justify-between border-t border-gray-50 pt-4 mt-auto">
-      <div>
-        <span className="text-xs text-gray-400 block font-medium">Starting from</span>
-        <span className="text-xl font-black text-gray-900">₹{price}</span>
+    <div className="border-t border-gray-50 pt-4 mt-auto">
+      <span className="text-xs text-gray-400 block font-medium mb-1">Starting from</span>
+      <div className="flex items-center justify-between gap-4">
+        <span className="text-2xl font-black text-gray-900 leading-none">₹{price}</span>
+        <Link to="/order">
+          <button className="text-white font-bold text-sm bg-brand px-6 py-3 rounded-xl shadow-lg shadow-brand/20 hover:shadow-brand/30 hover:bg-brand-dark active:scale-95 transition-all whitespace-nowrap leading-none flex items-center justify-center">
+            Book Now
+          </button>
+        </Link>
       </div>
-      <Link to="/order" className="w-full md:w-auto">
-        <button className="text-white font-bold text-sm bg-brand px-5 py-2.5 rounded-xl shadow-lg shadow-brand/20 hover:shadow-brand/30 hover:bg-brand-dark active:scale-95 transition-all whitespace-nowrap w-full md:w-auto">
-          Book Now
-        </button>
-      </Link>
     </div>
   </div>
 );

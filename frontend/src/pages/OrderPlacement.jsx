@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useOrder } from '../context/OrderContext';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/common/Button';
@@ -21,7 +21,17 @@ const OrderPlacement = () => {
     const [loading, setLoading] = useState(false);
     const [selectedSlot, setSelectedSlot] = useState(null);
     const navigate = useNavigate();
+    const location = useLocation();
     const { currentUser } = useAuth();
+
+    useEffect(() => {
+        if (location.state && location.state.selectedSlot) {
+            setSelectedSlot(location.state.selectedSlot);
+            setStep(2); // Jump to schedule step
+            // Optional: clear state so back button works expectedly? 
+            // actually keeping it might be fine, but let's leave it for now.
+        }
+    }, [location.state]);
 
     const handleProceedToSchedule = () => {
         if (!currentUser) {
