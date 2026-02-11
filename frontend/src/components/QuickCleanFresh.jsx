@@ -6,49 +6,36 @@ const QuickCleanFresh = () => {
   };
 
   return (
-    <div className="relative bg-[#3B82F6] pt-32 pb-24 mt-16 mb-16">
-      {/* Curved Background */}
-      {/* <div className="absolute inset-x-0 top-0 transform -translate-y-1/2">
-        <svg viewBox="0 0 1440 320" className="w-full">
-          <path
-            fill="#3B82F6"
-            fillOpacity="1"
-            d="M0,224L1440,64L1440,320L0,320Z"
-          ></path>
-        </svg>
-      </div> */}
-
-      {/* Text and Button */}
-      <div className="relative text-center max-w-xl mx-auto justify-center flex-col flex">
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+    <div className="relative bg-brand py-24 md:py-32 flex items-center justify-center">
+      <div className="container mx-auto px-4 text-center">
+        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
           Quick. Clean. Fresh.
-        </h2>
-        <p className="text-lg md:text-xl text-white mb-10">
+        </h1>
+        <p className="text-xl md:text-2xl text-white/90 font-medium mb-12 max-w-2xl mx-auto">
           Your laundry delivered in 24h
         </p>
+
         <Link
           to="/services"
-          className="bg-white mt-8 text-[#3B82F6] font-semibold rounded-lg shadow-md flex items-center justify-center h-12 w-full md:w-auto px-4 md:px-8 hover:bg-gray-100 transition mx-auto"
+          className="inline-flex items-center gap-2 bg-white text-brand font-bold text-lg px-8 py-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 transform"
         >
-          <span className="mr-2">
-            {/* Icon or SVG for the button */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              className="w-5 h-5 text-[#3B82F6]"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 20.5l-6-4.5V7l6-4.5L18 7v9l-6 4.5z"
-              />
-            </svg>
-          </span>
-          <span>Schedule your pickup</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Schedule your pickup
         </Link>
+      </div>
+
+      {/* Subtle Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+        <div className="absolute bottom-10 right-10 w-48 h-48 bg-white/5 rounded-full blur-3xl"></div>
       </div>
     </div>
   );

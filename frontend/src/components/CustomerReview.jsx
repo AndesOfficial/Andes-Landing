@@ -24,7 +24,7 @@ const CustomerReviews = () => {
         <div className="text-center mb-6 relative z-10">
           <FaQuoteLeft className="text-4xl text-brand/30 mx-auto mb-2 opacity-50" />
           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
-            Loved by Locals
+            Loved by Customers
           </h2>
           <p className="text-slate-500 text-lg max-w-2xl mx-auto">
             See what our happy customers in Pune have to say about their fresh laundry experience.
@@ -80,27 +80,27 @@ const CustomerReviews = () => {
               <SwiperSlide key={index} className="w-[85%] md:w-[600px] h-auto">
                 {({ isActive }) => (
                   <div className={`
-                                transition-all duration-300
+                                transition-all duration-500 ease-out
                                 flex flex-col items-center text-center
-                                bg-white rounded-3xl p-4 md:p-6
+                                bg-white rounded-[2rem] p-8 md:p-10
                                 border border-slate-100
-                                ${isActive ? 'shadow-2xl scale-100 opacity-100' : 'shadow-sm scale-95 opacity-50 blur-[1px]'}
+                                ${isActive ? 'shadow-2xl scale-100 opacity-100 ring-1 ring-brand/10' : 'shadow-sm scale-90 opacity-40 blur-[2px]'}
                             `}>
                     {/* Stars */}
-                    <div className="flex gap-1 text-yellow-400 text-lg mb-1">
+                    <div className="flex gap-1.5 text-yellow-400 text-xl md:text-2xl mb-4">
                       {[...Array(5)].map((_, i) => (
                         <FaStar key={i} className={i < review.rating ? "opacity-100" : "opacity-30"} />
                       ))}
                     </div>
 
                     {/* Review Text */}
-                    <p className={`text-slate-700 leading-snug mb-2 font-medium italic ${isActive ? "text-base md:text-lg" : "text-sm"}`}>
+                    <p className={`text-slate-700 leading-relaxed mb-6 font-medium italic font-serif ${isActive ? "text-lg md:text-2xl" : "text-base"}`}>
                       "{review.text}"
                     </p>
 
-                    {/* User Profile (No Divider) */}
+                    {/* User Profile */}
                     <div className="mt-auto flex flex-col items-center">
-                      <div className={`rounded-full p-1 border-2 border-brand/20 mb-1 transition-all duration-300 ${isActive ? "w-12 h-12 border-brand shadow-lg" : "w-10 h-10"}`}>
+                      <div className={`rounded-full p-1 border-2 border-brand/20 mb-3 transition-all duration-300 ${isActive ? "w-16 h-16 md:w-20 md:h-20 border-brand shadow-lg" : "w-12 h-12"}`}>
                         <img
                           src={review.imageUrl}
                           alt={review.name}
@@ -108,10 +108,10 @@ const CustomerReviews = () => {
                         />
                       </div>
 
-                      <h4 className={`font-bold text-slate-900 transition-all ${isActive ? "text-base" : "text-sm"}`}>
+                      <h4 className={`font-bold text-slate-900 transition-all ${isActive ? "text-lg md:text-xl" : "text-base"}`}>
                         {review.name}
                       </h4>
-                      <span className="text-xs text-slate-400 font-medium">Verified Customer</span>
+                      <span className="text-sm text-slate-400 font-medium tracking-wide uppercase">Verified Customer</span>
                     </div>
                   </div>
                 )}
