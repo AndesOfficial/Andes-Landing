@@ -182,7 +182,7 @@ const LandingPage = () => {
           <ServiceFeatures />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="flex flex-col space-y-6">
           <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
             <LaundryService />
           </div>
