@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 // import useTypewriter from "../hooks/useTypewriter";
-import van from "../assets/van.png"; // Import the van image
+import van from "../assets/van-removebg-preview.png"; // Import the van image
 import LaundryService from "../components/LaundryService.jsx";
 import LaundryStatus from "../components/LaundryStatus.jsx";
 import CustomerSupport from "../components/CustomerSupport.jsx";
