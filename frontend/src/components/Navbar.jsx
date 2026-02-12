@@ -16,14 +16,25 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
   // Use external prop if available, otherwise fallback to internal state
   const isScrolled = externalIsScrolled !== undefined ? externalIsScrolled : internalIsScrolled;
 
+  /* 
+     SCROLL LISTENER LOGIC:
+     We want the navbar to change its background color when the user scrolls down.
+     This useEffect adds an event listener to the window's scroll event.
+     If the user scrolls more than 20 pixels, we set isScrolled to true.
+  */
   useEffect(() => {
-    // If external control is provided, don't set up internal listener (or do it as backup? Better not to conflict)
+    // If the parent component controls scrolling, we don't need to do anything here.
     if (externalIsScrolled !== undefined) return;
 
     const handleScroll = () => {
-      setInternalIsScrolled(window.scrollY > 20);
+      // Check if window has scrolled past 20px
+      const hasScrolled = window.scrollY > 20;
+      setInternalIsScrolled(hasScrolled);
     };
+
     window.addEventListener("scroll", handleScroll);
+
+    // IMPORTANT: cleanup the listener when component unmounts to avoid memory leaks!
     return () => window.removeEventListener("scroll", handleScroll);
   }, [externalIsScrolled]);
 
@@ -33,44 +44,60 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
   //  Helper function to close the mobile menu
   const closeMenu = () => setIsOpen(false);
 
+
+  // --- Helper Variables for CSS Clarity ---
+  // Using variables makes the main return statement much cleaner and easier to read.
+
+  const navBackgroundClass = (isScrolled || isOpen)
+    ? "bg-white/75 backdrop-blur-lg shadow-sm border-b border-slate-200/50 py-2" // Scrolled or Menu Open state
+    : (isLanding ? "bg-transparent py-4" : "bg-brand py-4"); // Transparent on landing, Brand color on other pages
+
+  const linkColorClass = (isScrolled || isOpen)
+    ? "text-slate-600 hover:text-brand" // Dark text when scrolled
+    : "text-white hover:text-yellow-300"; // White text when transparent
+
+  const logoClass = (isScrolled || isOpen)
+    ? ""
+    : "brightness-0 invert"; // Invert logo to white when on transparent background
+
+
   return (
     <>
-      <nav className={`fixed w-full top-0 z-[100] transition-all duration-300 ${(isScrolled || isOpen)
-        ? "bg-white/75 backdrop-blur-lg shadow-sm border-b border-slate-200/50 py-2"
-        : (isLanding ? "bg-transparent py-4" : "bg-brand py-4")
-        }`}>
+      <nav className={`fixed w-full top-0 z-[100] transition-all duration-300 ${navBackgroundClass}`}>
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
+
+            {/* Logo Section */}
             <div className="flex items-center">
-              {/* Also close menu if clicking logo */}
               <Link to="/" onClick={closeMenu} className="flex items-center space-x-3">
                 <img
                   src={logo}
                   alt="Andes logo"
-                  className={`h-16 w-16 transition-all duration-300 ${(isScrolled || isOpen) ? "" : "brightness-0 invert"}`}
+                  className={`h-16 w-16 transition-all duration-300 ${logoClass}`}
                 />
               </Link>
             </div>
 
 
+            {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/working"
-                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${(isScrolled || isOpen) ? "text-slate-600 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/working") ? "font-bold text-brand" : ""}`}
+                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${linkColorClass} ${isActive("/working") ? "font-bold text-brand" : ""}`}
               >
                 How it works
               </Link>
               <Link to="/services"
-                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${(isScrolled || isOpen) ? "text-slate-600 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/services") ? "font-bold text-brand" : ""}`}
+                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${linkColorClass} ${isActive("/services") ? "font-bold text-brand" : ""}`}
               >
                 Services & Pricing
               </Link>
               <Link to="/andes-assured"
-                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${(isScrolled || isOpen) ? "text-slate-600 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/andes-assured") ? "font-bold text-brand" : ""}`}
+                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${linkColorClass} ${isActive("/andes-assured") ? "font-bold text-brand" : ""}`}
               >
                 Andes Assured
               </Link>
               <Link to="/about"
-                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${(isScrolled || isOpen) ? "text-slate-600 hover:text-brand" : "text-white hover:text-yellow-300"} ${isActive("/about") ? "font-bold text-brand" : ""}`}
+                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${linkColorClass} ${isActive("/about") ? "font-bold text-brand" : ""}`}
               >
                 About us
               </Link>
@@ -82,7 +109,7 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
                 <>
                   {/* Cart Icon */}
                   <Link to="/order" title="Cart" className="relative group p-1">
-                    <FaShoppingCart className={`text-2xl transition-colors duration-300 ease-in-out ${(isScrolled || isOpen) ? "text-slate-600 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
+                    <FaShoppingCart className={`text-2xl transition-colors duration-300 ease-in-out ${isScrolled || isOpen ? "text-slate-600 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
                     {totalItems > 0 && (
                       <span className="absolute -top-2 -right-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none text-white bg-red-600 rounded-full border-2 border-white">
                         {totalItems}
@@ -92,19 +119,19 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
 
                   {/* Dashboard / User Icon */}
                   <Link to="/dashboard" title="Dashboard" className="group p-1">
-                    <FaUser className={`text-2xl transition-colors duration-300 ease-in-out ${(isScrolled || isOpen) ? "text-slate-600 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
+                    <FaUser className={`text-2xl transition-colors duration-300 ease-in-out ${isScrolled || isOpen ? "text-slate-600 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
                   </Link>
 
                   {/* Logout Icon */}
                   <button onClick={logout} title="Logout" className="group p-1">
-                    <FaSignOutAlt className={`text-2xl transition-colors duration-300 ease-in-out ${(isScrolled || isOpen) ? "text-slate-600 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
+                    <FaSignOutAlt className={`text-2xl transition-colors duration-300 ease-in-out ${isScrolled || isOpen ? "text-slate-600 group-hover:text-brand" : "text-white group-hover:text-yellow-300"}`} />
                   </button>
                 </>
               ) : (
                 <>
                   <Link
                     to="/login"
-                    className={`font-medium text-lg transition-colors duration-300 ease-in-out ${(isScrolled || isOpen) ? "text-slate-600 hover:text-brand" : "text-white hover:text-yellow-300"}`}
+                    className={`font-medium text-lg transition-colors duration-300 ease-in-out ${linkColorClass}`}
                   >
                     Log In
                   </Link>
@@ -142,13 +169,15 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
       </nav>
 
       {/* Mobile menu overlay */}
+      {/* Added duration-500 to slow down the transition a bit so it looks smoother */}
       <div
-        className={`fixed inset-0 bg-black/50 z-[80] transition-opacity duration-300 md:hidden ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 bg-black/50 z-[80] transition-opacity duration-500 md:hidden ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
         onClick={closeMenu}
       />
 
       {/* Mobile menu drawer */}
-      <div className={`fixed top-0 right-0 h-full w-full sm:w-[400px] z-[90] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden flex flex-col ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
+      {/* Added duration-500 here too for the slide effect */}
+      <div className={`fixed top-0 right-0 h-full w-full sm:w-[400px] z-[90] bg-white shadow-2xl transform transition-transform duration-500 ease-in-out md:hidden flex flex-col ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
 
         {/* Scrollable Content Area */}
         <div className="flex-1 overflow-y-auto pt-24 pb-8 px-6 flex flex-col no-scrollbar">
@@ -173,7 +202,7 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
             </Link>
           </div>
 
-          <div className="flex-1"></div> {/* Spacer */}
+          <div className="flex-1"></div> {/* Spacer to push bottom content down */}
 
           {/* User Profile Section (Bottom) */}
           <div className="mt-auto">

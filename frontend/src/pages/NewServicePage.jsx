@@ -33,11 +33,13 @@ const NewServicePage = () => {
       const matchesSearch = (service.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
         (service.displayName || '').toLowerCase().includes(searchQuery.toLowerCase());
 
-      // 2. Main Category Filter (with Virtual Category support)
-      let matchesMain = false;
-      matchesMain = service.mainCategory === selectedMain;
+      // If searching, ignore category filter (Search Global)
+      if (searchQuery.trim()) {
+        return matchesSearch;
+      }
 
-      return matchesMain && matchesSearch;
+      // 2. Main Category Filter (with Virtual Category support)
+      return service.mainCategory === selectedMain;
     }).sort((a, b) => {
       // ... existing sort logic ...
       const priceA = a.rateByPiece || a.rateByKg || 0;
@@ -54,8 +56,8 @@ const NewServicePage = () => {
       <Navbar />
 
       {/* Mobile Search Bar - Scrolls away (Not sticky) */}
-      {/* Added pt-20 to account for Navbar height */}
-      <div className="lg:hidden bg-brand px-4 py-2 pt-20">
+      {/* Increased pt-20 to pt-28 (112px) to clear the 96px Navbar */}
+      <div className="lg:hidden bg-brand px-4 py-2 pt-28">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
             <FaSearch className="text-gray-400" />
@@ -70,8 +72,8 @@ const NewServicePage = () => {
         </div>
       </div>
 
-      {/* Mobile Tabs - Sticky below Navbar (top-[60px]) */}
-      <div className="lg:hidden sticky top-[60px] z-30 bg-brand shadow-md">
+      {/* Mobile Tabs - Sticky below Navbar (Adjusted to top-[80px] for scrolled navbar) */}
+      <div className="lg:hidden sticky top-[80px] z-30 bg-brand shadow-md">
         <div className="flex justify-between px-4 pb-2 pt-1">
           <button
             onClick={() => setSelectedMain('general')}
