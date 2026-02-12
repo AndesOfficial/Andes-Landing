@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useAuth } from "../context/AuthContext";
 import { useOrder } from "../context/OrderContext";
-import { FaShoppingCart, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { FaShoppingCart, FaUser, FaSignOutAlt, FaRocket, FaList, FaChevronRight } from "react-icons/fa";
 
 const Navbar = ({ isScrolled: externalIsScrolled }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -147,76 +148,92 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
       />
 
       {/* Mobile menu drawer */}
-      <div className={`fixed top-0 right-0 h-full w-full sm:w-[400px] z-[90] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
-        <div className="flex flex-col h-full justify-center items-center text-center px-8 relative">
+      <div className={`fixed top-0 right-0 h-full w-full sm:w-[400px] z-[90] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden flex flex-col ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
 
-          <div className="flex flex-col space-y-6 w-full">
-            <Link to="/working"
-              onClick={closeMenu}
-              className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
-            >
+        {/* Scrollable Content Area */}
+        <div className="flex-1 overflow-y-auto pt-24 pb-8 px-6 flex flex-col no-scrollbar">
+
+          {/* Main Navigation Links */}
+          <div className="flex flex-col space-y-2 mb-8">
+            <Link to="/working" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors flex justify-between items-center group">
               How it works
+              <FaChevronRight className="text-gray-300 text-sm group-hover:text-brand transition-colors" />
             </Link>
-            <Link to="/services"
-              onClick={closeMenu}
-              className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
-            >
+            <Link to="/services" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors flex justify-between items-center group">
               Services & Pricing
+              <FaChevronRight className="text-gray-300 text-sm group-hover:text-brand transition-colors" />
             </Link>
-
-            <Link to="/andes-assured"
-              onClick={closeMenu}
-              className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
-            >
+            <Link to="/andes-assured" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors flex justify-between items-center group">
               Andes Assured
+              <FaChevronRight className="text-gray-300 text-sm group-hover:text-brand transition-colors" />
             </Link>
-
-            <Link to="/about"
-              onClick={closeMenu}
-              className="text-2xl font-bold text-slate-800 hover:text-brand transition-colors"
-            >
+            <Link to="/about" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors flex justify-between items-center group">
               About us
+              <FaChevronRight className="text-gray-300 text-sm group-hover:text-brand transition-colors" />
             </Link>
+          </div>
 
-            <div className="w-16 h-1 bg-gray-100 mx-auto rounded-full my-4"></div>
+          <div className="flex-1"></div> {/* Spacer */}
+
+          {/* User Profile Section (Bottom) */}
+          <div className="mt-auto">
+            <div className="w-full h-px bg-gray-100 mb-6"></div>
 
             {currentUser ? (
-              <div className="flex flex-col space-y-4 w-full">
-                <div className="text-gray-500 font-medium text-lg">Hi, {currentUser.fullName || currentUser.name || "User"}</div>
+              <div className="bg-gray-50 rounded-2xl p-5 border border-gray-100">
+                {/* User Info Header */}
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 bg-brand/10 rounded-full flex items-center justify-center text-brand font-bold">
+                    {currentUser.fullName ? currentUser.fullName.charAt(0).toUpperCase() : <FaUser />}
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">Welcome Back</p>
+                    <p className="text-slate-800 font-bold leading-tight line-clamp-1">{currentUser.fullName || "User"}</p>
+                  </div>
+                </div>
+
+                {/* Dashboard Link */}
                 <Link
                   to="/dashboard"
                   onClick={closeMenu}
-                  className="text-xl font-semibold text-slate-700 hover:text-brand"
+                  className="bg-white border border-gray-200 text-slate-700 w-full py-3 rounded-xl font-bold text-sm shadow-sm hover:border-brand/30 hover:text-brand hover:shadow-md transition-all flex items-center justify-center gap-2 mb-3"
                 >
-                  Dashboard
+                  <FaList className="text-gray-400" />
+                  View Dashboard
                 </Link>
+
+                {/* New Order Button */}
                 <Link
                   to="/order"
                   onClick={closeMenu}
-                  className="bg-brand text-white flex items-center justify-center w-full h-14 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-brand-dark transition-all"
+                  className="bg-brand text-white w-full py-3.5 rounded-xl font-bold text-base shadow-lg shadow-brand/20 hover:bg-brand-dark hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 mb-4"
                 >
+                  <FaRocket />
                   New Order
                 </Link>
+
+                {/* Logout */}
                 <button
                   onClick={() => { logout(); closeMenu(); }}
-                  className="text-slate-400 font-medium hover:text-red-500 transition-colors"
+                  className="w-full text-center text-sm font-medium text-gray-400 hover:text-red-500 transition-colors py-1 flex items-center justify-center gap-2"
                 >
+                  <FaSignOutAlt />
                   Log Out
                 </button>
               </div>
             ) : (
-              <div className="flex flex-col space-y-4 w-full">
+              <div className="flex flex-col gap-3">
                 <Link
                   to="/login"
                   onClick={closeMenu}
-                  className="text-xl font-semibold text-slate-700 hover:text-brand"
+                  className="w-full py-3 rounded-xl font-bold text-slate-700 hover:bg-gray-50 border border-transparent hover:border-gray-200 transition-all text-center"
                 >
                   Log In
                 </Link>
                 <Link
                   to="/signup"
                   onClick={closeMenu}
-                  className="bg-brand text-white flex items-center justify-center w-full h-14 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-brand-dark transition-all"
+                  className="bg-brand text-white w-full py-3.5 rounded-xl font-bold text-lg shadow-lg shadow-brand/20 hover:bg-brand-dark transition-all text-center"
                 >
                   Sign Up Free
                 </Link>

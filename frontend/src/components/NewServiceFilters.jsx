@@ -1,81 +1,77 @@
-import React from 'react';
-import { FaWeightHanging, FaTshirt, FaLayerGroup } from 'react-icons/fa';
+import React, { useEffect } from 'react';
+import { FaLayerGroup, FaTshirt, FaShoePrints, FaHome, FaMale, FaFemale, FaBoxOpen, FaWeightHanging } from 'react-icons/fa';
 
 const ServiceFilters = ({
-  serviceModes,
-  serviceCategories,
-  selectedMode,
-  selectedCategory,
-  onModeChange,
-  onCategoryChange
+  mainCategories,
+  subCategories,
+  selectedMain,
+  selectedSub,
+  onMainChange,
+  onSubChange,
+  layout = 'horizontal', // 'horizontal' or 'vertical'
+
 }) => {
 
-  // Helper to get icon for mode
-  const getModeIcon = (key) => {
-    if (key === 'kg') return <FaWeightHanging className="mr-2 text-lg" />;
-    if (key === 'piece') return <FaTshirt className="mr-2 text-lg" />;
-    return null;
+  const getMainIcon = (key) => {
+    switch (key) {
+      case 'general': return <FaLayerGroup className="mr-2" />;
+      case 'dry_cleaning': return <FaTshirt className="mr-2" />;
+      case 'shoe_cleaning': return <FaShoePrints className="mr-2" />;
+      default: return null;
+    }
   };
 
-  return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
-      {/* Service Type Section */}
-      <div className="mb-8">
-        <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
-          Select Service Type
-        </h3>
-        <div className="flex flex-wrap gap-4">
-          <button
-            onClick={() => onModeChange('all')}
-            className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 flex items-center shadow-sm ${selectedMode === 'all'
-              ? 'bg-brand text-white shadow-brand/30 transform scale-105'
-              : 'bg-white text-gray-600 border border-gray-200 hover:border-brand/40 hover:text-brand'
-              }`}
-          >
-            <FaLayerGroup className="mr-2 text-lg" />
-            All
-          </button>
 
-          {serviceModes.map(mode => (
-            <button
-              key={mode.id}
-              onClick={() => onModeChange(mode.key)}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 flex items-center shadow-sm ${selectedMode === mode.key
-                ? 'bg-brand text-white shadow-brand/30 transform scale-105'
-                : 'bg-white text-gray-600 border border-gray-200 hover:border-brand/40 hover:text-brand'
-                }`}
-            >
-              {getModeIcon(mode.key)}
-              {mode.name}
-            </button>
-          ))}
+  if (layout === 'vertical') {
+    return (
+      <div className="space-y-6 sticky top-24">
+        {/* Categories */}
+        <div className="bg-white/70 backdrop-blur-lg rounded-3xl shadow-brand-soft border border-white/50 p-6">
+          <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Categories</h3>
+          <div className="flex flex-col gap-3">
+            {mainCategories.map(cat => (
+              <button
+                key={cat.id}
+                onClick={() => onMainChange(cat.key)}
+                className={`px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 flex items-center w-full text-left group ${selectedMain === cat.key
+                  ? 'bg-brand text-white shadow-lg shadow-brand/20 translate-x-2'
+                  : 'bg-transparent text-slate-600 hover:bg-white/50 hover:translate-x-1'
+                  }`}
+              >
+                <span className={`text-lg transition-transform duration-300 group-hover:scale-110 ${selectedMain === cat.key ? 'text-white' : 'text-brand opacity-80'}`}>
+                  {getMainIcon(cat.key)}
+                </span>
+                <span className="ml-3">{cat.name}</span>
+              </button>
+            ))}
+          </div>
         </div>
+
+        {/* Service Type Filter */}
+
+
       </div>
+    );
+  }
 
-      {/* Category Section */}
-      <div>
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Filter by Category</h3>
-        <div className="flex flex-wrap gap-3">
-          <button
-            onClick={() => onCategoryChange('all')}
-            className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 flex items-center shadow-sm ${selectedCategory === 'all'
-              ? 'bg-brand text-white shadow-brand/30 transform scale-105'
-              : 'bg-white text-gray-600 border border-gray-200 hover:border-brand/40 hover:text-brand'
-              }`}
-          >
-            All Categories
-          </button>
-
-          {serviceCategories.map(category => (
+  return (
+    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 mb-8">
+      {/* 1. Main Category Tabs */}
+      <div className="mb-0">
+        <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Categories</h3>
+        <div className="flex overflow-x-auto pb-4 gap-3 no-scrollbar md:flex-wrap md:overflow-hidden">
+          {mainCategories.map(cat => (
+            // ... existing horizontal mapping ... keeping it cleaner by just rendering children if exact same, but logic differs slightly
             <button
-              key={category.id}
-              onClick={() => onCategoryChange(category.key)}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 flex items-center shadow-sm ${selectedCategory === category.key
-                ? 'bg-brand text-white shadow-brand/30 transform scale-105'
-                : 'bg-white text-gray-600 border border-gray-200 hover:border-brand/40 hover:text-brand'
+              key={cat.id}
+              onClick={() => onMainChange(cat.key)}
+              className={`flex-shrink-0 px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 flex items-center whitespace-nowrap ${selectedMain === cat.key
+                ? 'bg-brand text-white shadow-lg shadow-brand/30 scale-105'
+                : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
                 }`}
             >
-              {category.name}
+              {getMainIcon(cat.key)}
+              {cat.name}
             </button>
           ))}
         </div>

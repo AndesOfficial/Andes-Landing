@@ -1,88 +1,266 @@
-import React, { useState } from 'react';
+
+import React, { useState, useMemo } from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/MyFooter';
 import ServiceFilters from '../components/NewServiceFilters';
-import ServiceList from '../components/NewServiceList';
-import PricingHighlights from '../components/PricingHighlights';
-import { Helmet } from 'react-helmet-async';
+import data from '../data';
+import CartFloatingButton from '../components/CartFloatingButton';
+import CartSidebar from '../components/CartSidebar';
+import { FaSearch } from 'react-icons/fa';
 import { useOrder } from '../context/OrderContext';
-import { Link } from 'react-router-dom';
-import { FaShoppingCart, FaArrowRight } from 'react-icons/fa';
+import NewServiceCard from '../components/NewServiceCard';
+import BottomNav from '../components/BottomNav';
+import { FaTshirt, FaShoePrints, FaLayerGroup } from 'react-icons/fa';
 
-const ServicesPage = ({ data }) => {
-  const [selectedMode, setSelectedMode] = useState('all');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const { cart, totalItems, totalPrice } = useOrder();
+const NewServicePage = () => {
+  const { cart, addToCart, removeFromCart, updateQuantity } = useOrder();
+  const [selectedMain, setSelectedMain] = useState('dry_cleaning'); // Default to Dry Cleaning as it's the main list now
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('default');
 
-  const filteredServices = data.services.filter(service => {
-    const modeMatch = selectedMode === 'all' ||
-      (selectedMode === 'piece' && (service.unit === 'piece' || service.unit === 'pair')) ||
-      (selectedMode === 'kg' && service.unit === 'kg');
-    const categoryMatch = selectedCategory === 'all' || service.categories.includes(selectedCategory);
-    return modeMatch && categoryMatch;
-  });
+  const getItemQuantity = (id) => {
+    const item = cart.find(i => i.id === id);
+    return item ? item.quantity : 0;
+  };
+
+
+
+  // Filter Logic
+  const filteredServices = useMemo(() => {
+    if (!data || !data.services) return [];
+    return data.services.filter(service => {
+      // 1. Search Filter
+      const matchesSearch = (service.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (service.displayName || '').toLowerCase().includes(searchQuery.toLowerCase());
+
+      // 2. Main Category Filter (with Virtual Category support)
+      let matchesMain = false;
+      matchesMain = service.mainCategory === selectedMain;
+
+      return matchesMain && matchesSearch;
+    }).sort((a, b) => {
+      // ... existing sort logic ...
+      const priceA = a.rateByPiece || a.rateByKg || 0;
+      const priceB = b.rateByPiece || b.rateByKg || 0;
+
+      if (sortBy === 'priceLowHigh') return priceA - priceB;
+      if (sortBy === 'priceHighLow') return priceB - priceA;
+      return 0;
+    });
+  }, [selectedMain, searchQuery, sortBy]);
 
   return (
-    <>
-      <Helmet>
-        <title>Andes Laundry - New Services</title>
-        <meta name="description" content="Explore our new laundry services and pricing." />
-      </Helmet>
-      <div className="min-h-screen bg-gray-50 pb-24"> {/* Added padding bottom for floating button */}
-        <div className="pt-32 pb-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            {/* Page Header */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
-                Services & Pricing
-              </h1>
-              <p className="mt-5 max-w-xl mx-auto text-xl text-gray-500">
-                Professional cleaning services tailored to your needs
-              </p>
+    <div className="min-h-screen bg-slate-50 font-sans text-gray-900 pb-24 lg:pb-0">
+      <Navbar />
+
+      {/* Mobile Header (Blue Background with Search) */}
+      <div className="lg:hidden fixed top-[60px] left-0 right-0 bg-brand px-4 py-4 z-30 shadow-md">
+        <div className="relative mb-3">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <FaSearch className="text-gray-400" />
+          </div>
+          <input
+            type="text"
+            placeholder="Search services..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-11 pr-4 py-3 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-white/50 focus:outline-none text-gray-700 bg-white"
+          />
+        </div>
+
+        {/* Mobile Tabs */}
+        <div className="flex justify-between px-2 pt-1">
+          <button
+            onClick={() => setSelectedMain('general')}
+            className={`flex flex-col items-center gap-1 text-xs font-bold pb-2 border-b-2 transition-all ${selectedMain === 'general' ? 'text-white border-white' : 'text-blue-200 border-transparent'}`}
+          >
+            <FaLayerGroup size={18} /> General
+          </button>
+          <button
+            onClick={() => setSelectedMain('dry_cleaning')}
+            className={`flex flex-col items-center gap-1 text-xs font-bold pb-2 border-b-2 transition-all ${selectedMain === 'dry_cleaning' ? 'text-white border-white' : 'text-blue-200 border-transparent'}`}
+          >
+            <FaTshirt size={18} /> Dry Cleaning
+          </button>
+          <button
+            onClick={() => setSelectedMain('shoe_cleaning')}
+            className={`flex flex-col items-center gap-1 text-xs font-bold pb-2 border-b-2 transition-all ${selectedMain === 'shoe_cleaning' ? 'text-white border-white' : 'text-blue-200 border-transparent'}`}
+          >
+            <FaShoePrints size={18} /> Shoes
+          </button>
+        </div>
+      </div>
+
+      <main className="container mx-auto px-4 py-8 max-w-7xl pt-44 lg:pt-8">
+        {/* Desktop Header & Search (Hidden on Mobile) */}
+        <div className="hidden lg:block">
+          {/* Slim Utility Header */}
+          <div className="bg-white/80 backdrop-blur-md border border-gray-100 rounded-2xl p-4 mb-8 flex flex-wrap justify-center md:justify-between items-center gap-4 shadow-sm text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <span className="bg-blue-50 text-brand p-1.5 rounded-full text-xs">💳</span>
+              <span>Simple Pricing</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="bg-green-50 text-green-600 p-1.5 rounded-full text-xs">✅</span>
+              <span>No Hidden Fees</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="bg-orange-50 text-orange-600 p-1.5 rounded-full text-xs">🚚</span>
+              <span>Free 24h Delivery</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="bg-purple-50 text-purple-600 p-1.5 rounded-full text-xs">₹</span>
+              <span>Min Order ₹50</span>
+            </div>
+          </div>
+
+          {/* Page Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-3xl md:text-5xl font-extrabold text-slate-800 tracking-tight mb-2">
+              Fresh Laundry, <span className="text-brand relative inline-block">
+                Delivered
+                <svg className="absolute w-full h-2 bottom-1 left-0 text-brand/20 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
+                  <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="8" fill="none" />
+                </svg>
+              </span>
+            </h1>
+            <p className="text-gray-500 max-w-2xl mx-auto">Premium care for your clothes with simple, transparent pricing.</p>
+          </div>
+
+          {/* Search & Sort Area */}
+          <div className="max-w-3xl mx-auto mb-8 flex flex-col md:flex-row gap-4">
+            <div className="flex-grow relative group">
+              <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                <FaSearch className="text-gray-400 group-focus-within:text-brand transition-colors" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search for a garment..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-6 py-4 rounded-full bg-white border border-gray-100 shadow-sm focus:shadow-xl focus:border-brand/20 focus:ring-4 focus:ring-brand/5 transition-all outline-none text-gray-700 placeholder:text-gray-400 font-medium"
+              />
             </div>
 
-            {/* Pricing Highlights */}
-            <PricingHighlights />
-
-            {/* Filters and Services */}
-            <div className="space-y-8">
-              <ServiceFilters
-                serviceModes={data.serviceModes}
-                serviceCategories={data.serviceCategories}
-                selectedMode={selectedMode}
-                selectedCategory={selectedCategory}
-                onModeChange={setSelectedMode}
-                onCategoryChange={setSelectedCategory}
-              />
-
-              <ServiceList services={filteredServices} />
+            <div className="flex-shrink-0">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="w-full md:w-auto px-6 py-4 rounded-full bg-white border border-gray-100 shadow-sm focus:shadow-xl focus:border-brand/20 focus:ring-4 focus:ring-brand/5 outline-none text-gray-700 font-bold cursor-pointer transition-all hover:bg-gray-50"
+              >
+                <option value="default">Filters</option>
+                <option value="priceLowHigh">Price: Low to High</option>
+                <option value="priceHighLow">Price: High to Low</option>
+              </select>
             </div>
           </div>
         </div>
 
-        {/* Floating Cart Button */}
-        {cart.length > 0 && (
-          <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-11/12 max-w-md z-50 animate-bounce-in">
-            <Link to="/order" className="bg-gradient-to-r from-brand to-brand-dark text-white rounded-2xl shadow-2xl p-4 flex items-center justify-between hover:scale-105 transition-transform duration-300">
-              <div className="flex items-center space-x-3">
-                <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
-                  <FaShoppingCart className="text-xl" />
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-bold text-lg">{totalItems} {totalItems === 1 ? 'item' : 'items'}</span>
-                  <span className="text-sm opacity-90">₹{totalPrice}</span>
-                </div>
-              </div>
-              <div className="flex items-center space-x-2 bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm">
-                <span className="font-medium">Checkout</span>
-                <FaArrowRight />
-              </div>
-            </Link>
-          </div>
-        )}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 relative items-start">
 
-        {/* Footer */}
+          {/* Filters Sidebar (Show only on Desktop) */}
+          <div className="hidden lg:block lg:col-span-1 xl:col-span-1 sticky top-24 self-start transition-all duration-300">
+            <ServiceFilters
+              mainCategories={data?.mainCategories || []}
+              selectedMain={selectedMain}
+              onMainChange={(key) => {
+                setSelectedMain(key);
+                setSearchQuery('');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              layout="vertical"
+            />
+          </div>
+
+          {/* Main Content */}
+          <div className="lg:col-span-3">
+
+            {/* Grouped Service List */}
+            {Object.entries(
+              filteredServices.reduce((acc, service) => {
+                const group = service.group || 'Other';
+                if (!acc[group]) acc[group] = [];
+                acc[group].push(service);
+                return acc;
+              }, {})
+            ).map(([group, services]) => (
+              <ServiceGroupSection
+                key={group}
+                title={group}
+                services={services}
+                addToCart={addToCart}
+                removeFromCart={removeFromCart}
+                getItemQuantity={getItemQuantity}
+              />
+            ))}
+
+            {filteredServices.length === 0 && (
+              <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm">
+                <div className="text-6xl mb-4 opacity-20">🧺</div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">No items found</h3>
+                <p className="text-gray-500 mb-6">We couldn't find any services matching "<span className="font-bold text-gray-700">{searchQuery}</span>".</p>
+                <button
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSearchQuery('');
+                    setSelectedMain('all');
+                  }}
+                  className="bg-brand text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-brand/20 hover:bg-brand-dark transition-all active:scale-95"
+                >
+                  Clear All Filters
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </main >
+
+      <BottomNav />
+
+      {/* Desktop Cart Sidebar Component (Positioned Fixed Right) */}
+      <div className="hidden lg:block">
+        <CartSidebar cart={cart} />
       </div>
-    </>
+
+    </div >
   );
 };
 
-export default ServicesPage;
+// Helper Component for Collapsible Sections
+const ServiceGroupSection = ({ title, services, addToCart, removeFromCart, getItemQuantity }) => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  return (
+    <div className="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between p-4 bg-gray-50/50 hover:bg-gray-100/50 transition-colors text-left"
+      >
+        <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+          <span className="w-1 h-6 bg-brand rounded-full"></span>
+          {title}
+          <span className="text-xs font-normal text-gray-400 ml-2">({services.length} items)</span>
+        </h3>
+        <span className={`text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+          ▼
+        </span>
+      </button>
+
+      <div className={`transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="p-4 grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {services.map(service => (
+            <NewServiceCard
+              key={service.id}
+              service={service}
+              onAdd={() => addToCart(service)}
+              onRemove={() => removeFromCart(service.id)}
+              getItemQuantity={getItemQuantity}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default NewServicePage;
