@@ -53,9 +53,10 @@ const NewServicePage = () => {
     <div className="min-h-screen bg-slate-50 font-sans text-gray-900 pb-24 lg:pb-0">
       <Navbar />
 
-      {/* Mobile Header (Blue Background with Search) */}
-      <div className="lg:hidden fixed top-[60px] left-0 right-0 bg-brand px-4 py-4 z-30 shadow-md">
-        <div className="relative mb-3">
+      {/* Mobile Search Bar - Scrolls away (Not sticky) */}
+      {/* Added pt-20 to account for Navbar height */}
+      <div className="lg:hidden bg-brand px-4 py-2 pt-20">
+        <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
             <FaSearch className="text-gray-400" />
           </div>
@@ -64,34 +65,37 @@ const NewServicePage = () => {
             placeholder="Search services..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 py-3 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-white/50 focus:outline-none text-gray-700 bg-white"
+            className="w-full pl-11 pr-4 py-2.5 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-white/50 focus:outline-none text-gray-700 bg-white"
           />
         </div>
+      </div>
 
-        {/* Mobile Tabs */}
-        <div className="flex justify-between px-2 pt-1">
+      {/* Mobile Tabs - Sticky below Navbar (top-[60px]) */}
+      <div className="lg:hidden sticky top-[60px] z-30 bg-brand shadow-md">
+        <div className="flex justify-between px-4 pb-2 pt-1">
           <button
             onClick={() => setSelectedMain('general')}
-            className={`flex flex-col items-center gap-1 text-xs font-bold pb-2 border-b-2 transition-all ${selectedMain === 'general' ? 'text-white border-white' : 'text-blue-200 border-transparent'}`}
+            className={`flex flex-col items-center gap-1 text-[10px] font-bold pb-2 border-b-2 transition-all px-2 ${selectedMain === 'general' ? 'text-white border-white' : 'text-blue-200 border-transparent'}`}
           >
-            <FaLayerGroup size={18} /> General
+            <FaLayerGroup size={16} /> General
           </button>
           <button
             onClick={() => setSelectedMain('dry_cleaning')}
-            className={`flex flex-col items-center gap-1 text-xs font-bold pb-2 border-b-2 transition-all ${selectedMain === 'dry_cleaning' ? 'text-white border-white' : 'text-blue-200 border-transparent'}`}
+            className={`flex flex-col items-center gap-1 text-[10px] font-bold pb-2 border-b-2 transition-all px-2 ${selectedMain === 'dry_cleaning' ? 'text-white border-white' : 'text-blue-200 border-transparent'}`}
           >
-            <FaTshirt size={18} /> Dry Cleaning
+            <FaTshirt size={16} /> Dry Cleaning
           </button>
           <button
             onClick={() => setSelectedMain('shoe_cleaning')}
-            className={`flex flex-col items-center gap-1 text-xs font-bold pb-2 border-b-2 transition-all ${selectedMain === 'shoe_cleaning' ? 'text-white border-white' : 'text-blue-200 border-transparent'}`}
+            className={`flex flex-col items-center gap-1 text-[10px] font-bold pb-2 border-b-2 transition-all px-2 ${selectedMain === 'shoe_cleaning' ? 'text-white border-white' : 'text-blue-200 border-transparent'}`}
           >
-            <FaShoePrints size={18} /> Shoes
+            <FaShoePrints size={16} /> Shoes
           </button>
         </div>
       </div>
 
-      <main className="container mx-auto px-4 py-8 max-w-7xl pt-44 lg:pt-8">
+      {/* Main Content - Reduced top padding, 1-col mobile grid */}
+      <main className="container mx-auto px-4 py-4 max-w-7xl lg:pt-8 min-h-[60vh]">
         {/* Desktop Header & Search (Hidden on Mobile) */}
         <div className="hidden lg:block">
           {/* Slim Utility Header */}
@@ -159,7 +163,7 @@ const NewServicePage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 relative items-start">
 
           {/* Filters Sidebar (Show only on Desktop) */}
-          <div className="hidden lg:block lg:col-span-1 xl:col-span-1 sticky top-24 self-start transition-all duration-300">
+          <div className="hidden lg:block lg:col-span-1 xl:col-span-1 sticky top-24 self-start transition-all duration-300 max-h-[calc(100vh-100px)] overflow-y-auto no-scrollbar">
             <ServiceFilters
               mainCategories={data?.mainCategories || []}
               selectedMain={selectedMain}
@@ -172,7 +176,7 @@ const NewServicePage = () => {
             />
           </div>
 
-          {/* Main Content */}
+          {/* Main Content: grid-cols-1 on mobile, 3 cols inside layout on desktop */}
           <div className="lg:col-span-3">
 
             {/* Grouped Service List */}
@@ -200,14 +204,10 @@ const NewServicePage = () => {
                 <h3 className="text-xl font-bold text-gray-800 mb-2">No items found</h3>
                 <p className="text-gray-500 mb-6">We couldn't find any services matching "<span className="font-bold text-gray-700">{searchQuery}</span>".</p>
                 <button
-                  onClick={() => {
-                    setSearchQuery('');
-                    setSearchQuery('');
-                    setSelectedMain('all');
-                  }}
+                  onClick={() => setSearchQuery('')}
                   className="bg-brand text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-brand/20 hover:bg-brand-dark transition-all active:scale-95"
                 >
-                  Clear All Filters
+                  Clear Search
                 </button>
               </div>
             )}
@@ -231,12 +231,12 @@ const ServiceGroupSection = ({ title, services, addToCart, removeFromCart, getIt
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300">
+    <div className="mb-4 lg:mb-6 bg-white rounded-xl lg:rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 bg-gray-50/50 hover:bg-gray-100/50 transition-colors text-left"
+        className="w-full flex items-center justify-between p-3 lg:p-4 bg-gray-50/50 hover:bg-gray-100/50 transition-colors text-left"
       >
-        <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+        <h3 className="text-base lg:text-lg font-bold text-gray-800 flex items-center gap-2">
           <span className="w-1 h-6 bg-brand rounded-full"></span>
           {title}
           <span className="text-xs font-normal text-gray-400 ml-2">({services.length} items)</span>
@@ -247,7 +247,8 @@ const ServiceGroupSection = ({ title, services, addToCart, removeFromCart, getIt
       </button>
 
       <div className={`transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="p-4 grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        {/* Mobile: 1 column (vertical list of horizontal cards). Desktop: 3 columns grid */}
+        <div className="p-3 lg:p-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-4">
           {services.map(service => (
             <NewServiceCard
               key={service.id}

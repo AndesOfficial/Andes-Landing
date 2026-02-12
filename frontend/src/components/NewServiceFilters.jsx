@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { FaLayerGroup, FaTshirt, FaShoePrints, FaHome, FaMale, FaFemale, FaBoxOpen, FaWeightHanging } from 'react-icons/fa';
 
@@ -23,8 +24,9 @@ const ServiceFilters = ({
 
 
   if (layout === 'vertical') {
+    // Desktop Sidebar Layout
     return (
-      <div className="space-y-6 sticky top-24">
+      <div className="space-y-6">
         {/* Categories */}
         <div className="bg-white/70 backdrop-blur-lg rounded-3xl shadow-brand-soft border border-white/50 p-6">
           <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Categories</h3>
@@ -46,14 +48,11 @@ const ServiceFilters = ({
             ))}
           </div>
         </div>
-
-        {/* Service Type Filter */}
-
-
       </div>
     );
   }
 
+  // Mobile/Horizontal Layout
   return (
     <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 mb-8">
       {/* 1. Main Category Tabs */}
@@ -61,7 +60,6 @@ const ServiceFilters = ({
         <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Categories</h3>
         <div className="flex overflow-x-auto pb-4 gap-3 no-scrollbar md:flex-wrap md:overflow-hidden">
           {mainCategories.map(cat => (
-            // ... existing horizontal mapping ... keeping it cleaner by just rendering children if exact same, but logic differs slightly
             <button
               key={cat.id}
               onClick={() => onMainChange(cat.key)}
