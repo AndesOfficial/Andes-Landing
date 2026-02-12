@@ -8,9 +8,9 @@ export default {
     extend: {
       colors: {
         brand: {
-          DEFAULT: '#0890f1',
-          dark: '#0670bd', // ~10% darker for hover
-          light: '#3ea8f4', // lighter shade if needed
+          DEFAULT: '#0084FF', // Primary Brand Blue
+          dark: '#0066cc',    // Darker shade for hover
+          light: '#e6f2ff',   // Very light blue for backgrounds/accents
         },
       },
       boxShadow: {
