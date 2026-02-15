@@ -8,8 +8,11 @@ const DashboardLayout = () => {
     const location = useLocation();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+    const closeSidebar = () => setIsSidebarOpen(false);
+
     const handleLogout = async () => {
         if (window.confirm("Are you sure you want to log out?")) {
+            closeSidebar();
             try {
                 await logout();
                 navigate('/login');
@@ -36,7 +39,7 @@ const DashboardLayout = () => {
             {/* Sidebar */}
             <div className={`fixed lg:static inset-y-0 left-0 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 transition-transform duration-200 ease-in-out w-64 bg-white shadow-xl flex flex-col z-30`}>
                 <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-                    <Link to="/" className="flex items-center gap-2">
+                    <Link to="/" className="flex items-center gap-2" onClick={closeSidebar}>
                         <div className="w-8 h-8 bg-brand rounded-lg flex items-center justify-center text-white font-bold text-xl">A</div>
                         <span className="text-2xl font-bold text-gray-800">Andes</span>
                     </Link>
@@ -57,7 +60,11 @@ const DashboardLayout = () => {
                 <nav className="flex-1 mt-6 overflow-y-auto">
                     <ul className="space-y-1">
                         <li>
-                            <Link to="/dashboard" className={`flex items-center px-6 py-3 transition-colors duration-200 ${isActive('/dashboard')}`}>
+                            <Link
+                                to="/dashboard"
+                                onClick={closeSidebar}
+                                className={`flex items-center px-6 py-3 transition-colors duration-200 ${isActive('/dashboard')}`}
+                            >
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                                 </svg>
@@ -65,7 +72,11 @@ const DashboardLayout = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/dashboard/orders" className={`flex items-center px-6 py-3 transition-colors duration-200 ${isActive('/dashboard/orders')}`}>
+                            <Link
+                                to="/dashboard/orders"
+                                onClick={closeSidebar}
+                                className={`flex items-center px-6 py-3 transition-colors duration-200 ${isActive('/dashboard/orders')}`}
+                            >
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                 </svg>
@@ -73,7 +84,11 @@ const DashboardLayout = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/dashboard/profile" className={`flex items-center px-6 py-3 transition-colors duration-200 ${isActive('/dashboard/profile')}`}>
+                            <Link
+                                to="/dashboard/profile"
+                                onClick={closeSidebar}
+                                className={`flex items-center px-6 py-3 transition-colors duration-200 ${isActive('/dashboard/profile')}`}
+                            >
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
@@ -85,6 +100,7 @@ const DashboardLayout = () => {
 
                 <div className="p-4 border-t border-gray-100">
                     <button onClick={handleLogout} className="flex items-center w-full px-6 py-3 text-red-500 hover:bg-red-50 rounded-lg transition-colors duration-200 group">
+
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
