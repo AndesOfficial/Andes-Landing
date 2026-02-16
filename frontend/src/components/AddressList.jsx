@@ -59,11 +59,15 @@ const AddressList = ({ onSelectAddress, selectedAddressId, onClose }) => {
     };
 
     const handleDeleteAddress = async (id, e) => {
-        e.stopPropagation();
+        console.log("Attempting delete", id);
+        e.stopPropagation(); // Stop click from triggering selection
         if (!window.confirm("Delete this address?")) return;
 
         try {
             await deleteDoc(doc(db, `users/${currentUser.uid}/addresses`, id));
+            if (selectedAddressId === id) {
+                onSelectAddress(null); // Deselect if deleted
+            }
         } catch (error) {
             console.error("Error deleting address:", error);
             alert("Failed to delete address.");

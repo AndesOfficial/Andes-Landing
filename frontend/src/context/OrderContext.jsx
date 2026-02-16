@@ -43,23 +43,28 @@ export const OrderProvider = ({ children }) => {
 
     const clearCart = () => setCart([]);
 
-    const placeOrder = async (deliverySlot) => {
+    const placeOrder = async (orderDetails) => {
         if (!currentUser) {
             console.error("Attempted to place order without user logged in");
             throw new Error("User must be logged in");
         }
 
+        const { deliverySlot, addPaperBag, finalTotal, deliveryAddress } = orderDetails;
+
         const orderData = {
             userId: currentUser.uid,
             userEmail: currentUser.email,
             userName: currentUser.fullName || 'Unknown',
-            items: cart.map(({ icon, ...rest }) => rest), // Remove icon (React component) which causes Firestore error
+            items: cart.map(({ icon, ...rest }) => rest),
             totalItems: cart.reduce((acc, item) => acc + item.quantity, 0),
-            totalPrice: cart.reduce((acc, item) => acc + (item.price * item.quantity), 0),
-            status: 'Pending', // Changed from 'Processing' to 'Pending' to allow user cancellation
+            totalPrice: finalTotal || cart.reduce((acc, item) => acc + (item.price * item.quantity), 0), // Use passed total or calc
+            subtotal: cart.reduce((acc, item) => acc + (item.price * item.quantity), 0),
+            addPaperBag: !!addPaperBag,
+            status: 'Pending',
             deliverySlot: deliverySlot || 'Not specified',
+            deliveryAddress: deliveryAddress || null,
             createdAt: serverTimestamp(),
-            orderId: '#ORD-' + Math.floor(100000 + Math.random() * 900000) // Simple random ID
+            orderId: '#ORD-' + Math.floor(100000 + Math.random() * 900000)
         };
 
         console.log("Placing order with data:", orderData); // Debug log

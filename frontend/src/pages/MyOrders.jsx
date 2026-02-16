@@ -185,12 +185,10 @@ const MyOrders = () => {
                                 <div className="bg-gray-50 p-4 rounded-xl">
                                     <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Pickup & Delivery</h4>
                                     <div className="space-y-2 text-sm text-slate-700">
-                                        <div className="flex justify-between">
-                                            <span className="font-medium text-slate-500">Slot:</span>
-                                            <span className="font-bold">{order.selectedSlot === 'morning' ? 'Morning (9 AM - 12 PM)' : 'Afternoon (2 PM - 5 PM)'}</span>
-                                        </div>
-                                        {/* You can add delivery estimate here if available */}
+                                        <span className="font-medium text-slate-500">Slot:</span>
+                                        <span className="font-bold">Standard (6 PM - 9 PM)</span>
                                     </div>
+                                    {/* You can add delivery estimate here if available */}
                                 </div>
 
                                 <div className="bg-gray-50 p-4 rounded-xl">
@@ -239,41 +237,40 @@ const MyOrders = () => {
                         </div>
                     ))
                 )}
-            </div>
-
-            {/* Cancel Confirmation Modal */}
-            {
-                showCancelModal && (
-                    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-fade-in">
-                        <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform transition-all scale-100">
-                            <div className="text-center">
-                                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
-                                    <FaTimesCircle className="h-6 w-6 text-red-600" />
-                                </div>
-                                <h3 className="text-lg leading-6 font-bold text-gray-900 mb-2">Cancel Order?</h3>
-                                <p className="text-sm text-gray-500 mb-6">
-                                    Are you sure you want to cancel this order? This action cannot be undone.
-                                </p>
-                                <div className="flex space-x-3">
-                                    <button
-                                        onClick={closeCancelModal}
-                                        className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-colors"
-                                    >
-                                        No, Keep It
-                                    </button>
-                                    <button
-                                        onClick={confirmCancel}
-                                        className="flex-1 px-4 py-2 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-colors shadow-lg shadow-red-200"
-                                    >
-                                        Yes, Cancel
-                                    </button>
+                {/* Cancel Confirmation Modal */}
+                {
+                    showCancelModal && (
+                        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-fade-in">
+                            <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform transition-all scale-100">
+                                <div className="text-center">
+                                    <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                                        <FaTimesCircle className="h-6 w-6 text-red-600" />
+                                    </div>
+                                    <h3 className="text-lg leading-6 font-bold text-gray-900 mb-2">Cancel Order?</h3>
+                                    <p className="text-sm text-gray-500 mb-6">
+                                        Are you sure you want to cancel this order? This action cannot be undone.
+                                    </p>
+                                    <div className="flex space-x-3">
+                                        <button
+                                            onClick={closeCancelModal}
+                                            className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-colors"
+                                        >
+                                            No, Keep It
+                                        </button>
+                                        <button
+                                            onClick={confirmCancel}
+                                            className="flex-1 px-4 py-2 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-colors shadow-lg shadow-red-200"
+                                        >
+                                            Yes, Cancel
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )
-            }
-        </div >
+                    )
+                }
+            </div>
+        </div>
     );
 };
 

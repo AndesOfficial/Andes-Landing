@@ -7,7 +7,6 @@ import { Helmet } from "react-helmet-async";
 import { toast } from 'react-toastify';
 
 import CartReviewStep from '../components/checkout/CartReviewStep';
-import SchedulingStep from '../components/checkout/SchedulingStep';
 import PaymentSummaryStep from '../components/checkout/PaymentSummaryStep';
 
 const MIN_ORDER_VALUE = 99;
@@ -18,12 +17,8 @@ const OrderPlacement = () => {
 
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [selectedSlot, setSelectedSlot] = useState(null);
+    const [selectedSlot, setSelectedSlot] = useState('standard');
     const [addPaperBag, setAddPaperBag] = useState(false);
-    // showAddressModal and couponCode moved to PaymentSummaryStep or keep if needed?
-    // PaymentSummaryStep handles them internally for UI. 
-    // couponCode state was local to input, didn't seem to affect order logic in original code.
-    // selectedAddress IS needed for placeOrder, so keep it here.
     const [selectedAddress, setSelectedAddress] = useState(null);
 
     const paperBagCost = 6.00;
@@ -35,15 +30,20 @@ const OrderPlacement = () => {
     const { currentUser } = useAuth();
 
     useEffect(() => {
+        // Auto-select standard slot if not already
+        if (!selectedSlot) {
+            setSelectedSlot('standard');
+        }
+
         if (location.state && location.state.selectedSlot) {
-            setSelectedSlot(location.state.selectedSlot);
-            setStep(2); // Jump to schedule step
+            setSelectedSlot('standard');
+            setStep(2);
         }
     }, [location.state]);
 
     const isBelowMOV = totalPrice < MIN_ORDER_VALUE;
 
-    const handleProceedToSchedule = () => {
+    const handleProceedToPayment = () => {
         if (isBelowMOV) {
             toast.error(`Minimum order value is ₹${MIN_ORDER_VALUE}`);
             return;
@@ -53,15 +53,20 @@ const OrderPlacement = () => {
             navigate('/login', { state: { from: '/order' } });
             return;
         }
+
         setStep(2);
     };
 
     const handlePlaceOrder = async () => {
-        console.log("Placing order with slot:", selectedSlot);
         setLoading(true);
-
         try {
-            await placeOrder({ ...selectedSlot, addPaperBag, finalTotal, deliveryAddress: selectedAddress }); // Pass new details
+            // Fix: Pass selectedSlot as a PROPERTY, not spread (which breaks strings)
+            await placeOrder({
+                deliverySlot: selectedSlot,
+                addPaperBag,
+                finalTotal,
+                deliveryAddress: selectedAddress
+            });
             navigate('/order-confirmation');
         } catch (error) {
             console.log("Something went wrong:", error);
@@ -79,7 +84,10 @@ const OrderPlacement = () => {
             </Helmet>
             <div className="max-w-4xl mx-auto">
                 <div className="flex items-center mb-8">
-                    <button onClick={() => navigate(-1)} className="mr-4 text-slate-500 hover:text-slate-800">
+                    <button
+                        onClick={() => step === 1 ? navigate(-1) : setStep(step - 1)}
+                        className="mr-4 text-slate-500 hover:text-slate-800"
+                    >
                         <FaArrowLeft className="text-xl" />
                     </button>
                     <h1 className="text-3xl font-bold text-slate-900">Checkout</h1>
@@ -93,10 +101,6 @@ const OrderPlacement = () => {
                             <div className={`h-full bg-brand transition-all duration-500 ${step >= 2 ? 'w-full' : 'w-0'}`}></div>
                         </div>
                         <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold transition-all ${step >= 2 ? 'bg-brand text-white shadow-lg' : 'bg-gray-200 text-gray-500'}`}>2</div>
-                        <div className="w-16 h-1 bg-gray-200 rounded-full overflow-hidden">
-                            <div className={`h-full bg-brand transition-all duration-500 ${step >= 3 ? 'w-full' : 'w-0'}`}></div>
-                        </div>
-                        <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold transition-all ${step >= 3 ? 'bg-brand text-white shadow-lg' : 'bg-gray-200 text-gray-500'}`}>3</div>
                     </div>
                 </div>
 
@@ -109,21 +113,12 @@ const OrderPlacement = () => {
                         totalPrice={totalPrice}
                         isBelowMOV={isBelowMOV}
                         minOrderValue={MIN_ORDER_VALUE}
-                        onNext={handleProceedToSchedule}
+                        onNext={handleProceedToPayment}
                         addToCart={addToCart}
                     />
                 )}
 
                 {step === 2 && (
-                    <SchedulingStep
-                        selectedSlot={selectedSlot}
-                        setSelectedSlot={setSelectedSlot}
-                        onNext={() => setStep(3)}
-                        onBack={() => setStep(1)}
-                    />
-                )}
-
-                {step === 3 && (
                     <PaymentSummaryStep
                         cart={cart}
                         totalItems={totalItems}
@@ -137,7 +132,7 @@ const OrderPlacement = () => {
                         finalTotal={finalTotal}
                         onPlaceOrder={handlePlaceOrder}
                         loading={loading}
-                        onBack={() => setStep(2)}
+                        onBack={() => setStep(1)}
                     />
                 )}
             </div>

@@ -74,8 +74,8 @@ const PaymentSummaryStep = ({
                     <div className="bg-blue-50 rounded-xl p-4 flex items-start text-blue-800">
                         <FaInfoCircle className="mt-1 mr-3 flex-shrink-0 text-blue-500" />
                         <p className="text-sm font-medium leading-relaxed">
-                            Orders will be picked up and delivered between 6:00 PM and 9:00 PM
-                            {selectedSlot && <span className="block mt-1 text-xs opacity-75">Selected Preference: {selectedSlot === 'morning' ? 'Morning (9-12)' : 'Afternoon (2-5)'}</span>}
+                            Pickup & Delivery Window: <br />
+                            <span className="font-bold">6:00 PM - 9:00 PM</span>
                         </p>
                     </div>
                 </div>
