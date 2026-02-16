@@ -7,10 +7,10 @@ import shoeicon from "../assets/shoeicon.svg";
 
 // Data for OrderPlacement.jsx
 export const quickServices = [
-    { id: 'wash-fold', name: 'Wash & Fold', price: 1.5, unit: 'kg', icon: <FaTshirt />, desc: 'Regular laundry, washed, dried, and folded.' },
-    { id: 'dry-clean', name: 'Dry Clean', price: 5.0, unit: 'item', icon: <FaTshirt />, desc: 'Delicate items cleaned with care.' },
-    { id: 'ironing', name: 'Ironing', price: 2.0, unit: 'item', icon: <FaTshirt />, desc: 'Professional steam ironing.' },
-    { id: 'bedding', name: 'Bedding', price: 8.0, unit: 'set', icon: <FaTshirt />, desc: 'Comforters, sheets, and blankets.' },
+    { id: 'wash-fold', name: 'Wash & Fold', price: 69, unit: 'kg', icon: <FaTshirt />, desc: 'Regular laundry, washed, dried, and folded.' },
+    { id: 'wash', name: 'Wash ', price: 69, unit: 'Kg', icon: <FaTshirt />, desc: 'Delicate items cleaned with care.' },
+    { id: 'iron', name: 'Iron', price: 12, unit: 'piece', icon: <FaTshirt />, desc: 'Professional steam ironing.' },
+    { id: 'wash-iron', name: 'Wash & Iron', price: 89, unit: 'kg', icon: <FaTshirt />, desc: 'Comforters, sheets, and blankets.' },
 ];
 
 // Data for ServicesPage.jsx

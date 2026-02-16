@@ -56,10 +56,10 @@ const Services = () => {
           </div>
           <div className="snap-center shrink-0 w-[85%] sm:w-[350px] md:w-auto h-full">
             <ItemCard
-              title="Dry Cleaning"
-              price="From ₹29"
+              title="Wash & Fold"
+              price="69/Kg"
               description="For delicate items and fabrics."
-              includes={["DRY CLEANING", "IRONING"]}
+              includes={["WASH", "FOLD"]}
               serviceTime="24H - 48H"
               returned="ON HANGERS"
               icon={<FaUserTie size={36} className="text-brand" />}
