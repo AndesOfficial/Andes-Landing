@@ -56,7 +56,7 @@ export const OrderProvider = ({ children }) => {
             items: cart.map(({ icon, ...rest }) => rest), // Remove icon (React component) which causes Firestore error
             totalItems: cart.reduce((acc, item) => acc + item.quantity, 0),
             totalPrice: cart.reduce((acc, item) => acc + (item.price * item.quantity), 0),
-            status: 'Processing',
+            status: 'Pending', // Changed from 'Processing' to 'Pending' to allow user cancellation
             deliverySlot: deliverySlot || 'Not specified',
             createdAt: serverTimestamp(),
             orderId: '#ORD-' + Math.floor(100000 + Math.random() * 900000) // Simple random ID
@@ -88,6 +88,7 @@ export const OrderProvider = ({ children }) => {
         setPreferences,
         setSchedule,
         placeOrder,
+        clearCart,
         totalItems: cart.reduce((acc, item) => acc + item.quantity, 0),
         totalPrice: cart.reduce((acc, item) => acc + (item.price * item.quantity), 0)
     };
