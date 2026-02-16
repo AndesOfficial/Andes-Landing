@@ -2,14 +2,16 @@
 import { Link } from "react-router-dom";
 import { FaInstagram, FaLinkedin, FaWhatsapp, FaEnvelope, FaPaperPlane } from "react-icons/fa";
 
+import { toast } from 'react-toastify';
+
 const MyFooter = () => {
 
   // This function handles the newsletter subscription.
   // We use e.preventDefault() so the page doesn't reload when the user clicks the button.
   const handleSubscribe = (e) => {
     e.preventDefault();
-    // Show a friendly alert to let the user know it worked!
-    alert("Thanks for subscribing! We'll keep you updated.");
+    // Show a friendly toast to let the user know it worked!
+    toast.success("Thanks for subscribing! We'll keep you updated.");
   };
 
   // Getting the current year dynamically so we don't have to update it manually every New Year's Eve!
@@ -32,13 +34,13 @@ const MyFooter = () => {
 
             {/* Social Icons Container */}
             <div className="flex space-x-4">
-              <a href="https://www.instagram.com/andes.now/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-brand transition-colors">
+              <a href="https://www.instagram.com/andes.now/" target="_blank" rel="noopener noreferrer" aria-label="Visit our Instagram page" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-brand transition-colors">
                 <FaInstagram />
               </a>
-              <a href="https://www.linkedin.com/company/andesnow/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-brand transition-colors">
+              <a href="https://www.linkedin.com/company/andesnow/" target="_blank" rel="noopener noreferrer" aria-label="Visit our LinkedIn page" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-brand transition-colors">
                 <FaLinkedin />
               </a>
-              <a href="https://wa.me/918626076578" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-brand transition-colors">
+              <a href="https://wa.me/918626076578" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-brand transition-colors">
                 <FaWhatsapp />
               </a>
             </div>

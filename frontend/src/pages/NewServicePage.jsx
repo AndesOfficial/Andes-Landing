@@ -1,5 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
+import { Helmet } from "react-helmet-async";
 import Navbar from '../components/Navbar';
 import Footer from '../components/MyFooter';
 import ServiceFilters from '../components/NewServiceFilters';
@@ -51,8 +52,13 @@ const NewServicePage = () => {
     });
   }, [selectedMain, searchQuery, sortBy]);
 
+
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-gray-900 pb-24 lg:pb-0">
+    <div className="min-h-[100dvh] bg-slate-50 font-sans text-gray-900 pb-24 lg:pb-0">
+      <Helmet>
+        <title>Services | Andes Laundry</title>
+        <meta name="description" content="Browse our laundry services, from Wash & Fold to Dry Cleaning." />
+      </Helmet>
       <Navbar />
 
       {/* Mobile Search Bar - Scrolls away (Not sticky) */}

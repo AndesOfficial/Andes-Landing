@@ -27,15 +27,8 @@ const OrderPlacement = lazy(() => import("./pages/OrderPlacement"));
 const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation"));
 const NotFound = lazy(() => import("./pages/NotFound")); // Planned for next step
 
-// Loading Component
-const PageLoader = () => (
-  <div className="flex justify-center items-center min-h-screen bg-slate-50">
-    <div className="relative h-16 w-16">
-      <div className="absolute inset-0 rounded-full border-4 border-brand/20"></div>
-      <div className="absolute inset-0 rounded-full border-4 border-brand border-t-transparent animate-spin"></div>
-    </div>
-  </div>
-);
+import PageLoader from './components/common/PageLoader';
+
 
 function App() {
   const location = useLocation();
@@ -86,7 +79,7 @@ function App() {
               <Route path="/other" element={<Other />} />
               <Route path="/privacypolicy" element={<Other />} />
               <Route path="/download" element={<DownloadPage />} />
-              <Route path="/services" element={<NewServicePage data={data} />} />
+              <Route path="/services" element={<NewServicePage />} />
 
               {/* Public Auth Routes */}
               <Route path="/signup" element={<SignUp />} />

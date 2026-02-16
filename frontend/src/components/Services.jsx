@@ -2,6 +2,8 @@ import ItemCard from "./ItemCard.jsx";
 import { FaRegComment, FaTshirt, FaUserTie, FaShoePrints, FaShoppingBasket } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+import Button from "./common/Button";
+
 const Services = () => {
   return (
     <div className="bg-brand text-white py-12 px-4 rounded-[2.5rem] md:rounded-[3.5rem] shadow-2xl shadow-brand/30 transition-all duration-300 ease-in-out mx-auto max-w-7xl relative overflow-hidden">
@@ -18,17 +20,15 @@ const Services = () => {
         </p>
         <div className="flex justify-center gap-4 mb-6">
           <Link to="/services">
-            <button
-              className="bg-white text-brand px-4 py-2 rounded hover:bg-brand-dark hover:text-white hover:border hover:border-white transition-all duration-300 ease-in-out"
-            >
+            <Button variant="white" className="px-4 py-2">
               See price list
-            </button>
+            </Button>
           </Link>
           <a href="mailto:care@andes.co.in" className="no-underline">
-            <button className="bg-transparent border border-white px-4 py-2 rounded flex items-center gap-2 hover:border-white hover:bg-white hover:text-brand transition-all duration-300 ease-in-out">
+            <Button variant="outline-white" className="px-4 py-2 flex items-center gap-2">
               <FaRegComment size={20} />
               Ask us anything
-            </button>
+            </Button>
           </a>
         </div>
         <div className="flex overflow-x-auto md:overflow-x-visible overflow-y-hidden snap-x snap-mandatory scrollbar-hide space-x-4 md:space-x-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto pb-4 md:pb-0 px-4 md:px-0">
