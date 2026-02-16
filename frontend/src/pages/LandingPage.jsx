@@ -25,6 +25,8 @@ import Appsupport from "../components/Appsupport.jsx";
 import FAQ from "../components/Faq.jsx";
 import { Helmet } from "react-helmet-async";
 import MobileStickyBtn from "../components/MobileStickyBtn.jsx";
+import SchedulingWidget from "../components/SchedulingWidget.jsx";
+import { motion } from "framer-motion";
 
 const bulletPoints1 = [
   { icon: <FaBell className="text-brand text-xl" />, text: "Get notified when your order is ready for pick-up" },
@@ -46,12 +48,31 @@ const bulletPoints4 = [
   { icon: <FaBox className="text-brand text-xl" />, text: "Enjoy freshly cleaned clothes at your doorstep" },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut"
+    }
+  }
+};
+
 const LandingPage = () => {
   const navigate = useNavigate();
-
-  const handleSlotClick = (slot) => {
-    navigate('/order', { state: { selectedSlot: slot } });
-  };
 
   return (
     <div className="overflow-x-hidden">
@@ -61,134 +82,104 @@ const LandingPage = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <div className="bg-brand min-h-[85vh] flex flex-col justify-center relative overflow-hidden pb-12 pt-20 md:pt-32">
-        <main className="container mx-auto px-4 max-w-7xl flex flex-col lg:flex-row items-center relative z-10 gap-8 lg:gap-16">
-          {/* Left Content - Text & Widget */}
-          <div className="w-full lg:w-3/5 text-white z-20 flex flex-col items-start text-left lg:pl-4">
-            <div className="mb-6 w-full">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
-                Laundry & dry <br /> cleaning with <br /> 24h delivery
-              </h1>
+      <div className="bg-brand min-h-[100dvh] flex flex-col justify-center relative overflow-hidden pb-12 pt-24 md:pt-32">
+        <main className="container mx-auto px-4 max-w-7xl relative z-10">
+          <motion.div
+            className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {/* Left Content - Text & Widget */}
+            <div className="w-full lg:w-3/5 text-white z-20 flex flex-col items-start text-left lg:pl-4">
+              <motion.div className="mb-6 w-full" variants={itemVariants}>
+                <h1 className="text-[clamp(2.5rem,5vw,5rem)] font-bold tracking-tight leading-[1.1] mb-6">
+                  Laundry & dry <br /> cleaning with <br /> 24h delivery
+                </h1>
 
-              {/* Location */}
-              <div className="flex items-baseline gap-3">
-                <h2 className="text-yellow-300 font-bold text-3xl md:text-4xl tracking-wide">
-                  Pune, India
-                </h2>
-              </div>
-            </div>
-
-            {/* Store links */}
-            <div className="flex flex-row gap-4 mb-10">
-              <a
-                href="https://play.google.com/store/apps/details?id=com.andes.laundry"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center bg-white text-black px-4 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out"
-              >
-                <img src={playstore} alt="Play Store" className="w-6 h-6" />
-                <div className="ml-3 text-left">
-                  <p className="text-[10px] text-gray-600 font-medium leading-none mb-1">Get it on</p>
-                  <p className="text-sm font-bold leading-none">Google Play</p>
+                {/* Location */}
+                <div className="flex items-baseline gap-3">
+                  <h2 className="text-yellow-300 font-bold text-3xl md:text-4xl tracking-wide">
+                    Pune, India
+                  </h2>
                 </div>
-              </a>
+              </motion.div>
 
-              <a
-                href="https://apps.apple.com/in/app/andes/id6747010488"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center bg-white text-black px-4 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out"
-              >
-                <img src={appstore} alt="App Store" className="w-6 h-6" />
-                <div className="ml-3 text-left">
-                  <p className="text-[10px] text-gray-600 font-medium leading-none mb-1">Download on the</p>
-                  <p className="text-sm font-bold leading-none">App Store</p>
-                </div>
-              </a>
-            </div>
-
-            {/* Scheduling Widget Mockup */}
-            <div className="bg-white rounded-3xl p-6 shadow-2xl w-full max-w-xl border border-white/20 backdrop-blur-sm">
-              <h3 className="text-slate-800 font-semibold mb-4 text-lg">Schedule your collection in <span className="text-brand">Pune</span></h3>
-
-              <div className="flex flex-col sm:flex-row gap-3">
-                <div
-                  onClick={() => handleSlotClick('morning')}
-                  className="flex-1 w-full border border-gray-100 bg-gray-50/50 rounded-2xl p-3 flex items-center justify-between cursor-pointer hover:border-brand hover:bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-in-out group"
+              {/* Store links */}
+              <motion.div className="flex flex-row gap-4 mb-10" variants={itemVariants}>
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.andes.laundry"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center bg-white text-black px-4 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="bg-yellow-100 p-2 rounded-full">
-                      <FaBolt className="text-lg text-yellow-500" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-brand-dark font-bold uppercase tracking-wider mb-0.5">Earliest</p>
-                      <p className="text-slate-800 font-bold text-base group-hover:text-brand transition-colors ease-in-out duration-300">09:00 - 12:00</p>
-                    </div>
+                  <img src={playstore} alt="Play Store" className="w-6 h-6" />
+                  <div className="ml-3 text-left">
+                    <p className="text-[10px] text-gray-600 font-medium leading-none mb-1">Get it on</p>
+                    <p className="text-sm font-bold leading-none">Google Play</p>
                   </div>
-                  <FaChevronRight className="text-gray-300 font-bold text-sm group-hover:text-brand" />
-                </div>
+                </a>
 
-                <div
-                  onClick={() => handleSlotClick('afternoon')}
-                  className="flex-1 w-full border border-gray-100 bg-gray-50/50 rounded-2xl p-3 flex items-center justify-between cursor-pointer hover:border-brand hover:bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-in-out group"
+                <a
+                  href="https://apps.apple.com/in/app/andes/id6747010488"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center bg-white text-black px-4 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="bg-slate-100 p-2 rounded-full">
-                      <FaMoon className="text-lg text-slate-400" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-brand-dark font-bold uppercase tracking-wider mb-0.5">Last</p>
-                      <p className="text-slate-800 font-bold text-base group-hover:text-brand transition-colors ease-in-out duration-300">14:00 - 17:00</p>
-                    </div>
+                  <img src={appstore} alt="App Store" className="w-6 h-6" />
+                  <div className="ml-3 text-left">
+                    <p className="text-[10px] text-gray-600 font-medium leading-none mb-1">Download on the</p>
+                    <p className="text-sm font-bold leading-none">App Store</p>
                   </div>
-                  <FaChevronRight className="text-gray-300 font-bold text-sm group-hover:text-brand" />
-                </div>
-              </div>
+                </a>
+              </motion.div>
 
-              <div className="mt-4 text-center">
-                <Link to="/services" className="text-brand font-bold text-sm hover:underline hover:text-brand-dark transition-colors duration-300 ease-in-out">Book Now</Link>
-              </div>
+              {/* Scheduling Widget */}
+              <motion.div className="w-full" variants={itemVariants}>
+                <SchedulingWidget />
+              </motion.div>
             </div>
-          </div>
 
-          {/* Right Content - Image with Blob */}
-          <div className="w-full lg:w-1/2 flex justify-center relative mt-12 lg:mt-0">
+            {/* Right Content - Image with Blob */}
+            <motion.div
+              className="w-full lg:w-1/2 flex justify-center relative mt-12 lg:mt-0"
+              variants={itemVariants}
+            >
+              <div className="relative w-full max-w-lg lg:max-w-xl aspect-square flex items-center justify-center group perspective-1000">
+                <img
+                  src={van}
+                  alt="Andes Laundry Van"
+                  style={{
+                    maskImage: 'radial-gradient(circle, black 50%, transparent 100%)',
+                    WebkitMaskImage: 'radial-gradient(circle, black 50%, transparent 100%)',
+                    mixBlendMode: 'lighten'
+                  }}
+                />
 
-
-            <div className="relative w-full max-w-lg lg:max-w-xl aspect-square flex items-center justify-center group perspective-1000">
-              <img
-                src={van}
-                alt="Andes Laundry Van"
-                style={{
-                  maskImage: 'radial-gradient(circle, black 50%, transparent 100%)',
-                  WebkitMaskImage: 'radial-gradient(circle, black 50%, transparent 100%)',
-                  mixBlendMode: 'lighten'
-                }}
-              />
-
-              {/* Floating Trust Badge */}
-              <div className="absolute -bottom-6 -right-4 lg:bottom-12 lg:right-4 bg-white p-4 rounded-2xl shadow-brand-soft border border-white/60 backdrop-blur-md animate-bounce-slow z-20 flex items-center gap-4 hover:scale-105 transition-transform">
-                <div className="bg-green-50 p-3 rounded-full text-green-500">
-                  <FaStar className="text-xl" />
+                {/* Floating Trust Badge */}
+                <div className="absolute -bottom-6 -right-4 lg:bottom-12 lg:right-4 bg-white p-4 rounded-2xl shadow-brand-soft border border-white/60 backdrop-blur-md animate-bounce-slow z-20 flex items-center gap-4 hover:scale-105 transition-transform">
+                  <div className="bg-green-50 p-3 rounded-full text-green-500">
+                    <FaStar className="text-xl" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-slate-800 text-base leading-tight">4.5/5 Rating</p>
+                    <p className="text-xs text-gray-500">Trusted by thousands</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-bold text-slate-800 text-base leading-tight">4.5/5 Rating</p>
-                  <p className="text-xs text-gray-500">Trusted by thousands</p>
+
+                {/* 24h Delivery Badge */}
+                <div className="absolute top-0 -left-2 lg:top-12 lg:-left-6 bg-white p-4 rounded-2xl shadow-brand-soft border border-white/60 backdrop-blur-md animate-float z-20 flex items-center gap-3 hover:scale-105 transition-transform">
+                  <div className="bg-yellow-50 p-3 rounded-full text-yellow-500">
+                    <FaBolt className="text-xl" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-slate-800 text-base leading-tight">24hr Turnaround</p>
+                    <p className="text-xs text-gray-500">Express delivery</p>
+                  </div>
                 </div>
               </div>
-
-              {/* 24h Delivery Badge */}
-              <div className="absolute top-0 -left-2 lg:top-12 lg:-left-6 bg-white p-4 rounded-2xl shadow-brand-soft border border-white/60 backdrop-blur-md animate-float z-20 flex items-center gap-3 hover:scale-105 transition-transform">
-                <div className="bg-yellow-50 p-3 rounded-full text-yellow-500">
-                  <FaBolt className="text-xl" />
-                </div>
-                <div>
-                  <p className="font-bold text-slate-800 text-base leading-tight">24hr Turnaround</p>
-                  <p className="text-xs text-gray-500">Express delivery</p>
-                </div>
-              </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </main>
       </div>
 

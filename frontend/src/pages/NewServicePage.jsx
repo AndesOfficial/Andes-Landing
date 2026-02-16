@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/MyFooter';
 import ServiceFilters from '../components/NewServiceFilters';
 import data from '../data';
-import CartFloatingButton from '../components/CartFloatingButton';
+// import CartFloatingButton from '../components/CartFloatingButton'; // Removed as per request
 import CartSidebar from '../components/CartSidebar';
 import { FaSearch } from 'react-icons/fa';
 import { useOrder } from '../context/OrderContext';

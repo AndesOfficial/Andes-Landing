@@ -49,7 +49,7 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
   // Using variables makes the main return statement much cleaner and easier to read.
 
   const navBackgroundClass = (isScrolled || isOpen)
-    ? "bg-white/75 backdrop-blur-lg shadow-sm border-b border-slate-200/50 py-2" // Scrolled or Menu Open state
+    ? "bg-white/80 backdrop-blur-md shadow-lg shadow-brand/5 border-b border-white/40 py-2" // Scrolled or Menu Open state
     : (isLanding ? "bg-transparent py-4" : "bg-brand py-4"); // Transparent on landing, Brand color on other pages
 
   const linkColorClass = (isScrolled || isOpen)

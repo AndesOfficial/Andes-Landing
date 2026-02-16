@@ -7,6 +7,8 @@ import data from './data';
 import MyFooter from './components/MyFooter';
 import DashboardLayout from "./components/DashboardLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Lazy Load Pages
 const LandingPage = lazy(() => import("./pages/LandingPage"));
@@ -99,6 +101,7 @@ function App() {
         <MyFooter />
       </div>
 
+      <ToastContainer position="bottom-center" autoClose={2000} hideProgressBar={true} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
       {/* <IntercomComponent /> */}
     </>
   );
