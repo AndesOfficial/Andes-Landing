@@ -7,6 +7,11 @@ import data from './data';
 import MyFooter from './components/MyFooter';
 import DashboardLayout from "./components/DashboardLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+import ChatWidget from "./components/Chat/ChatWidget";
+import MobileStickyBtn from "./components/MobileStickyBtn";
 
 // Lazy Load Pages
 const LandingPage = lazy(() => import("./pages/LandingPage"));
@@ -25,28 +30,12 @@ const OrderPlacement = lazy(() => import("./pages/OrderPlacement"));
 const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation"));
 const NotFound = lazy(() => import("./pages/NotFound")); // Planned for next step
 
-// Loading Component
-const PageLoader = () => (
-  <div className="flex justify-center items-center min-h-screen bg-slate-50">
-    <div className="relative h-16 w-16">
-      <div className="absolute inset-0 rounded-full border-4 border-brand/20"></div>
-      <div className="absolute inset-0 rounded-full border-4 border-brand border-t-transparent animate-spin"></div>
-    </div>
-  </div>
-);
+import PageLoader from './components/common/PageLoader';
+
 
 function App() {
   const location = useLocation();
-  const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   if (location.pathname.startsWith('/dashboard')) {
     return (
@@ -66,13 +55,14 @@ function App() {
           </Routes>
         </Suspense>
         {/* <IntercomComponent /> */}
+        <ChatWidget />
       </>
     );
   }
 
   return (
     <>
-      <Navbar isScrolled={isScrolled} />
+      <Navbar />
       <div className="flex flex-col min-h-screen">
         <div className="flex-grow">
           <Suspense fallback={<PageLoader />}>
@@ -84,7 +74,7 @@ function App() {
               <Route path="/other" element={<Other />} />
               <Route path="/privacypolicy" element={<Other />} />
               <Route path="/download" element={<DownloadPage />} />
-              <Route path="/services" element={<NewServicePage data={data} />} />
+              <Route path="/services" element={<NewServicePage />} />
 
               {/* Public Auth Routes */}
               <Route path="/signup" element={<SignUp />} />
@@ -99,7 +89,12 @@ function App() {
         <MyFooter />
       </div>
 
+      <ToastContainer position="bottom-center" autoClose={2000} hideProgressBar={true} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
+
       {/* <IntercomComponent /> */}
+      {/* <IntercomComponent /> */}
+      <ChatWidget />
+      <MobileStickyBtn />
     </>
   );
 }

@@ -3,7 +3,7 @@ import first from "../assets/first.png";
 
 const LaundryService = () => {
   return (
-    <div className="flex flex-col md:flex-row w-full h-full bg-white rounded-3xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-gray-100/50 hover:shadow-lg transition-all duration-300">
+    <div id="service-area" className="flex flex-col md:flex-row w-full h-full bg-white rounded-3xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-gray-100/50 hover:shadow-lg transition-all duration-300">
       {/* Left Section (Image) */}
       <div className="md:w-1/2 relative min-h-[300px] md:min-h-full overflow-hidden group">
         <div className="absolute inset-0 bg-blue-100/20 mix-blend-multiply z-10 transition-opacity group-hover:opacity-0"></div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
+import AddressList from '../components/AddressList';
 
 const Profile = () => {
     const { currentUser } = useAuth();
@@ -70,6 +71,18 @@ const Profile = () => {
                             Change Password
                         </button>
                     </div>
+                </div>
+            </div>
+
+            {/* Address Management Section */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mt-8">
+                <div className="p-8">
+                    <h2 className="text-xl font-bold text-gray-900 mb-6">Saved Addresses</h2>
+                    <AddressList
+                        onSelectAddress={() => { }} // No-op for profile view, just managing
+                        selectedAddressId={null}
+                        onClose={() => { }} // No close needed as it's embedded
+                    />
                 </div>
             </div>
         </div>

@@ -28,6 +28,17 @@ const NewServiceCard = ({ service }) => {
     };
 
     addToCart(itemToAdd, 1);
+    toast.success(`${service.displayName} added to cart!`, {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      style: { borderRadius: '12px', background: '#333', color: '#fff', fontSize: '14px', fontWeight: 'bold' }
+    });
     setTimeout(() => setIsAdding(false), 500);
   };
 

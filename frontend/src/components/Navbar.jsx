@@ -6,15 +6,14 @@ import { useAuth } from "../context/AuthContext";
 import { useOrder } from "../context/OrderContext";
 import { FaShoppingCart, FaUser, FaSignOutAlt, FaRocket, FaList, FaChevronRight } from "react-icons/fa";
 
-const Navbar = ({ isScrolled: externalIsScrolled }) => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [internalIsScrolled, setInternalIsScrolled] = useState(false);
   const location = useLocation();
   const { currentUser, logout } = useAuth();
   const { totalItems } = useOrder();
 
-  // Use external prop if available, otherwise fallback to internal state
-  const isScrolled = externalIsScrolled !== undefined ? externalIsScrolled : internalIsScrolled;
+  // We now handle scroll state locally only
+  const [isScrolled, setIsScrolled] = useState(false);
 
   /* 
      SCROLL LISTENER LOGIC:
@@ -23,22 +22,15 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
      If the user scrolls more than 20 pixels, we set isScrolled to true.
   */
   useEffect(() => {
-    // If the parent component controls scrolling, we don't need to do anything here.
-    if (externalIsScrolled !== undefined) return;
-
     const handleScroll = () => {
-      // Check if window has scrolled past 20px
-      const hasScrolled = window.scrollY > 20;
-      setInternalIsScrolled(hasScrolled);
+      setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    // IMPORTANT: cleanup the listener when component unmounts to avoid memory leaks!
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [externalIsScrolled]);
+  }, []);
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) => location.pathname === path || (location.hash && location.pathname + location.hash === path);
   const isLanding = location.pathname === "/";
 
   //  Helper function to close the mobile menu
@@ -49,7 +41,7 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
   // Using variables makes the main return statement much cleaner and easier to read.
 
   const navBackgroundClass = (isScrolled || isOpen)
-    ? "bg-white/75 backdrop-blur-lg shadow-sm border-b border-slate-200/50 py-2" // Scrolled or Menu Open state
+    ? "bg-white/80 backdrop-blur-md shadow-lg shadow-brand/5 border-b border-white/40 py-2" // Scrolled or Menu Open state
     : (isLanding ? "bg-transparent py-4" : "bg-brand py-4"); // Transparent on landing, Brand color on other pages
 
   const linkColorClass = (isScrolled || isOpen)
@@ -169,18 +161,16 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
       </nav>
 
       {/* Mobile menu overlay */}
-      {/* Added duration-500 to slow down the transition a bit so it looks smoother */}
       <div
-        className={`fixed inset-0 bg-black/50 z-[80] transition-opacity duration-500 md:hidden ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 bg-black/50 z-[80] transition-opacity duration-300 md:hidden ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
         onClick={closeMenu}
       />
 
       {/* Mobile menu drawer */}
-      {/* Added duration-500 here too for the slide effect */}
-      <div className={`fixed top-0 right-0 h-full w-full sm:w-[400px] z-[90] bg-white shadow-2xl transform transition-transform duration-500 ease-in-out md:hidden flex flex-col ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
+      <div className={`fixed top-0 right-0 h-full w-full sm:w-[400px] z-[90] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden flex flex-col ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
 
         {/* Scrollable Content Area */}
-        <div className="flex-1 overflow-y-auto pt-24 pb-8 px-6 flex flex-col no-scrollbar">
+        <div className="flex-1 overflow-y-auto pt-24 pb-24 px-6 flex flex-col no-scrollbar">
 
           {/* Main Navigation Links */}
           <div className="flex flex-col space-y-2 mb-8">
