@@ -19,7 +19,7 @@ const CustomerStories = () => {
         "Being a working professional in Pune, Andes has been a lifesaver! Their express service ensures my office wear is always crisp and ready. Best laundry service I've found in the city.",
       image: c4,
       rating: 5,
-      location: "Mumbai, Maharashtra",
+      location: "Baner, Pune",
     },
     {
       id: 2,
@@ -30,7 +30,7 @@ const CustomerStories = () => {
         "From suits to traditional wear, Andes handles everything with utmost care. Their door-step service saves me so much time. Truly worth every rupee!",
       image: c2,
       rating: 5,
-      location: "Bangalore, Karnataka",
+      location: "Koregaon Park, Pune",
     },
     {
       id: 3,
@@ -41,7 +41,7 @@ const CustomerStories = () => {
         "As a college student in Pune, I needed reliable and affordable laundry service. Andes not only offers great student discounts but also ensures quick delivery. Perfect for my busy schedule!",
       image: c1,
       rating: 5,
-      location: "Delhi, NCR",
+      location: "Viman Nagar, Pune",
     },
     {
       id: 4,
@@ -63,7 +63,7 @@ const CustomerStories = () => {
         "I love their eco-friendly approach. The clothes feel soft and don't smell of harsh chemicals. It's great to see a laundry service that cares about the environment.",
       image: customer2,
       rating: 5,
-      location: "Hyderabad, Telangana",
+      location: "Kalyani Nagar, Pune",
     },
     {
       id: 6,
@@ -74,7 +74,7 @@ const CustomerStories = () => {
         "My sneakers were a mess, but Andes made them look brand new! I was amazed by the detailed cleaning. Definitely using them for all my footwear now.",
       image: c3,
       rating: 5,
-      location: "Chennai, Tamil Nadu",
+      location: "Wakad, Pune",
     }
   ];
 

@@ -38,7 +38,7 @@ const Navbar = ({ isScrolled: externalIsScrolled }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [externalIsScrolled]);
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) => location.pathname === path || (location.hash && location.pathname + location.hash === path);
   const isLanding = location.pathname === "/";
 
   //  Helper function to close the mobile menu

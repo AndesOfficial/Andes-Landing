@@ -8,7 +8,10 @@ import MyFooter from './components/MyFooter';
 import DashboardLayout from "./components/DashboardLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ToastContainer } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
+import ChatWidget from "./components/Chat/ChatWidget";
+import MobileStickyBtn from "./components/MobileStickyBtn";
 
 // Lazy Load Pages
 const LandingPage = lazy(() => import("./pages/LandingPage"));
@@ -61,6 +64,7 @@ function App() {
           </Routes>
         </Suspense>
         {/* <IntercomComponent /> */}
+        <ChatWidget />
       </>
     );
   }
@@ -95,7 +99,11 @@ function App() {
       </div>
 
       <ToastContainer position="bottom-center" autoClose={2000} hideProgressBar={true} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
+
       {/* <IntercomComponent /> */}
+      {/* <IntercomComponent /> */}
+      <ChatWidget />
+      <MobileStickyBtn />
     </>
   );
 }

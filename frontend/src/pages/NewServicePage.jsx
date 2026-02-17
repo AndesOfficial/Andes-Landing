@@ -234,38 +234,157 @@ const NewServicePage = () => {
   );
 };
 
+// Desktop Table View
+const DesktopServiceTable = ({ services, addToCart, removeFromCart, getItemQuantity }) => (
+  <div className="overflow-x-auto">
+    <table className="w-full text-left border-collapse">
+      <thead>
+        <tr className="bg-gray-50 border-b border-gray-100 text-xs uppercase tracking-wider text-gray-500 font-bold">
+          <th className="p-4 rounded-tl-xl">Service</th>
+          <th className="p-4">Details</th>
+          <th className="p-4">Price</th>
+          <th className="p-4 text-center rounded-tr-xl">Action</th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-gray-50">
+        {services.map(service => {
+          const qty = getItemQuantity(service.id);
+          const unitPrice = service.price || service.rateByKg || service.rateByPiece;
+          return (
+            <tr key={service.id} className="hover:bg-blue-50/30 transition-colors group">
+              <td className="p-4 font-bold text-gray-800 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-xl overflow-hidden">
+                  {/* Image Fix */}
+                  {service.image ? <img src={service.image} alt="" className="w-full h-full object-cover" /> : '👕'}
+                </div>
+                {service.name}
+              </td>
+              <td className="p-4 text-sm text-gray-500 max-w-xs">{service.description}</td>
+              <td className="p-4 font-bold text-brand whitespace-nowrap">
+                {`₹${unitPrice}`}
+              </td>
+              <td className="p-4 text-right">
+                {qty > 0 ? (
+                  <div className="flex items-center justify-center gap-3 bg-white border border-gray-200 rounded-lg px-2 py-1 shadow-sm">
+                    <button onClick={() => removeFromCart(service.id)} className="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-red-500 font-bold">-</button>
+                    <span className="text-sm font-bold w-4 text-center">{qty}</span>
+                    <button onClick={() => addToCart({ ...service, price: unitPrice })} className="w-6 h-6 flex items-center justify-center text-brand font-bold">+</button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => addToCart({ ...service, price: unitPrice })}
+                    className="bg-brand/10 text-brand hover:bg-brand hover:text-white px-4 py-2 rounded-lg text-sm font-bold transition-all w-full"
+                  >
+                    Add
+                  </button>
+                )}
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+);
+
+// Mobile Accordion View
+const MobileServiceList = ({ services, addToCart, removeFromCart, getItemQuantity }) => (
+  <div className="flex flex-col gap-3">
+    {services.map(service => {
+      const qty = getItemQuantity(service.id);
+      const unitPrice = service.price || service.rateByKg || service.rateByPiece;
+      const totalPrice = qty * unitPrice;
+
+      return (
+        <div key={service.id} className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+          <div className="flex justify-between items-start gap-3 mb-2">
+            <div className="flex items-start gap-3 flex-1">
+              {/* Fixed: Added Image */}
+              <div className="w-16 h-16 rounded-lg bg-gray-50 flex-shrink-0 overflow-hidden border border-gray-100">
+                {service.image ? (
+                  <img src={service.image} alt={service.name} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-2xl">👕</div>
+                )}
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-800 text-lg leading-tight mb-1">{service.name}</h4>
+                <p className="text-xs text-gray-500 line-clamp-2">{service.description}</p>
+              </div>
+            </div>
+            <div className="text-right">
+              {/* Price Logic Update: Show total if qty > 0 */}
+              <span className="block font-bold text-brand text-lg">
+                {qty > 0 ? `₹${totalPrice}` : `₹${unitPrice}`}
+              </span>
+              <span className="text-xs text-gray-400 uppercase">
+                {qty > 0 ? `(₹${unitPrice} x ${qty})` : (service.unit || 'unit')}
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-3 pt-3 border-t border-gray-50 flex items-center justify-between">
+            <span className="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">24h Delivery</span>
+
+            {qty > 0 ? (
+              <div className="flex items-center gap-4 bg-gray-50 rounded-lg px-3 py-1.5 border border-gray-200">
+                <button onClick={() => removeFromCart(service.id)} className="text-lg font-bold text-gray-500 px-2">-</button>
+                <span className="font-bold text-gray-800">{qty}</span>
+                <button onClick={() => addToCart({ ...service, price: unitPrice })} className="text-lg font-bold text-brand px-2">+</button>
+              </div>
+            ) : (
+              <button
+                onClick={() => addToCart({ ...service, price: unitPrice })}
+                className="bg-brand text-white px-6 py-2 rounded-lg text-sm font-bold shadow-md shadow-brand/20 active:scale-95 transition-all"
+              >
+                Add to Cart
+              </button>
+            )}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+);
+
 // Helper Component for Collapsible Sections
 const ServiceGroupSection = ({ title, services, addToCart, removeFromCart, getItemQuantity }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="mb-4 lg:mb-6 bg-white rounded-xl lg:rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300">
+    <div className="mb-4 lg:mb-8 bg-white rounded-xl lg:rounded-3xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-3 lg:p-4 bg-gray-50/50 hover:bg-gray-100/50 transition-colors text-left"
+        className="w-full flex items-center justify-between p-4 lg:p-6 bg-gray-50/80 hover:bg-gray-100 transition-colors text-left"
       >
-        <h3 className="text-base lg:text-lg font-bold text-gray-800 flex items-center gap-2">
-          <span className="w-1 h-6 bg-brand rounded-full"></span>
+        <h3 className="text-lg lg:text-2xl font-bold text-gray-800 flex items-center gap-3">
+          <span className="w-1.5 h-6 lg:h-8 bg-brand rounded-full"></span>
           {title}
-          <span className="text-xs font-normal text-gray-400 ml-2">({services.length} items)</span>
+          <span className="text-sm font-normal text-gray-500 ml-2 bg-white px-2 py-1 rounded-full border border-gray-200 shadow-sm">{services.length} items</span>
         </h3>
-        <span className={`text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+        <span className={`text-gray-400 transform transition-transform duration-300 bg-white p-2 rounded-full shadow-sm ${isOpen ? 'rotate-180' : ''}`}>
           ▼
         </span>
       </button>
 
-      <div className={`transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
-        {/* Mobile: 1 column (vertical list of horizontal cards). Desktop: 3 columns grid */}
-        <div className="p-3 lg:p-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-4">
-          {services.map(service => (
-            <NewServiceCard
-              key={service.id}
-              service={service}
-              onAdd={() => addToCart(service)}
-              onRemove={() => removeFromCart(service.id)}
+      <div className={`transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[3000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="p-3 lg:p-6">
+          {/* Desktop View: Grid of Cards */}
+          <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {services.map(service => (
+              <NewServiceCard key={service.id} service={service} />
+            ))}
+          </div>
+
+          {/* Mobile View */}
+          <div className="lg:hidden">
+            <MobileServiceList
+              services={services}
+              addToCart={addToCart}
+              removeFromCart={removeFromCart}
               getItemQuantity={getItemQuantity}
             />
-          ))}
+          </div>
         </div>
       </div>
     </div>
