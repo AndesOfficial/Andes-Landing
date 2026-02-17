@@ -35,16 +35,7 @@ import PageLoader from './components/common/PageLoader';
 
 function App() {
   const location = useLocation();
-  const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   if (location.pathname.startsWith('/dashboard')) {
     return (
@@ -71,7 +62,7 @@ function App() {
 
   return (
     <>
-      <Navbar isScrolled={isScrolled} />
+      <Navbar />
       <div className="flex flex-col min-h-screen">
         <div className="flex-grow">
           <Suspense fallback={<PageLoader />}>

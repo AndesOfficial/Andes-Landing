@@ -17,6 +17,14 @@ const ChatWindow = ({ isOpen, onClose }) => {
 
     useEffect(() => {
         scrollToBottom();
+
+        // Prevent Background Scroll when Chat is Open on Mobile
+        if (isOpen && window.innerWidth < 768) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => { document.body.style.overflow = 'unset'; };
     }, [messages, isOpen]);
 
     const handleSendMessage = (text) => {
@@ -84,7 +92,7 @@ const ChatWindow = ({ isOpen, onClose }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-0 md:inset-auto md:bottom-28 md:right-8 md:w-96 md:h-auto md:max-h-[600px] w-full h-full md:rounded-[24px] flex flex-col z-[9990] font-sans antialiased"
+            className="fixed inset-0 md:inset-auto md:bottom-28 md:right-8 md:w-96 md:h-auto md:max-h-[600px] w-full h-[100dvh] md:rounded-[24px] flex flex-col z-[9990] font-sans antialiased"
             style={{
                 boxShadow: window.innerWidth > 768 ? "0 20px 50px rgba(0,0,0,0.15)" : "none",
             }}

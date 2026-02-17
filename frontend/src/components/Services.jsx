@@ -31,51 +31,55 @@ const Services = () => {
             </Button>
           </a>
         </div>
-        <div className="flex overflow-x-auto md:overflow-x-visible overflow-y-hidden snap-x snap-mandatory scrollbar-hide space-x-4 md:space-x-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto pb-4 md:pb-0 px-4 md:px-0">
-          <div className="snap-center shrink-0 w-[85%] sm:w-[350px] md:w-auto h-full">
-            <ItemCard
-              title="Wash"
-              price="69/Kg"
-              description="For everyday laundry, bedsheets and towels."
-              includes={["WASH", "TUMBLE-DRY", "FOLD"]}
-              serviceTime="24H - 48H"
-              returned="IN A LAUNDRY/ANDES BAG"
-              icon={<FaShoppingBasket size={36} className="text-brand" />}
-            />
+        <div className="relative">
+          <div className="flex overflow-x-auto md:overflow-x-visible overflow-y-hidden snap-x snap-mandatory scrollbar-hide space-x-4 md:space-x-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto pb-4 md:pb-0 px-4 md:px-0">
+            <div className="snap-center shrink-0 w-[85%] sm:w-[350px] md:w-auto h-full">
+              <ItemCard
+                title="Wash"
+                price="69/Kg"
+                description="For everyday laundry, bedsheets and towels."
+                includes={["WASH", "TUMBLE-DRY", "FOLD"]}
+                serviceTime="24H - 48H"
+                returned="IN A LAUNDRY/ANDES BAG"
+                icon={<FaShoppingBasket size={36} className="text-brand" />}
+              />
+            </div>
+            <div className="snap-center shrink-0 w-[85%] sm:w-[350px] md:w-auto h-full">
+              <ItemCard
+                title="Wash & Iron"
+                price="89/Kg"
+                description="For everyday laundry & ironing."
+                includes={["WASH", "TUMBLE-DRY", "IRONING"]}
+                serviceTime="24H - 48H"
+                returned="ON HANGERS"
+                icon={<FaTshirt size={36} className="text-brand" />}
+              />
+            </div>
+            <div className="snap-center shrink-0 w-[85%] sm:w-[350px] md:w-auto h-full">
+              <ItemCard
+                title="Wash & Fold"
+                price="69/Kg"
+                description="For delicate items and fabrics."
+                includes={["WASH", "FOLD"]}
+                serviceTime="24H - 48H"
+                returned="ON HANGERS"
+                icon={<FaUserTie size={36} className="text-brand" />}
+              />
+            </div>
+            <div className="snap-center shrink-0 w-[85%] sm:w-[350px] md:w-auto h-full">
+              <ItemCard
+                title="Shoes Cleaning"
+                price="125/Pair"
+                description="For all types of shoes."
+                includes={["CUSTOM CLEANING"]}
+                serviceTime="24H - 48H"
+                returned="IN A LAUNDRY/ANDES BAG"
+                icon={<FaShoePrints size={36} className="text-brand" />}
+              />
+            </div>
           </div>
-          <div className="snap-center shrink-0 w-[85%] sm:w-[350px] md:w-auto h-full">
-            <ItemCard
-              title="Wash & Iron"
-              price="89/Kg"
-              description="For everyday laundry & ironing."
-              includes={["WASH", "TUMBLE-DRY", "IRONING"]}
-              serviceTime="24H - 48H"
-              returned="ON HANGERS"
-              icon={<FaTshirt size={36} className="text-brand" />}
-            />
-          </div>
-          <div className="snap-center shrink-0 w-[85%] sm:w-[350px] md:w-auto h-full">
-            <ItemCard
-              title="Wash & Fold"
-              price="69/Kg"
-              description="For delicate items and fabrics."
-              includes={["WASH", "FOLD"]}
-              serviceTime="24H - 48H"
-              returned="ON HANGERS"
-              icon={<FaUserTie size={36} className="text-brand" />}
-            />
-          </div>
-          <div className="snap-center shrink-0 w-[85%] sm:w-[350px] md:w-auto h-full">
-            <ItemCard
-              title="Shoes Cleaning"
-              price="125/Pair"
-              description="For all types of shoes."
-              includes={["CUSTOM CLEANING"]}
-              serviceTime="24H - 48H"
-              returned="IN A LAUNDRY/ANDES BAG"
-              icon={<FaShoePrints size={36} className="text-brand" />}
-            />
-          </div>
+          {/* Scroll Hint Overlay */}
+          <div className="absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-brand to-transparent pointer-events-none md:hidden rounded-r-[2.5rem]" />
         </div>
       </div>
     </div>
