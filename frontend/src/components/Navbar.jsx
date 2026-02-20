@@ -83,15 +83,15 @@ const Navbar = () => {
               >
                 Services & Pricing
               </Link>
-              <Link to="/andes-assured"
-                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${linkColorClass} ${isActive("/andes-assured") ? "font-bold text-brand" : ""}`}
-              >
-                Andes Assured
-              </Link>
               <Link to="/about"
                 className={`transition-colors duration-300 ease-in-out font-medium text-lg ${linkColorClass} ${isActive("/about") ? "font-bold text-brand" : ""}`}
               >
                 About us
+              </Link>
+              <Link to="/andes-assured"
+                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${linkColorClass} ${isActive("/andes-assured") ? "font-bold text-brand" : ""}`}
+              >
+                Andes Assured
               </Link>
             </div>
 
@@ -182,12 +182,12 @@ const Navbar = () => {
               Services & Pricing
               <FaChevronRight className="text-gray-300 text-sm group-hover:text-brand transition-colors" />
             </Link>
-            <Link to="/andes-assured" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors flex justify-between items-center group">
-              Andes Assured
-              <FaChevronRight className="text-gray-300 text-sm group-hover:text-brand transition-colors" />
-            </Link>
             <Link to="/about" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors flex justify-between items-center group">
               About us
+              <FaChevronRight className="text-gray-300 text-sm group-hover:text-brand transition-colors" />
+            </Link>
+            <Link to="/andes-assured" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors flex justify-between items-center group">
+              Andes Assured
               <FaChevronRight className="text-gray-300 text-sm group-hover:text-brand transition-colors" />
             </Link>
           </div>

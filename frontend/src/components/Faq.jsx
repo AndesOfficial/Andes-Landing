@@ -28,7 +28,7 @@ const Faq = () => {
   ];
 
   return (
-    <div id="faq" className="max-w-4xl lg:ml-32 p-4 pb-4 mb-20 scroll-mt-24">
+    <div id="faq" className="w-full">
       {faqs.map((faq, index) => (
         <div key={index} className="mb-4">
           <div

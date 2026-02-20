@@ -15,9 +15,11 @@ const FeatureRight = ({ title, subtitle, description, imageSrc, bulletPoints }) 
         <div className="absolute left-0 top-6 w-12 h-0.5 bg-slate-200 md:hidden"></div>
         <div className="absolute left-[-5px] top-[22px] w-3 h-3 rounded-full bg-brand md:hidden ring-4 ring-white"></div>
 
-        <h2 className="text-xs font-bold text-brand uppercase tracking-wider mb-2">{title}</h2>
-        <h3 className="text-2xl font-bold text-slate-800 mb-3 leading-tight">{subtitle}</h3>
-        <p className="text-slate-600 mb-6 leading-relaxed text-sm md:text-base">{description}</p>
+        <h2 className="text-2xl font-bold text-brand mb-2">{title}</h2>
+        <h3 className="text-xl font-bold text-slate-800 uppercase tracking-wider mb-3 leading-tight">{subtitle}</h3>
+        {description && (
+          <p className="text-slate-600 mb-6 leading-relaxed text-sm md:text-base">{description}</p>
+        )}
         <ul className="space-y-3">
           {bulletPoints.map((point, index) => (
             <li key={index} className="flex items-start">
@@ -30,7 +32,7 @@ const FeatureRight = ({ title, subtitle, description, imageSrc, bulletPoints }) 
         </ul>
       </div>
       <div className="hidden md:block md:w-1/2 m-4 pl-8">
-        <img src={imageSrc} alt="feature" className="w-full h-auto object-cover rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] transform transition-transform duration-500 hover:scale-[1.02]" />
+        <img src={imageSrc} alt="feature" className="w-full h-auto object-cover rounded-3xl shadow-[0_12px_40px_rgb(0,0,0,0.15)] ring-1 ring-slate-900/5 transform transition-transform duration-500 hover:scale-[1.02]" />
       </div>
     </div>
   );
