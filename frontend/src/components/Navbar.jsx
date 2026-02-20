@@ -4,7 +4,7 @@ import { useLocation, Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useAuth } from "../context/AuthContext";
 import { useOrder } from "../context/OrderContext";
-import { FaShoppingCart, FaUser, FaSignOutAlt, FaRocket, FaList, FaChevronRight } from "react-icons/fa";
+import { FaShoppingCart, FaUser, FaSignOutAlt, FaRocket, FaList, FaChevronRight, FaStar } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +55,15 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`fixed w-full top-0 z-[100] transition-all duration-300 ${navBackgroundClass}`}>
+      {/* Top Announcement Bar */}
+      <div className={`fixed w-full top-0 z-[110] transition-transform duration-300 ${isScrolled ? "-translate-y-full" : "translate-y-0"} bg-slate-900 border-b border-white/10 text-white text-[11px] sm:text-sm font-medium py-2 px-4 flex items-center justify-center gap-2 tracking-wide`}>
+        <FaStar className="text-yellow-400 text-[10px] sm:text-xs" />
+        <span>Premium Laundry Service in Pune</span>
+        <span className="hidden sm:inline opacity-30 mx-2">|</span>
+        <span className="font-bold text-yellow-400 hidden sm:inline">24h Express Delivery Available</span>
+      </div>
+
+      <nav className={`fixed w-full z-[100] transition-all duration-300 ${navBackgroundClass} ${isScrolled ? "top-0" : "top-[32px] sm:top-[36px]"}`}>
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
 

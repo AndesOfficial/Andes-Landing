@@ -39,7 +39,7 @@ const ChatWidget = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className={`fixed bottom-24 right-4 md:bottom-8 md:right-8 z-[9999] flex items-center justify-center transition-all duration-300 shadow-xl
+                className={`fixed ${isOpen ? 'top-4 md:bottom-8 md:top-auto right-4 md:right-8' : 'bottom-20 md:bottom-8 right-3 md:right-8'} z-[9999] flex items-center justify-center transition-all duration-300 shadow-xl lg:scale-100 scale-90
           ${isOpen
                         ? 'w-10 h-10 bg-gray-800 text-white rounded-full rotate-90' // Smaller check/close
                         : 'w-14 h-14 bg-white text-blue-600 rounded-full hover:shadow-2xl border border-blue-100' // White with blue message icon
