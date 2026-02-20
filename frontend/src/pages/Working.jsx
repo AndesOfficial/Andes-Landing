@@ -10,32 +10,33 @@ import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import card4 from "../assets/card4.png";
 import { Helmet } from "react-helmet-async";
+import { FaBell, FaClock, FaBoxOpen, FaDoorOpen, FaPhoneAlt, FaCommentDots, FaCheckCircle, FaLeaf, FaTint, FaHeart } from "react-icons/fa";
 
 
 const bulletPoints1 = [
-  { icon: "🔔", text: "Get notified when your order is ready for pick-up" },
-  { icon: "⏱️", text: "Schedule collection at your convenience" },
+  { icon: <FaBell />, text: "Get notified when your order is ready for pick-up" },
+  { icon: <FaClock />, text: "Schedule collection at your convenience" },
 ];
 
 const bulletPoints2 = [
-  { icon: "📦", text: "Track your delivery in real-time" },
-  { icon: "🚪", text: "Know exactly when your laundry will arrive" },
+  { icon: <FaBoxOpen />, text: "Track your delivery in real-time" },
+  { icon: <FaDoorOpen />, text: "Know exactly when your laundry will arrive" },
 ];
 
 const bulletPoints3 = [
-  { icon: "📞", text: "24/7 customer support available" },
-  { icon: "💬", text: "Reach us via call or chat in the app" },
+  { icon: <FaPhoneAlt />, text: "24/7 customer support available" },
+  { icon: <FaCommentDots />, text: "Reach us via call or chat in the app" },
 ];
 
 const bulletPoints4 = [
-  { icon: "✅", text: "Order scheduled and delivered promptly" },
-  { icon: "📦", text: "Enjoy freshly cleaned clothes at your doorstep" },
+  { icon: <FaCheckCircle />, text: "Order scheduled and delivered promptly" },
+  { icon: <FaBoxOpen />, text: "Enjoy freshly cleaned clothes at your doorstep" },
 ];
 
 const bulletPointsEnvironmental = [
-  { icon: "🍃", text: "Zero-emission delivery vehicles" },
-  { icon: "💧", text: "Efficient water use" },
-  { icon: "❤️", text: "Trustworthy local cleaners" },
+  { icon: <FaLeaf />, text: "Zero-emission delivery vehicles" },
+  { icon: <FaTint />, text: "Efficient water use" },
+  { icon: <FaHeart />, text: "Trustworthy local cleaners" },
 ];
 
 const Working = () => {

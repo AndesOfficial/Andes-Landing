@@ -7,7 +7,13 @@ const PricingCard = ({ icon, title, description, actualPrice, fakePrice, linkTex
   return (
     <div className="bg-white shadow-md rounded-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-transparent hover:border-brand/20">
       <div className="flex items-center mb-4">
-        <img src={icon} alt={title} className="w-12 h-12 mr-4" />
+        {typeof icon === 'string' ? (
+          <img src={icon} alt={title} className="w-12 h-12 mr-4 object-contain" />
+        ) : (
+          <div className="w-12 h-12 mr-4 flex items-center justify-center text-4xl text-brand opacity-90">
+            {icon}
+          </div>
+        )}
         <div>
           <h3 className="text-lg font-semibold">{title}</h3>
           <p className="text-sm text-gray-600">{description}</p>

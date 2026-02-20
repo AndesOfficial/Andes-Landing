@@ -1,11 +1,6 @@
 import PricingSection from "../components/PricingSection";
 import PricingCard from "../components/PricingCard";
 import MyFooter from "../components/MyFooter";
-import washicon from "../assets/washicon.svg";
-import drycleaning from "../assets/drycleaningicon.svg";
-import bulkyicon from "../assets/bulkyicon.jpg";
-import ironicon from "../assets/ironicon.svg";
-import shoeicon from "../assets/shoeicon.svg";
 
 import { servicesPricingData } from "../data/servicesData";
 import { Helmet } from "react-helmet-async";

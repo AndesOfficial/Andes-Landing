@@ -1,9 +1,4 @@
-import { FaTshirt } from 'react-icons/fa';
-import washicon from "../assets/washicon.svg";
-import drycleaning from "../assets/drycleaningicon.svg";
-import bulkyicon from "../assets/bulkyicon.jpg";
-import ironicon from "../assets/ironicon.svg";
-import shoeicon from "../assets/shoeicon.svg";
+import { FaTshirt, FaWater, FaSteam, FaShoePrints, FaLayerGroup } from 'react-icons/fa';
 
 // Data for OrderPlacement.jsx
 export const quickServices = [
@@ -16,7 +11,7 @@ export const quickServices = [
 // Data for ServicesPage.jsx
 export const servicesPricingData = [
     {
-        icon: washicon,
+        icon: <FaWater />,
         title: "Wash",
         description: "For everyday laundry, bedsheets and towels.",
         actualPrice: 59,
@@ -24,7 +19,7 @@ export const servicesPricingData = [
         priceInfo: "₹59 / kg",
     },
     {
-        icon: ironicon,
+        icon: <FaTshirt />,
         title: "Wash & Iron",
         description: "For everyday laundry that requires ironing.",
         actualPrice: 79,
@@ -32,7 +27,7 @@ export const servicesPricingData = [
         priceInfo: "from ₹79 / kg",
     },
     {
-        icon: ironicon,
+        icon: <FaSteam />,
         title: "Only Iron",
         description: "For clothes that only need ironing and no washing.",
         actualPrice: 9,
@@ -40,7 +35,7 @@ export const servicesPricingData = [
         priceInfo: "from ₹9 / piece",
     },
     {
-        icon: drycleaning,
+        icon: <FaLayerGroup />,
         title: "Blankets & Dry Cleaning",
         description: "For delicate items that require dry cleaning.",
         actualPrice: 209,
@@ -48,7 +43,7 @@ export const servicesPricingData = [
         priceInfo: "from ₹209 / piece",
     },
     {
-        icon: bulkyicon,
+        icon: <FaLayerGroup />,
         title: "Bedsheet (single) cleaning",
         description: "For single bedsheets that require cleaning.",
         actualPrice: 139,
@@ -56,7 +51,7 @@ export const servicesPricingData = [
         priceInfo: "from ₹139 / piece",
     },
     {
-        icon: bulkyicon,
+        icon: <FaLayerGroup />,
         title: "Bedsheet (double) cleaning",
         description: "For double bedsheets that require cleaning.",
         actualPrice: 269,
@@ -64,7 +59,7 @@ export const servicesPricingData = [
         priceInfo: "from ₹269 / piece",
     },
     {
-        icon: bulkyicon,
+        icon: <FaLayerGroup />,
         title: "Blanket (single) cleaning",
         description: "For single blankets that require cleaning.",
         actualPrice: 139,
@@ -72,7 +67,7 @@ export const servicesPricingData = [
         priceInfo: "from ₹139 / piece",
     },
     {
-        icon: bulkyicon,
+        icon: <FaLayerGroup />,
         title: "Blanket (double) cleaning",
         description: "For double blankets that require cleaning.",
         actualPrice: 269,
@@ -80,7 +75,7 @@ export const servicesPricingData = [
         priceInfo: "from ₹269 / piece",
     },
     {
-        icon: drycleaning,
+        icon: <FaTshirt />,
         title: "Saree (without works) cleaning",
         description: "For sarees without works that require cleaning.",
         actualPrice: 209,
@@ -88,7 +83,7 @@ export const servicesPricingData = [
         priceInfo: "from ₹209 / piece",
     },
     {
-        icon: drycleaning,
+        icon: <FaTshirt />,
         title: "Saree (with works) cleaning",
         description: "For sarees with works that require cleaning.",
         actualPrice: 309,
@@ -96,7 +91,7 @@ export const servicesPricingData = [
         priceInfo: "from ₹309 / piece",
     },
     {
-        icon: shoeicon,
+        icon: <FaShoePrints />,
         title: "Shoe (general) cleaning",
         description: "For general shoes that need cleaning.",
         actualPrice: 259,
@@ -104,7 +99,7 @@ export const servicesPricingData = [
         priceInfo: "from ₹259 / pair",
     },
     {
-        icon: shoeicon,
+        icon: <FaShoePrints />,
         title: "Shoe (Loafers) cleaning",
         description: "For loafers that need cleaning.",
         actualPrice: 259,
@@ -112,7 +107,7 @@ export const servicesPricingData = [
         priceInfo: "from ₹259 / pair",
     },
     {
-        icon: shoeicon,
+        icon: <FaShoePrints />,
         title: "Shoe (Sneakers) cleaning",
         description: "For sneakers that need cleaning.",
         actualPrice: 259,
