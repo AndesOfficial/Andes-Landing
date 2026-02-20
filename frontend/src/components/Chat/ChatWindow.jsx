@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaRobot } from 'react-icons/fa';
-import { getBotResponse, createInitialMessage } from '../../utils/chatLogic';
 import { useNavigate } from 'react-router-dom';
+import { db, auth } from '../../firebase';
+import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore';
 
 const ChatWindow = ({ isOpen, onClose }) => {
-    const [messages, setMessages] = useState([createInitialMessage()]);
+    const [messages, setMessages] = useState([
+        { id: 'init', text: "Hi! I'm Andy. How can I lighten your load today?", sender: 'bot' }
+    ]);
     const [inputValue, setInputValue] = useState('');
-    const [chatState, setChatState] = useState('IDLE'); // New: Track conversation state
     const messagesEndRef = useRef(null);
     const navigate = useNavigate();
 
@@ -15,10 +17,40 @@ const ChatWindow = ({ isOpen, onClose }) => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
+    // 1. Listen to Firestore in Real-Time
+    useEffect(() => {
+        if (!auth?.currentUser) return; // Wait until user is logged in
+
+        const messagesRef = collection(db, `users/${auth.currentUser.uid}/messages`);
+        const q = query(messagesRef, orderBy('createTime', 'asc'));
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const fetchedMessages = [
+                { id: 'init', text: "Hi! I'm Andy. How can I lighten your load today?", sender: 'bot' }
+            ];
+
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                if (data.prompt) {
+                    fetchedMessages.push({ id: doc.id + '-u', text: data.prompt, sender: 'user' });
+                }
+                if (data.response) {
+                    fetchedMessages.push({ id: doc.id + '-b', text: data.response, sender: 'bot' });
+                } else if (data.prompt && !data.response) {
+                    // Show a loading state while AI is thinking
+                    fetchedMessages.push({ id: doc.id + '-loading', text: "Andy is typing...", sender: 'bot' });
+                }
+            });
+
+            setMessages(fetchedMessages);
+        });
+
+        return () => unsubscribe();
+    }, [isOpen]);
+
+    // 2. Prevent Background Scroll on Mobile
     useEffect(() => {
         scrollToBottom();
-
-        // Prevent Background Scroll when Chat is Open on Mobile
         if (isOpen && window.innerWidth < 768) {
             document.body.style.overflow = 'hidden';
         } else {
@@ -27,65 +59,31 @@ const ChatWindow = ({ isOpen, onClose }) => {
         return () => { document.body.style.overflow = 'unset'; };
     }, [messages, isOpen]);
 
-    const handleSendMessage = (text) => {
+    // 3. Send Message to Firestore
+    const handleSendMessage = async (text) => {
         if (!text.trim()) return;
 
-        // Add User Message
-        const userMsg = { id: Date.now(), text: text, sender: 'user' };
-        setMessages((prev) => [...prev, userMsg]);
-        setInputValue('');
+        if (!auth?.currentUser) {
+            alert("Please log in to chat with Andy!");
+            return;
+        }
 
-        // Simulate Bot Typing
-        setTimeout(() => {
-            // Pass current chatState to the logic function
-            let botResponse = getBotResponse(text, chatState);
+        setInputValue(''); // Clear input instantly
 
-            // Update state based on bot's decision
-            if (botResponse.nextState) {
-                setChatState(botResponse.nextState);
-            }
-
-            // Contextual Navigation Actions (Client-side overrides)
-            if (['View Full Price List', 'Check Pricing'].includes(text)) {
-                navigate('/services');
-                onClose();
-            }
-            if (['Place an Order', 'Schedule Pickup', 'Book Now', 'Start Order'].includes(text)) {
-                navigate('/services');
-                onClose();
-            }
-            if (text === 'Go to My Orders') {
-                navigate('/dashboard/orders');
-                onClose();
-            }
-
-            // Smart Toggle: Scroll to Pricing (Desktop) logic
-            if ((text.toLowerCase().includes('pricing') || text.toLowerCase().includes('cost')) && window.location.pathname === '/') {
-                const pricingSection = document.getElementById('pricing-section');
-                if (pricingSection) {
-                    pricingSection.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-
-            const botMsg = {
-                id: Date.now() + 1,
-                text: botResponse.text,
-                sender: 'bot',
-                options: botResponse.options
-            };
-            setMessages((prev) => [...prev, botMsg]);
-        }, 600);
-    };
-
-    const handleOptionClick = (option) => {
-        handleSendMessage(option);
+        try {
+            await addDoc(collection(db, `users/${auth.currentUser.uid}/messages`), {
+                prompt: text,
+                createTime: serverTimestamp()
+            });
+        } catch (error) {
+            console.error("Error sending message:", error);
+        }
     };
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') handleSendMessage(inputValue);
     };
 
-    // Safe area handling for mobile
     return (
         <motion.div
             initial={{ opacity: 0, y: 40, scale: 0.9 }}
@@ -97,13 +95,10 @@ const ChatWindow = ({ isOpen, onClose }) => {
                 boxShadow: window.innerWidth > 768 ? "0 20px 50px rgba(0,0,0,0.15)" : "none",
             }}
         >
-            {/* Blurred Backdrop for Glassmorphism */}
             <div className="absolute inset-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl md:rounded-[24px] border border-white/20 dark:border-gray-700/50" />
 
-            {/* Content Container (Relative to sit on top of blur) */}
             <div className="relative flex flex-col h-full overflow-hidden md:rounded-[24px]">
-
-                {/* Minimal Header */}
+                {/* Header */}
                 <div className="px-6 py-5 bg-white/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-700 flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
                         <FaRobot className="text-lg" />
@@ -114,7 +109,7 @@ const ChatWindow = ({ isOpen, onClose }) => {
                     </div>
                 </div>
 
-
+                {/* Messages Area */}
                 <div className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-hide">
                     {messages.map((msg) => (
                         <div
@@ -129,29 +124,12 @@ const ChatWindow = ({ isOpen, onClose }) => {
                             >
                                 <p className="whitespace-pre-wrap">{msg.text}</p>
                             </div>
-
-                            {/* Time/Status could go here for extra polish, keeping it minimal for now */}
                         </div>
                     ))}
-
-                    {/* Render Options separately to avoid cramping the message bubble */}
-                    {messages[messages.length - 1].sender === 'bot' && messages[messages.length - 1].options && (
-                        <div className="flex flex-wrap gap-2 mt-1 ml-1 animate-fadeIn">
-                            {messages[messages.length - 1].options.map((option, idx) => (
-                                <button
-                                    key={idx}
-                                    onClick={() => handleOptionClick(option)}
-                                    className="text-xs font-medium px-4 py-2 bg-white dark:bg-gray-800 border border-blue-100 dark:border-gray-600 text-blue-600 dark:text-blue-300 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 hover:scale-105 transition-all shadow-sm"
-                                >
-                                    {option}
-                                </button>
-                            ))}
-                        </div>
-                    )}
                     <div ref={messagesEndRef} />
                 </div>
 
-                {/* Input Area - Floated effect */}
+                {/* Input Area */}
                 <div className="p-4 bg-transparent">
                     <div className="flex items-center gap-2 bg-white dark:bg-gray-800 p-2 rounded-full border border-gray-200 dark:border-gray-700 shadow-sm focus-within:ring-2 focus-within:ring-blue-100 dark:focus-within:ring-blue-900/30 transition-all">
                         <input

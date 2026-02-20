@@ -13,15 +13,16 @@ const LaundryServiceIntro = () => {
           to your needs.
         </p>
         <p className="text-base lg:text-lg leading-relaxed">
-          We collect, clean, and deliver your laundry to your doorstep. When and
+          
+          We collect, clean and deliver your laundry to your doorstep. When and
           where you need us, we will be there. 98.7% of all standard laundry and
           dry cleaning is delivered the next day.
         </p>
       </div>
       <div className="flex-1">
         <img
-          
           className="w-full h-auto object-cover rounded-lg shadow-lg"
+          alt="Laundry service"
         />
       </div>
     </div>

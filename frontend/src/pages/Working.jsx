@@ -9,7 +9,7 @@ import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import card4 from "../assets/card4.png";
-import {Helmet} from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 
 
 const bulletPoints1 = [
@@ -51,7 +51,7 @@ const Working = () => {
         <FeatureLeft
           title="FLEXIBLE"
           subtitle="1. Schedule Your Collection"
-          description="Plan your day with ease. Choose a collection time that fits your schedule. We’ll notify you when the order is ready for pick-up, ensuring smooth coordination."
+          description=""
           imageSrc={card1}
           bulletPoints={bulletPoints1}
         />
@@ -59,7 +59,7 @@ const Working = () => {
         <FeatureRight
           title="DELIVERY STATUS"
           subtitle="2. Track Your Delivery"
-          description="Stay informed about your laundry delivery with real-time tracking. Know exactly when your laundry will arrive at your doorstep, making it easy to plan your day."
+          description=""
           imageSrc={card2}
           bulletPoints={bulletPoints2}
         />
@@ -67,7 +67,7 @@ const Working = () => {
         <FeatureLeft
           title="CUSTOMER SUPPORT"
           subtitle="3. Assistance When You Need It"
-          description="We're here to help! Whether you have a question about your order or need assistance with our services, our customer support is always ready to assist you."
+          description=""
           imageSrc={card3}
           bulletPoints={bulletPoints3}
         />
@@ -75,7 +75,7 @@ const Working = () => {
         <FeatureRight
           title="ORDER COMPLETED"
           subtitle="4. Order Scheduled and Delivered"
-          description="Your laundry is handled with care from pick-up to delivery. Enjoy your freshly cleaned clothes delivered right to your door, hassle-free!"
+          description=""
           imageSrc={card4}
           bulletPoints={bulletPoints4}
         />

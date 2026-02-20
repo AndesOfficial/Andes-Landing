@@ -42,6 +42,17 @@ import suit3PieceImage from './assets/suit 3piece.jpg';
 import toppImage from './assets/topp.jpg';
 import windowCurtainImage from './assets/window_curtain.jpg';
 
+// New images
+import doorCurtainImage from './assets/Door_curtain.jpg';
+import pagdiImage from './assets/Pagdi.jpg';
+import dhotiImage from './assets/dhoti.jpg';
+import joggersImage from './assets/joggers.jpg';
+import lehengaImage from './assets/lahenga.jpg';
+import pillowCoverImage from './assets/pillowcover.jpg';
+import shawlImage from './assets/shawll.jpg';
+import winterCoatImage from './assets/wintercoat.jpg';
+import woolenGlovesImage from './assets/woolengloves.jpg';
+
 const data = {
   serviceModes: [
     { id: 0, name: "By Piece/Pair", key: "piece" },
@@ -73,11 +84,11 @@ const data = {
     { id: 332, name: "Saree", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 199, unit: "piece", displayName: "Saree", image: sareeImage, badge: "Dry Clean" },
     { id: 333, name: "Saree Embroidery", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 249, unit: "piece", displayName: "Saree (Embroidery)", image: sareeEmbroideryImage, badge: "Dry Clean" },
     { id: 326, name: "Blouse", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 99, unit: "piece", displayName: "Blouse", image: blouseImage, badge: "Dry Clean" },
-    { id: 330, name: "Lehenga", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 299, unit: "piece", displayName: "Lehenga", image: lehengaDesignerImage, badge: "Dry Clean" },
+    { id: 330, name: "Lehenga", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 299, unit: "piece", displayName: "Lehenga", image: lehengaImage, badge: "Dry Clean" },
     { id: 340, name: "Designer Lehenga", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 499, unit: "piece", displayName: "Designer Lehenga", image: lehengaDesignerImage, badge: "Dry Clean" },
-    { id: 224, name: "Dhoti", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 99, unit: "piece", displayName: "Dhoti", image: washFoldImage, badge: "Dry Clean" },
+    { id: 224, name: "Dhoti", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 99, unit: "piece", displayName: "Dhoti", image: dhotiImage, badge: "Dry Clean" },
     { id: 226, name: "Sherwani", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 349, unit: "piece", displayName: "Sherwani", image: sherwaniImage, badge: "Dry Clean" },
-    { id: 229, name: "Pagdi", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 149, unit: "piece", displayName: "Pagdi", image: uniformImage, badge: "Dry Clean" },
+    { id: 229, name: "Pagdi", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 149, unit: "piece", displayName: "Pagdi", image: pagdiImage, badge: "Dry Clean" },
     { id: 322, name: "Salwar", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 99, unit: "piece", displayName: "Salwar", image: salwarImage, badge: "Dry Clean" },
     { id: 310, name: "Sharara", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 149, unit: "piece", displayName: "Sharara", image: shararaImage, badge: "Dry Clean" },
     { id: 324, name: "Dupatta", mainCategory: "dry_cleaning", group: "Ethnic Wear", rateByPiece: 69, unit: "piece", displayName: "Dupatta", image: dupattaImage, badge: "Dry Clean" },
@@ -86,12 +97,12 @@ const data = {
     { id: 240, name: "Sweater", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 99, unit: "piece", displayName: "Sweater", image: sweaterImage, badge: "Dry Clean" },
     { id: 241, name: "Hoodie", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 149, unit: "piece", displayName: "Hoodie", image: hoodieImage, badge: "Dry Clean" },
     { id: 242, name: "Muffler", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 99, unit: "piece", displayName: "Muffler", image: mufflerImage, badge: "Dry Clean" },
-    { id: 243, name: "Shawl", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 149, unit: "piece", displayName: "Shawl", image: mufflerImage, badge: "Dry Clean" },
-    { id: 253, name: "Winter Coat", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 299, unit: "piece", displayName: "Winter Coat", image: jacketImage, badge: "Dry Clean" },
+    { id: 243, name: "Shawl", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 149, unit: "piece", displayName: "Shawl", image: shawlImage, badge: "Dry Clean" },
+    { id: 253, name: "Winter Coat", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 299, unit: "piece", displayName: "Winter Coat", image: winterCoatImage, badge: "Dry Clean" },
     { id: 269, name: "Jacket Leather", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 449, unit: "piece", displayName: "Leather Jacket", image: leatherJacketImage, badge: "Dry Clean" },
     { id: 246, name: "Jacket Puffer", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 249, unit: "piece", displayName: "Puffer Jacket", image: jacketImage, badge: "Dry Clean" },
     { id: 244, name: "Normal Jacket", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 149, unit: "piece", displayName: "Normal Jacket", image: jacketNormalImage, badge: "Dry Clean" },
-    { id: 270, name: "Woolen Gloves", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 99, unit: "pair", displayName: "Woolen Gloves", image: simpleShoesImage, badge: "Dry Clean" }, // Using simple shoes img as placeholder or just generic
+    { id: 270, name: "Woolen Gloves", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 99, unit: "pair", displayName: "Woolen Gloves", image: woolenGlovesImage, badge: "Dry Clean" }, // Using simple shoes img as placeholder or just generic
     { id: 271, name: "Leather Gloves", mainCategory: "dry_cleaning", group: "Winter Wear", rateByPiece: 199, unit: "pair", displayName: "Leather Gloves", image: leatherJacketImage, badge: "Dry Clean" },
 
     // Daily / Formal
@@ -102,18 +113,18 @@ const data = {
     { id: 203, name: "Jeans", mainCategory: "dry_cleaning", group: "Daily / Formal", rateByPiece: 129, unit: "piece", displayName: "Jeans", image: jeansImage, badge: "Dry Clean" },
     { id: 301, name: "Top", mainCategory: "dry_cleaning", group: "Daily / Formal", rateByPiece: 89, unit: "piece", displayName: "Top", image: toppImage, badge: "Dry Clean" },
     { id: 202, name: "T-Shirt", mainCategory: "dry_cleaning", group: "Daily / Formal", rateByPiece: 79, unit: "piece", displayName: "T-Shirt", image: tshirtImage, badge: "Dry Clean" },
-    { id: 208, name: "Joggers", mainCategory: "dry_cleaning", group: "Daily / Formal", rateByPiece: 99, unit: "piece", displayName: "Joggers", image: trousersImage, badge: "Dry Clean" },
+    { id: 208, name: "Joggers", mainCategory: "dry_cleaning", group: "Daily / Formal", rateByPiece: 99, unit: "piece", displayName: "Joggers", image: joggersImage, badge: "Dry Clean" },
     { id: 307, name: "Skirt", mainCategory: "dry_cleaning", group: "Daily / Formal", rateByPiece: 99, unit: "piece", displayName: "Skirt", image: skirtImage, badge: "Dry Clean" },
 
     // Household
     { id: 513, name: "Window Curtain", mainCategory: "dry_cleaning", group: "Household", rateByPiece: 149, unit: "panel", displayName: "Window Curtain", image: windowCurtainImage, badge: "Dry Clean" },
-    { id: 529, name: "Door Curtain", mainCategory: "dry_cleaning", group: "Household", rateByPiece: 199, unit: "panel", displayName: "Door Curtain", image: windowCurtainImage, badge: "Dry Clean" },
+    { id: 529, name: "Door Curtain", mainCategory: "dry_cleaning", group: "Household", rateByPiece: 199, unit: "panel", displayName: "Door Curtain", image: doorCurtainImage, badge: "Dry Clean" },
     { id: 507, name: "Single Bedsheet", mainCategory: "dry_cleaning", group: "Household", rateByPiece: 199, unit: "piece", displayName: "Single Bedsheet", image: bedsheetSingleImage, badge: "Dry Clean" },
     { id: 508, name: "Double Bedsheet", mainCategory: "dry_cleaning", group: "Household", rateByPiece: 249, unit: "piece", displayName: "Double Bedsheet", image: bedsheetBlanketImage, badge: "Dry Clean" },
     { id: 520, name: "Single Blanket", mainCategory: "dry_cleaning", group: "Household", rateByPiece: 299, unit: "piece", displayName: "Single Blanket", image: bedsheetBlanketImage, badge: "Dry Clean" },
     { id: 521, name: "Double Blanket", mainCategory: "dry_cleaning", group: "Household", rateByPiece: 399, unit: "piece", displayName: "Double Blanket", image: bedsheetBlanketImage, badge: "Dry Clean" },
     { id: 512, name: "Cushion", mainCategory: "dry_cleaning", group: "Household", rateByPiece: 99, unit: "piece", displayName: "Cushion", image: cushionImage, badge: "Dry Clean" },
-    { id: 511, name: "Pillow Cover", mainCategory: "dry_cleaning", group: "Household", rateByPiece: 49, unit: "piece", displayName: "Pillow Cover", image: bedsheetSingleImage, badge: "Dry Clean" },
+    { id: 511, name: "Pillow Cover", mainCategory: "dry_cleaning", group: "Household", rateByPiece: 49, unit: "piece", displayName: "Pillow Cover", image: pillowCoverImage, badge: "Dry Clean" },
 
 
     // --- 3. SHOE CLEANING (Specific Items Only) ---

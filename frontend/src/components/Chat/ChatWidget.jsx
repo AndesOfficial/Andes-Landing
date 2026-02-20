@@ -39,10 +39,10 @@ const ChatWidget = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className={`fixed bottom-24 right-4 md:bottom-8 md:right-8 z-[9999] flex items-center justify-center transition-all duration-300
+                className={`fixed bottom-24 right-4 md:bottom-8 md:right-8 z-[9999] flex items-center justify-center transition-all duration-300 shadow-xl
           ${isOpen
-                        ? 'w-10 h-10 bg-gray-800 text-white shadow-lg rounded-full rotate-90' // Smaller check/close
-                        : 'w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-xl shadow-blue-500/30 rounded-2xl hover:shadow-blue-500/50' // Squircle shape
+                        ? 'w-10 h-10 bg-gray-800 text-white rounded-full rotate-90' // Smaller check/close
+                        : 'w-14 h-14 bg-white text-blue-600 rounded-full hover:shadow-2xl border border-blue-100' // White with blue message icon
                     }
         `}
             >

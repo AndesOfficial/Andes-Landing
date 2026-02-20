@@ -1,73 +1,52 @@
 import { Link, useNavigate } from "react-router-dom";
-// import useTypewriter from "../hooks/useTypewriter";
-import van from "../assets/van-removebg-preview.png"; // Import the van image
-import LaundryService from "../components/LaundryService.jsx";
-import LaundryStatus from "../components/LaundryStatus.jsx";
-import CustomerSupport from "../components/CustomerSupport.jsx";
+import van from "../assets/van-removebg-preview.png";
 import Services from "../components/Services.jsx";
 import CustomerReviews from "../components/CustomerReview.jsx";
-import Future from "../components/Future.jsx";
 import BookNow from "../components/BookNow.jsx";
-// import Serviceinfo from "../components/Serviceinfo.jsx";
 import ServiceFeatures from "../components/ServiceFeatures.jsx";
 import playstore from "../assets/playstoreicon.svg";
-import appstore from "../assets/appstoreicon.svg"; // Import the App Store icon
-import AndesAssured from "../components/AA.jsx";
-import TeamSection from "../components/TeamSection.jsx";
+import appstore from "../assets/appstoreicon.svg";
+import WhoWeAre from "../components/WhoWeAre.jsx";
+import AppPromo from "../components/AppPromo.jsx";
+import FAQ from "../components/Faq.jsx";
+import { Helmet } from "react-helmet-async";
+import MobileStickyBtn from "../components/MobileStickyBtn.jsx";
+import { motion } from "framer-motion";
+import { FaStar, FaBolt } from "react-icons/fa";
 import FeatureLeft from "../components/FeatureLeft.jsx";
 import FeatureRight from "../components/FeatureRight.jsx";
 import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
-import card4 from "../assets/card4.png";
-import { FaStar, FaStarHalfAlt, FaBell, FaClock, FaBox, FaDoorOpen, FaHeadset, FaCommentDots, FaCheck, FaBolt, FaMoon, FaChevronRight } from "react-icons/fa";
-import Appsupport from "../components/Appsupport.jsx";
-import FAQ from "../components/Faq.jsx";
-import { Helmet } from "react-helmet-async";
-import MobileStickyBtn from "../components/MobileStickyBtn.jsx";
-import SchedulingWidget from "../components/SchedulingWidget.jsx";
-import { motion } from "framer-motion";
 
 const bulletPoints1 = [
-  { icon: <FaBell className="text-brand text-xl" />, text: "Get notified when your order is ready for pick-up" },
-  { icon: <FaClock className="text-brand text-xl" />, text: "Schedule collection at your convenience" },
+  { icon: "🧺", text: "We offer laundry, dry cleaning, and ironing at a schedule that fits your lifestyle." },
+  { icon: "✨", text: "Never worry about staining your favorite shirt again." },
 ];
 
 const bulletPoints2 = [
-  { icon: <FaBox className="text-brand text-xl" />, text: "Track your delivery in real-time" },
-  { icon: <FaDoorOpen className="text-brand text-xl" />, text: "Know exactly when your laundry will arrive" },
+  { icon: "🚚", text: "Schedule a Collection Today, book a slot that works for you in seconds." },
+  { icon: "⏱️", text: "Get it Back in 24h. Fast, reliable turnaround for your clean clothes." },
 ];
 
 const bulletPoints3 = [
-  { icon: <FaHeadset className="text-brand text-xl" />, text: "24/7 customer support available" },
-  { icon: <FaCommentDots className="text-brand text-xl" />, text: "Reach us via call or chat in the app" },
-];
-
-const bulletPoints4 = [
-  { icon: <FaCheck className="text-brand text-xl" />, text: "Order scheduled and delivered promptly" },
-  { icon: <FaBox className="text-brand text-xl" />, text: "Enjoy freshly cleaned clothes at your doorstep" },
+  { icon: "🎧", text: "Anytime Assistance. Reach out to us anytime for order updates or queries." },
+  { icon: "🕰️", text: "Available 24/7. Our support team is always ready to resolve your issues." },
 ];
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.1
-    }
+    transition: { staggerChildren: 0.2, delayChildren: 0.1 }
   }
 };
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
+    opacity: 1, y: 0,
+    transition: { duration: 0.6, ease: "easeOut" }
   }
 };
 
@@ -84,77 +63,48 @@ const LandingPage = () => {
       {/* Hero Section */}
       <div className="bg-brand min-h-[100dvh] flex flex-col justify-center relative overflow-hidden pb-12 pt-24 md:pt-32">
         <main className="container mx-auto px-4 max-w-7xl relative z-10">
-          <motion.div
-            className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
+          <motion.div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16" variants={containerVariants} initial="hidden" animate="visible">
+
             {/* Left Content - Text & Widget */}
             <div className="w-full lg:w-3/5 text-white z-20 flex flex-col items-start text-left lg:pl-4">
               <motion.div className="mb-6 w-full" variants={itemVariants}>
-                <h1 className="text-[clamp(2.5rem,5vw,5rem)] font-bold tracking-tight leading-[1.1] mb-6">
-                  Laundry & dry <br /> cleaning with <br /> 24h delivery
+                <h1 className="text-[clamp(2.5rem,5vw,5rem)] font-bold tracking-tight leading-[1.1] mb-4">
+                  Laundry & Dry Cleaning <br /> within 24h
                 </h1>
 
                 {/* Location */}
-                <div className="flex items-baseline gap-3">
-                  <h2 className="text-yellow-300 font-bold text-3xl md:text-4xl tracking-wide">
-                    Pune, India
-                  </h2>
+                <p className="text-yellow-400 text-2xl font-bold mb-8 flex items-center gap-2">
+                  Pune, India - Now in Pune
+                </p>
+
+                {/* New Order & Download Actions */}
+                <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+                  <Link to="/order" className="w-full">
+                    <button className="w-full bg-yellow-400 text-slate-900 font-extrabold px-8 py-4 rounded-xl shadow-[0_0_20px_rgba(250,204,21,0.6)] hover:scale-105 hover:bg-yellow-300 transition-all duration-300 text-xl flex items-center justify-center gap-2">
+                      Book Now
+                    </button>
+                  </Link>
+                  <Link to="/order" className="w-full">
+                    <button className="w-full bg-transparent border-2 border-white/30 text-white font-bold px-8 py-4 rounded-xl hover:bg-white/10 hover:border-white transition-all duration-300 text-xl whitespace-nowrap">
+                      Order Now
+                    </button>
+                  </Link>
                 </div>
-              </motion.div>
 
-              {/* Store links */}
-              <motion.div className="flex flex-row gap-4 mb-10" variants={itemVariants}>
-                <a
-                  href="https://play.google.com/store/apps/details?id=com.andes.laundry"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center bg-white text-black px-4 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out"
-                >
-                  <img src={playstore} alt="Play Store" className="w-6 h-6" />
-                  <div className="ml-3 text-left">
-                    <p className="text-[10px] text-gray-600 font-medium leading-none mb-1">Get it on</p>
-                    <p className="text-sm font-bold leading-none">Google Play</p>
-                  </div>
-                </a>
-
-                <a
-                  href="https://apps.apple.com/in/app/andes/id6747010488"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center bg-white text-black px-4 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out"
-                >
-                  <img src={appstore} alt="App Store" className="w-6 h-6" />
-                  <div className="ml-3 text-left">
-                    <p className="text-[10px] text-gray-600 font-medium leading-none mb-1">Download on the</p>
-                    <p className="text-sm font-bold leading-none">App Store</p>
-                  </div>
-                </a>
-              </motion.div>
-
-              {/* Scheduling Widget */}
-              <motion.div className="w-full" variants={itemVariants}>
-                <SchedulingWidget />
+                {/* Download App Link */}
+                <div className="mt-8 flex flex-col items-start opacity-90 hover:opacity-100 transition-opacity">
+                  <p className="text-base text-white/80 mb-2 font-medium">Get the full experience</p>
+                  <Link to="/download" className="flex items-center gap-3 text-2xl text-yellow-300 font-extrabold hover:text-yellow-200 group">
+                    Download App <FaBolt className="text-xl group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
               </motion.div>
             </div>
 
             {/* Right Content - Image with Blob */}
-            <motion.div
-              className="w-full lg:w-1/2 flex justify-center relative mt-12 lg:mt-0"
-              variants={itemVariants}
-            >
+            <motion.div className="w-full lg:w-1/2 flex justify-center relative mt-12 lg:mt-0" variants={itemVariants}>
               <div className="relative w-full max-w-lg lg:max-w-xl aspect-square flex items-center justify-center group perspective-1000">
-                <img
-                  src={van}
-                  alt="Andes Laundry Van"
-                  style={{
-                    maskImage: 'radial-gradient(circle, black 50%, transparent 100%)',
-                    WebkitMaskImage: 'radial-gradient(circle, black 50%, transparent 100%)',
-                    mixBlendMode: 'lighten'
-                  }}
-                />
+                <img src={van} alt="Andes Laundry Van" style={{ maskImage: 'radial-gradient(circle, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(circle, black 50%, transparent 100%)', mixBlendMode: 'lighten' }} />
 
                 {/* Floating Trust Badge */}
                 <div className="absolute -bottom-6 -right-4 lg:bottom-12 lg:right-4 bg-white p-4 rounded-2xl shadow-brand-soft border border-white/60 backdrop-blur-md animate-bounce-slow z-20 flex items-center gap-4 hover:scale-105 transition-transform">
@@ -183,21 +133,15 @@ const LandingPage = () => {
         </main>
       </div>
 
-      <section className="container mx-auto px-4 py-12 md:py-20 space-y-8">
-        <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100">
-          <ServiceFeatures />
-        </div>
+      <AppPromo />
 
-        <div className="flex flex-col space-y-6">
-          <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-            <LaundryService />
-          </div>
-          <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-            <LaundryStatus />
-          </div>
-          <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-            <CustomerSupport />
-          </div>
+      <section className="bg-white">
+        <WhoWeAre />
+      </section>
+
+      <section className="py-12 md:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <ServiceFeatures />
         </div>
       </section>
 
@@ -208,61 +152,52 @@ const LandingPage = () => {
         </div>
       </div>
 
-      {/* How it Works Section with Rounded Top */}
-      <div className="bg-white rounded-t-[3rem] md:rounded-t-[5rem] -mt-12 pt-16 pb-12 relative z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
-        <div className="text-center px-4 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
-            How it Works
-          </h2>
-          <p className="text-slate-500 text-lg max-w-2xl mx-auto">Simple steps to get your laundry done right.</p>
-        </div>
+      {/* 3 Feature Blocks (2 Top, 1 Bottom) */}
+      <section className="bg-white py-12 md:py-20">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-8 lg:mb-12">
+            <FeatureLeft
+              title="Freedom From Laundry"
+              subtitle="A laundry service designed for you"
+              description=""
+              imageSrc={card1}
+              bulletPoints={bulletPoints1}
+            />
+            <FeatureRight
+              title="24h Turnaround Time"
+              subtitle="No need to plan in advance"
+              description=""
+              imageSrc={card2}
+              bulletPoints={bulletPoints2}
+            />
+          </div>
 
-        <section className="container mx-auto px-4 space-y-16 md:space-y-24">
-          <FeatureLeft
-            title="FLEXIBLE SCHEDULING"
-            subtitle="1. Schedule Your Collection"
-            description="Plan your day with ease. Choose a collection time that fits your schedule. We’ll notify you when the order is ready for pick-up, ensuring smooth coordination."
-            imageSrc={card1}
-            bulletPoints={bulletPoints1}
-          />
-          <FeatureRight
-            title="REAL-TIME TRACKING"
-            subtitle="2. Track Your Delivery"
-            description="Stay informed about your laundry delivery with real-time tracking. Know exactly when your laundry will arrive at your doorstep, making it easy to plan your day."
-            imageSrc={card2}
-            bulletPoints={bulletPoints2}
-          />
-          <FeatureLeft
-            title="24/7 SUPPORT"
-            subtitle="3. Assistance When You Need It"
-            description="We're here to help! Whether you have a question about your order or need assistance with our services, our customer support is always ready to assist you."
-            imageSrc={card3}
-            bulletPoints={bulletPoints3}
-          />
-          <FeatureRight
-            title="HASSLE-FREE DELIVERY"
-            subtitle="4. Order Scheduled and Delivered"
-            description="Your laundry is handled with care from pick-up to delivery. Enjoy your freshly cleaned clothes delivered right to your door, hassle-free!"
-            imageSrc={card4}
-            bulletPoints={bulletPoints4}
-          />
-        </section>
-      </div>
+          <div className="max-w-4xl mx-auto">
+            <FeatureLeft
+              title="24h Customer Support"
+              subtitle="We're here to help you"
+              description=""
+              imageSrc={card3}
+              bulletPoints={bulletPoints3}
+            />
+          </div>
+        </div>
+      </section>
 
       <div className="bg-slate-50 py-12 md:py-20">
         <CustomerReviews />
       </div>
 
-      <AndesAssured />
-      <Future />
-      <BookNow />
-      <TeamSection />
-
-      <section className="py-12 md:py-20">
-        <Appsupport />
+      <section className="bg-white py-12 md:py-20">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Frequently Asked Questions</h2>
+            <p className="text-lg text-slate-600">Have questions? We're here to help.</p>
+          </div>
+          <FAQ />
+        </div>
       </section>
 
-      <FAQ />
       <MobileStickyBtn />
     </div>
   );

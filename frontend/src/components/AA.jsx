@@ -15,46 +15,46 @@ const AndesAssured = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Feature Card 1 */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl">
+          <div className="bg-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <div className="bg-brand/10 rounded-full w-14 h-14 flex items-center justify-center mb-6 text-brand text-2xl">
               <FaCheckCircle />
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-3">Quality Check</h3>
             <p className="text-gray-600 leading-relaxed text-sm">
-              Rigorous inspection at every step to ensure your clothes are handled with care.
+              Rigorous 5-step inspection for perfect results, every time.
             </p>
           </div>
 
           {/* Feature Card 2 */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl">
+          <div className="bg-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <div className="bg-brand/10 rounded-full w-14 h-14 flex items-center justify-center mb-6 text-brand text-2xl">
               <FaShippingFast />
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-3">Ultra-Fast Delivery</h3>
             <p className="text-gray-600 leading-relaxed text-sm">
-              Enjoy priority service with pickup and delivery faster than ever before.
+              Priority pickup and 24-hour turnaround to match your busy schedule.
             </p>
           </div>
 
           {/* Feature Card 3 */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl">
+          <div className="bg-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <div className="bg-brand/10 rounded-full w-14 h-14 flex items-center justify-center mb-6 text-brand text-2xl">
               <FaShieldAlt />
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-3">Water Efficient</h3>
             <p className="text-gray-600 leading-relaxed text-sm">
-              Advanced technology saves water while delivering superior cleaning quality.
+              Advanced technology that saves up to 40% more water per wash.
             </p>
           </div>
 
           {/* Feature Card 4 */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl">
+          <div className="bg-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <div className="bg-brand/10 rounded-full w-14 h-14 flex items-center justify-center mb-6 text-brand text-2xl">
               <FaLeaf />
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-3">Eco-Friendly</h3>
             <p className="text-gray-600 leading-relaxed text-sm">
-              Non-toxic, safe detergents that protect your skin and the environment.
+              100% non-toxic, skin-safe detergents that protect the environment.
             </p>
           </div>
         </div>

@@ -1,9 +1,8 @@
-
 import first from "../assets/first.png";
 
 const LaundryService = () => {
   return (
-    <div id="service-area" className="flex flex-col md:flex-row w-full h-full bg-white rounded-3xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-gray-100/50 hover:shadow-lg transition-all duration-300">
+    <div id="service-area" className="flex flex-col md:flex-row w-full h-full bg-white rounded-xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-gray-100/50 hover:shadow-lg transition-all duration-300">
       {/* Left Section (Image) */}
       <div className="md:w-1/2 relative min-h-[300px] md:min-h-full overflow-hidden group">
         <div className="absolute inset-0 bg-blue-100/20 mix-blend-multiply z-10 transition-opacity group-hover:opacity-0"></div>
@@ -22,21 +21,23 @@ const LaundryService = () => {
           <h2 className="text-sm md:text-base text-gray-400 font-bold uppercase tracking-wider relative z-10">
             Freedom from Laundry
           </h2>
-          <div className="absolute -bottom-1 -left-1 w-full h-2 bg-blue-100 -rotate-1 rounded-full -z-0"></div>
+          <div className="absolute -bottom-1 -left-1 w-full h-2 bg-blue-100 -rotate-1 rounded-sm -z-0"></div>
         </div>
 
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-800 mb-6 leading-tight">
           A laundry service <br /> designed <span className="text-brand">for you</span>
         </h1>
 
-        <p className="text-gray-500 text-lg leading-relaxed mb-8">
+        {/* Increased margin bottom here to add space before the tabs, as requested */}
+        <p className="text-gray-500 text-lg leading-relaxed mb-12">
           Never worry about staining your favorite shirt again. We offer comprehensive laundry, dry cleaning, and ironing services tailored to fit your busy lifestyle.
         </p>
 
+        
         <div className="flex flex-wrap gap-3">
-          <span className="bg-blue-50 text-brand px-4 py-2 rounded-full text-sm font-bold">Wash & Fold</span>
-          <span className="bg-blue-50 text-brand px-4 py-2 rounded-full text-sm font-bold">Dry Cleaning</span>
-          <span className="bg-blue-50 text-brand px-4 py-2 rounded-full text-sm font-bold">Ironing</span>
+          <span className="bg-blue-50 text-brand px-4 py-2 rounded-md text-sm font-bold border border-blue-100">Wash & Fold</span>
+          <span className="bg-blue-50 text-brand px-4 py-2 rounded-md text-sm font-bold border border-blue-100">Dry Cleaning</span>
+          <span className="bg-blue-50 text-brand px-4 py-2 rounded-md text-sm font-bold border border-blue-100">Ironing</span>
         </div>
       </div>
     </div>
