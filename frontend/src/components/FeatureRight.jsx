@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react";
+import { FaCheckCircle } from "react-icons/fa";
 
 const FeatureRight = ({ title, subtitle, description, imageSrc, bulletPoints }) => {
   return (
@@ -9,7 +10,7 @@ const FeatureRight = ({ title, subtitle, description, imageSrc, bulletPoints }) 
 
       <div className="md:w-1/2 p-6 md:p-8 pl-12 md:pl-8 relative z-10">
         <div className="md:hidden mb-4 -ml-6 w-[calc(100%+1.5rem)] px-6">
-          <img src={imageSrc} alt="feature" className="w-full h-48 object-cover rounded-[2rem] shadow-sm" />
+          <img src={imageSrc} alt="feature" loading="lazy" className="w-full h-48 object-cover rounded-[2rem] shadow-sm" />
         </div>
 
         <div className="absolute left-0 top-6 w-12 h-0.5 bg-slate-200 md:hidden"></div>
@@ -24,15 +25,17 @@ const FeatureRight = ({ title, subtitle, description, imageSrc, bulletPoints }) 
           {bulletPoints.map((point, index) => (
             <li key={index} className="flex items-start">
               <span className="bg-brand/10 text-brand p-2 rounded-full mr-3 shadow-sm shrink-0 mt-0.5">
-                {point.icon}
+                {point.icon || <FaCheckCircle />}
               </span>
-              <span className="text-slate-700 font-medium text-sm md:text-base">{point.text}</span>
+              <span className="text-slate-700 font-medium text-sm md:text-base">
+                {typeof point === "string" ? point : point.text}
+              </span>
             </li>
           ))}
         </ul>
       </div>
       <div className="hidden md:block md:w-1/2 m-4 pl-8">
-        <img src={imageSrc} alt="feature" className="w-full h-auto object-cover rounded-[2rem] shadow-[0_12px_40px_rgb(0,0,0,0.15)] ring-1 ring-slate-900/5 transform transition-transform duration-500 hover:scale-[1.02]" />
+        <img src={imageSrc} alt="feature" loading="lazy" className="w-full h-auto object-cover rounded-[2rem] shadow-[0_12px_40px_rgb(0,0,0,0.15)] ring-1 ring-slate-900/5 transform transition-transform duration-500 hover:scale-[1.02]" />
       </div>
     </div>
   );

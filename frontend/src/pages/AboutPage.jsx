@@ -3,16 +3,16 @@ import TeamSection from "../components/TeamSection";
 import AppPromo from "../components/AppPromo";
 import WorkWithUs from "../components/WorkWithUs";
 import Future from "../components/Future";
-import {Helmet} from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 
 const AboutPage = () => {
   return (
-    <div>
+    <div className="pt-24 md:pt-32 bg-slate-50 min-h-screen">
       <Helmet>
         <title> Andes Laundry - About Us</title>
         <meta name="description" content="Learn more about Andes Laundry, your trusted laundry partner in Pune." />
       </Helmet>
-      
+
       <WhoWeAre />
       <TeamSection />
       <AppPromo />
