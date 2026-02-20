@@ -4,15 +4,13 @@ import Services from "../components/Services.jsx";
 import CustomerReviews from "../components/CustomerReview.jsx";
 import BookNow from "../components/BookNow.jsx";
 import ServiceFeatures from "../components/ServiceFeatures.jsx";
-import playstore from "../assets/playstoreicon.svg";
-import appstore from "../assets/appstoreicon.svg";
 import WhoWeAre from "../components/WhoWeAre.jsx";
 import AppPromo from "../components/AppPromo.jsx";
 import FAQ from "../components/Faq.jsx";
 import { Helmet } from "react-helmet-async";
 import MobileStickyBtn from "../components/MobileStickyBtn.jsx";
 import { motion } from "framer-motion";
-import { FaStar, FaBolt } from "react-icons/fa";
+import { FaStar, FaBolt, FaShoppingBasket, FaMagic, FaTruck, FaClock, FaHeadset, FaLifeRing } from "react-icons/fa";
 import FeatureLeft from "../components/FeatureLeft.jsx";
 import FeatureRight from "../components/FeatureRight.jsx";
 import card1 from "../assets/card1.png";
@@ -20,18 +18,18 @@ import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 
 const bulletPoints1 = [
-  { icon: "🧺", text: "We offer laundry, dry cleaning, and ironing at a schedule that fits your lifestyle." },
-  { icon: "✨", text: "Never worry about staining your favorite shirt again." },
+  { icon: <FaShoppingBasket />, text: "We offer laundry, dry cleaning, and ironing at a schedule that fits your lifestyle." },
+  { icon: <FaMagic />, text: "Never worry about staining your favorite shirt again." },
 ];
 
 const bulletPoints2 = [
-  { icon: "🚚", text: "Schedule a Collection Today, book a slot that works for you in seconds." },
-  { icon: "⏱️", text: "Get it Back in 24h. Fast, reliable turnaround for your clean clothes." },
+  { icon: <FaTruck />, text: "Schedule a Collection Today, book a slot that works for you in seconds." },
+  { icon: <FaClock />, text: "Get it Back in 24h. Fast, reliable turnaround for your clean clothes." },
 ];
 
 const bulletPoints3 = [
-  { icon: "🎧", text: "Anytime Assistance. Reach out to us anytime for order updates or queries." },
-  { icon: "🕰️", text: "Available 24/7. Our support team is always ready to resolve your issues." },
+  { icon: <FaHeadset />, text: "Anytime Assistance. Reach out to us anytime for order updates or queries." },
+  { icon: <FaLifeRing />, text: "Available 24/7. Our support team is always ready to resolve your issues." },
 ];
 
 const containerVariants = {

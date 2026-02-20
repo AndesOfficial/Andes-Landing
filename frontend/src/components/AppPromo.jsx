@@ -1,4 +1,4 @@
-import playstore from "../assets/playstoreicon.svg";
+
 import { FaMobileAlt } from "react-icons/fa";
 
 const AppPromo = () => {
@@ -52,7 +52,7 @@ const AppPromo = () => {
           <p className="text-xl mb-6">Use code <span className="font-extrabold bg-white text-brand px-3 py-1 rounded-md border-2 border-dashed border-brand mx-1">FIRST20</span> at checkout.</p>
           <p className="text-sm opacity-80 mt-8">*Terms and conditions apply. Valid for new customers only.</p>
         </div>
-        
+
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 h-full w-1/2 bg-white opacity-5 transform skew-x-12 translate-x-1/4"></div>
         <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full border-4 border-white opacity-10"></div>
