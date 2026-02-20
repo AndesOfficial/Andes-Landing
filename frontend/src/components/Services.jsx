@@ -33,7 +33,7 @@ const Services = () => {
         </div>
         <div className="relative">
           <div className="flex overflow-x-auto md:overflow-x-visible overflow-y-hidden snap-x snap-mandatory scrollbar-hide space-x-4 md:space-x-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto pb-4 md:pb-0 px-4 md:px-0">
-            <div className="snap-center shrink-0 w-[85%] sm:w-[350px] md:w-auto h-full">
+            <div className="snap-center shrink-0 w-64 sm:w-[350px] md:w-auto h-full">
               <ItemCard
                 title="Wash"
                 price="69/Kg"

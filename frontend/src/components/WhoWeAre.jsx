@@ -28,7 +28,7 @@ const WhoWeAre = () => {
 
           {/* Left Content - Text */}
           <div className="flex-1 lg:w-1/2 order-2 lg:order-1">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight tracking-tight uppercase">
               Redefining laundry
             </h2>
 
@@ -63,18 +63,10 @@ const WhoWeAre = () => {
           <div className="flex-1 lg:w-1/2 relative flex justify-center lg:justify-end order-1 lg:order-2 w-full">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-brand/20 to-brand-blue/5 rounded-full blur-3xl opacity-70 -z-10 animate-pulse-slow"></div>
 
-            <div className="relative z-10 w-full max-w-lg mx-auto lg:mx-0 bg-white p-8 rounded-[3rem] shadow-xl border border-slate-100/50">
-              {/* Washing Machine Representation instead of Truck */}
-              <div className="w-full aspect-square rounded-[2rem] bg-gradient-to-br from-blue-50 to-indigo-50 border-8 border-white shadow-inner flex items-center justify-center relative overflow-hidden group">
-                <div className="w-48 h-48 rounded-full border-8 border-slate-200 flex items-center justify-center bg-white shadow-[inset_0_4px_20px_rgba(0,0,0,0.1)] relative overflow-hidden">
-                  {/* Water/Clothes animation inside */}
-                  <div className="absolute inset-0 bg-brand/10 group-hover:bg-brand/20 transition-colors duration-700 w-[150%] h-[150%] -left-1/4 -top-1/4 rounded-[40%] animate-[spin_8s_linear_infinite]"></div>
-                  <div className="absolute inset-0 bg-blue-400/20 group-hover:bg-blue-400/30 transition-colors duration-700 w-[140%] h-[140%] -left-1/5 -top-1/5 rounded-[45%] animate-[spin_6s_linear_infinite_reverse]"></div>
-                </div>
-                {/* Digital Display */}
-                <div className="absolute top-8 right-8 w-16 h-8 bg-slate-800 rounded-lg flex items-center justify-center border-t-2 border-slate-700 shadow-inner">
-                  <span className="text-brand font-mono font-bold text-sm">24:00</span>
-                </div>
+            <div className="relative z-10 w-full max-w-lg mx-auto lg:mx-0 bg-white p-4 sm:p-8 rounded-[3rem] shadow-2xl border border-slate-100/50">
+              {/* Truck Image */}
+              <div className="w-full relative rounded-[2.5rem] overflow-hidden bg-brand/5">
+                <img src={vanImage} alt="Andes Laundry Van" className="w-full h-auto object-cover filter drop-shadow-xl p-4" />
               </div>
 
               <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:-left-6 bg-white p-4 lg:p-6 rounded-2xl shadow-xl border border-slate-100 w-max animate-float flex items-center gap-4">

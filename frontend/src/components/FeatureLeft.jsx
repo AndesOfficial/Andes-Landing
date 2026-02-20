@@ -11,19 +11,19 @@ const FeatureLeft = ({ title, subtitle, description, imageSrc, bulletPoints }) =
         <img
           src={imageSrc}
           alt="feature"
-          className="w-full h-auto object-cover rounded-3xl shadow-[0_12px_40px_rgb(0,0,0,0.15)] ring-1 ring-slate-900/5 transform transition-transform duration-500 hover:scale-[1.02]"
+          className="w-full h-auto object-cover rounded-[2rem] shadow-[0_12px_40px_rgb(0,0,0,0.15)] ring-1 ring-slate-900/5 transform transition-transform duration-500 hover:scale-[1.02]"
         />
       </div>
       <div className="md:w-1/2 p-6 md:p-8 pl-12 md:pl-8 relative z-10">
-        <div className="md:hidden mb-4 -ml-6 w-[calc(100%+1.5rem)]">
-          <img src={imageSrc} alt="feature" className="w-full h-48 object-cover rounded-2xl shadow-sm" />
+        <div className="md:hidden mb-4 -ml-6 w-[calc(100%+1.5rem)] px-6">
+          <img src={imageSrc} alt="feature" className="w-full h-48 object-cover rounded-[2rem] shadow-sm" />
         </div>
 
         <div className="absolute left-0 top-6 w-12 h-0.5 bg-slate-200 md:hidden"></div>
         <div className="absolute left-[-5px] top-[22px] w-3 h-3 rounded-full bg-brand md:hidden ring-4 ring-white"></div>
 
-        <h2 className="text-2xl font-bold text-brand mb-2">{title}</h2>
-        <h3 className="text-xl font-bold text-slate-800 uppercase tracking-wider mb-3 leading-tight">{subtitle}</h3>
+        <h2 className="text-2xl lg:text-3xl font-black tracking-tight text-slate-800 mb-2 uppercase">{title}</h2>
+        <h3 className="text-lg lg:text-xl font-bold text-brand uppercase tracking-widest mb-4 leading-tight">{subtitle}</h3>
         {description && (
           <p className="text-slate-600 mb-6 leading-relaxed text-sm md:text-base">{description}</p>
         )}
