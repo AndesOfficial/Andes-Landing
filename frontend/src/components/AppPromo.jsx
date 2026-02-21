@@ -3,7 +3,7 @@ import { FaMobileAlt } from "react-icons/fa";
 
 const AppPromo = () => {
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-between px-4 md:px-8 py-12 bg-white container mx-auto gap-12">
+    <div className="flex flex-col lg:flex-row items-center justify-between px-4 md:px-8 py-8 bg-white container mx-auto gap-12 rounded-[2rem] shadow-sm">
       {/* Left Section */}
       <div className="lg:w-1/2">
         <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
