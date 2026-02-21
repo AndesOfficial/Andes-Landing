@@ -42,7 +42,7 @@ const Navbar = () => {
 
   const navBackgroundClass = (isScrolled || isOpen)
     ? "bg-white/80 backdrop-blur-md shadow-lg shadow-brand/5 border-b border-white/40 py-2" // Scrolled or Menu Open state
-    : (isLanding ? "bg-transparent py-4" : "bg-brand py-4"); // Transparent on landing, Brand color on other pages
+    : (isLanding ? "bg-transparent py-4 border-transparent" : "bg-brand py-4 border-transparent"); // Transparent on landing, Brand color on other pages
 
   const linkColorClass = (isScrolled || isOpen)
     ? "text-slate-600 hover:text-brand" // Dark text when scrolled

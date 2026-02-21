@@ -15,7 +15,15 @@ export default {
       },
       boxShadow: {
         'brand-soft': '0 10px 15px -3px rgba(8, 144, 241, 0.1)',
-      }
+      },
+      animation: {
+        shine: "shine 1s forwards",
+      },
+      keyframes: {
+        shine: {
+          "100%": { left: "125%" },
+        },
+      },
     },
   },
   plugins: [],
