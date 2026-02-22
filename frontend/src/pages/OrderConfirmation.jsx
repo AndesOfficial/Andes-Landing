@@ -1,11 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/common/Button';
+import { Helmet } from 'react-helmet-async';
 import { FaCheckCircle } from 'react-icons/fa';
 
 const OrderConfirmation = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+            <Helmet>
+                <title>Order Confirmed | Andes Laundry</title>
+                <meta name="robots" content="noindex" />
+            </Helmet>
             <div className="max-w-lg w-full text-center">
                 <div className="bg-white p-10 rounded-3xl shadow-xl border border-gray-100">
                     <div className="flex justify-center mb-6">

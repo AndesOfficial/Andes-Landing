@@ -255,7 +255,7 @@ const DesktopServiceTable = ({ services, addToCart, removeFromCart, getItemQuant
               <td className="p-4 font-bold text-gray-800 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-xl overflow-hidden">
                   {/* Image Fix */}
-                  {service.image ? <img src={service.image} alt="" className="w-full h-full object-cover" /> : '👕'}
+                  {service.image ? <img src={service.image} alt={service.name} className="w-full h-full object-cover" /> : '👕'}
                 </div>
                 {service.name}
               </td>
