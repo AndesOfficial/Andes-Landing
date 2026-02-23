@@ -1,3 +1,4 @@
+import { FaCarSide, FaTint, FaCheckCircle } from "react-icons/fa";
 import future from "../assets/aboutus.jpeg";
 
 const Future = () => {
@@ -25,58 +26,19 @@ const Future = () => {
           <ul className="text-lg md:text-xl space-y-5 mb-8">
             <li className="flex items-center font-medium">
               <span className="inline-block w-6 h-6 mr-3 text-yellow-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 20.5l-6-4.5V7l6-4.5L18 7v9l-6 4.5z"
-                  />
-                </svg>
+                <FaCarSide className="w-6 h-6" />
               </span>
               Zero-emission delivery vehicles
             </li>
             <li className="flex items-center font-medium">
               <span className="inline-block w-6 h-6 mr-3 text-yellow-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M20 7.5a8.38 8.38 0 01-8 8.38A8.38 8.38 0 014 7.5C4 4.42 6.42 2 9.5 2S15 4.42 15 7.5a2.5 2.5 0 005 0"
-                  />
-                </svg>
+                <FaTint className="w-6 h-6" />
               </span>
               Efficient water use
             </li>
             <li className="flex items-center font-medium">
               <span className="inline-block w-6 h-6 mr-3 text-yellow-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M20 6L9 17l-5-5"
-                  />
-                </svg>
+                <FaCheckCircle className="w-6 h-6" />
               </span>
               Trustworthy local cleaners
             </li>

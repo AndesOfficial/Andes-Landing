@@ -1,12 +1,6 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faClock,
-    faTruck,
-    faShieldAlt,
-    faMapMarkerAlt,
-    faPhoneAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { FaClock, FaTruck, FaShieldAlt, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
+
 const Other = () => {
     return (
         <>
@@ -20,7 +14,7 @@ const Other = () => {
                 </h1>
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faClock} className="mr-2" />
+                        <FaClock className="inline-block mr-2" />
                         Delivery Timeframes
                     </h2>
                     <ul className="list-disc list-inside text-gray-700">
@@ -35,7 +29,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faTruck} className="mr-2" />
+                        <FaTruck className="inline-block mr-2" />
                         Minimum Order Value
                     </h2>
                     <ul className="list-disc list-inside text-gray-700">
@@ -46,7 +40,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faShieldAlt} className="mr-2" />
+                        <FaShieldAlt className="inline-block mr-2" />
                         Claims for Damages
                     </h2>
                     <ul className="list-disc list-inside text-gray-700">
@@ -68,7 +62,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faShieldAlt} className="mr-2" />
+                        <FaShieldAlt className="inline-block mr-2" />
                         Return & Exchange Policy
                     </h2>
                     <ul className="list-disc list-inside text-gray-700">
@@ -81,7 +75,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" />
+                        <FaMapMarkerAlt className="inline-block mr-2" />
                         General Information
                     </h2>
                     <ul className="list-disc list-inside text-gray-700">
@@ -102,7 +96,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faShieldAlt} className="mr-2" />
+                        <FaShieldAlt className="inline-block mr-2" />
                         Information Collection
                     </h2>
                     <p className="text-gray-700">
@@ -117,7 +111,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faShieldAlt} className="mr-2" />
+                        <FaShieldAlt className="inline-block mr-2" />
                         Usage of Information
                     </h2>
                     <p className="text-gray-700">
@@ -140,7 +134,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faPhoneAlt} className="mr-2" />
+                        <FaPhoneAlt className="inline-block mr-2" />
                         Communication Channels
                     </h2>
                     <p className="text-gray-700">
@@ -157,7 +151,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faShieldAlt} className="mr-2" />
+                        <FaShieldAlt className="inline-block mr-2" />
                         Data Protection
                     </h2>
                     <p className="text-gray-700">
@@ -168,7 +162,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faShieldAlt} className="mr-2" />
+                        <FaShieldAlt className="inline-block mr-2" />
                         Consent
                     </h2>
                     <p className="text-gray-700">
@@ -179,7 +173,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faShieldAlt} className="mr-2" />
+                        <FaShieldAlt className="inline-block mr-2" />
                         Updates to the Privacy Policy
                     </h2>
                     <p className="text-gray-700">
@@ -194,7 +188,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faClock} className="mr-2" />
+                        <FaClock className="inline-block mr-2" />
                         Delivery Timeframes
                     </h2>
                     <ul className="list-disc list-inside text-gray-700">
@@ -209,7 +203,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faTruck} className="mr-2" />
+                        <FaTruck className="inline-block mr-2" />
                         Minimum Order Value
                     </h2>
                     <ul className="list-disc list-inside text-gray-700">
@@ -220,7 +214,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faShieldAlt} className="mr-2" />
+                        <FaShieldAlt className="inline-block mr-2" />
                         Claims for Damages
                     </h2>
                     <ul className="list-disc list-inside text-gray-700">
@@ -242,7 +236,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faShieldAlt} className="mr-2" />
+                        <FaShieldAlt className="inline-block mr-2" />
                         Return & Exchange Policy
                     </h2>
                     <ul className="list-disc list-inside text-gray-700">
@@ -255,7 +249,7 @@ const Other = () => {
 
                 <section className="mb-12">
                     <h2 className="text-2xl font-semibold mb-4 underline">
-                        <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" />
+                        <FaMapMarkerAlt className="inline-block mr-2" />
                         General Information
                     </h2>
                     <ul className="list-disc list-inside text-gray-700">

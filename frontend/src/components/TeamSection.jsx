@@ -1,4 +1,4 @@
-import React from 'react';
+import { FaHeart } from "react-icons/fa";
 import Aryan from '../assets/AryanGupta.png';
 import Girl1 from '../assets/girl1.jpg';
 import Boy1 from '../assets/Boy1.jpg';
@@ -29,7 +29,7 @@ const TeamSection = () => {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 tracking-tight">Meet Our Team</h2>
           <p className="text-lg md:text-xl text-blue-50 max-w-2xl mx-auto font-medium leading-relaxed opacity-90">
             We're a global team of laundry, tech, and logistics experts on a mission to free people
-            from laundry so that they can spend more time doing what they <span className="text-yellow-400 text-2xl align-middle">💛</span>
+            from laundry so that they can spend more time doing what they <FaHeart className="text-yellow-400 inline-block align-middle" />
           </p>
         </div>
 

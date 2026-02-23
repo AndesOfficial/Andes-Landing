@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
+import { FaClock } from "react-icons/fa";
+
 const QuickCleanFresh = () => {
   return (
     <div className="relative bg-gradient-to-br from-brand via-brand to-blue-900 pt-32 pb-24 md:pt-40 md:pb-32 flex items-center justify-center overflow-hidden z-10 rounded-b-[3rem] shadow-2xl">
@@ -37,15 +39,7 @@ const QuickCleanFresh = () => {
             className="inline-flex items-center justify-center gap-2 bg-yellow-400 text-slate-900 font-black tracking-wide uppercase text-lg px-8 py-4 md:px-10 md:py-5 rounded-xl md:rounded-2xl shadow-[0_10px_40px_rgba(250,204,21,0.4)] hover:-translate-y-1 hover:bg-yellow-300 transition-all duration-300 group relative overflow-hidden w-full sm:w-auto"
           >
             <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-40 group-hover:animate-[shine_1s_ease-in-out]" />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 relative z-10"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            <FaClock size={24} className="relative z-10" />
             <span className="relative z-10">Schedule your pickup</span>
           </Link>
         </motion.div>

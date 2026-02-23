@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { FaHeart } from "react-icons/fa";
 
 const Schedule = () => {
   return (
@@ -27,9 +28,9 @@ const Schedule = () => {
           </p>
           <Link to="/services">
             <button
-              className="inline-block bg-white text-brand font-semibold py-3 px-6 rounded-md shadow-lg hover:bg-brand/10 transition-colors"
+              className="inline-flex items-center gap-2 bg-white text-brand font-semibold py-3 px-6 rounded-md shadow-lg hover:bg-brand/10 transition-colors"
             >
-              <span className="mr-2">💙</span> Schedule your pickup
+              <FaHeart className="text-brand" /> Schedule your pickup
             </button>
           </Link>
         </div>
