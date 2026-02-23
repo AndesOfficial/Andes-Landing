@@ -71,12 +71,12 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 pt-32 pb-12 px-4 sm:px-6 lg:px-8">
+        <div className="mt-[80px] min-h-[calc(100vh-80px)] flex items-center justify-center bg-slate-50 pb-12 px-4 sm:px-6 lg:px-8">
             <Helmet>
                 <title>{showReset ? 'Reset Password' : 'Log In'} - Andes Laundry</title>
                 <meta name="description" content="Log in to your Andes Laundry account to schedule pickups, track orders, and manage your profile." />
             </Helmet>
-            <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+            <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-soft border border-slate-100">
                 <div className="text-center">
                     <h2 className="text-3xl font-extrabold text-slate-900">
                         {showReset ? 'Reset Password' : 'Welcome Back'}
@@ -100,7 +100,7 @@ const Login = () => {
 
                         <div className="relative flex items-center justify-center text-sm mt-6 mb-6">
                             <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-gray-200"></div>
+                                <div className="w-full border-t border-slate-200"></div>
                             </div>
                             <span className="relative bg-white px-4 text-slate-500">Or continue with email</span>
                         </div>

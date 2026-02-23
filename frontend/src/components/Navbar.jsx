@@ -182,21 +182,21 @@ const Navbar = () => {
 
           {/* Main Navigation Links */}
           <div className="flex flex-col space-y-2 mb-8">
-            <Link to="/working" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors flex justify-between items-center group">
+            <Link to="/working" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors flex justify-between items-center group">
               How it works
-              <FaChevronRight className="text-gray-300 text-sm group-hover:text-brand transition-colors" />
+              <FaChevronRight className="text-slate-300 text-sm group-hover:text-brand transition-colors" />
             </Link>
-            <Link to="/services" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors flex justify-between items-center group">
+            <Link to="/services" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors flex justify-between items-center group">
               Services & Pricing
-              <FaChevronRight className="text-gray-300 text-sm group-hover:text-brand transition-colors" />
+              <FaChevronRight className="text-slate-300 text-sm group-hover:text-brand transition-colors" />
             </Link>
-            <Link to="/about" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors flex justify-between items-center group">
+            <Link to="/about" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors flex justify-between items-center group">
               About us
-              <FaChevronRight className="text-gray-300 text-sm group-hover:text-brand transition-colors" />
+              <FaChevronRight className="text-slate-300 text-sm group-hover:text-brand transition-colors" />
             </Link>
-            <Link to="/andes-assured" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors flex justify-between items-center group">
+            <Link to="/andes-assured" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors flex justify-between items-center group">
               Andes Assured
-              <FaChevronRight className="text-gray-300 text-sm group-hover:text-brand transition-colors" />
+              <FaChevronRight className="text-slate-300 text-sm group-hover:text-brand transition-colors" />
             </Link>
           </div>
 
@@ -204,17 +204,17 @@ const Navbar = () => {
 
           {/* User Profile Section (Bottom) */}
           <div className="mt-auto">
-            <div className="w-full h-px bg-gray-100 mb-6"></div>
+            <div className="w-full h-px bg-slate-100 mb-6"></div>
 
             {currentUser ? (
-              <div className="bg-gray-50 rounded-2xl p-5 border border-gray-100">
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-100">
                 {/* User Info Header */}
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-10 h-10 bg-brand/10 rounded-full flex items-center justify-center text-brand font-bold">
                     {currentUser.fullName ? currentUser.fullName.charAt(0).toUpperCase() : <FaUser />}
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">Welcome Back</p>
+                    <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Welcome Back</p>
                     <p className="text-slate-800 font-bold leading-tight line-clamp-1">{currentUser.fullName || "User"}</p>
                   </div>
                 </div>
@@ -225,7 +225,7 @@ const Navbar = () => {
                   onClick={closeMenu}
                   className="bg-white border border-gray-200 text-slate-700 w-full py-3 rounded-xl font-bold text-sm shadow-sm hover:border-brand/30 hover:text-brand hover:shadow-md transition-all flex items-center justify-center gap-2 mb-3"
                 >
-                  <FaList className="text-gray-400" />
+                  <FaList className="text-slate-400" />
                   View Dashboard
                 </Link>
 
@@ -242,7 +242,7 @@ const Navbar = () => {
                 {/* Logout */}
                 <button
                   onClick={() => { logout(); closeMenu(); }}
-                  className="w-full text-center text-sm font-medium text-gray-400 hover:text-red-500 transition-colors py-1 flex items-center justify-center gap-2"
+                  className="w-full text-center text-sm font-medium text-slate-400 hover:text-red-500 transition-colors py-1 flex items-center justify-center gap-2"
                 >
                   <FaSignOutAlt />
                   Log Out
@@ -253,7 +253,7 @@ const Navbar = () => {
                 <Link
                   to="/login"
                   onClick={closeMenu}
-                  className="w-full py-3 rounded-xl font-bold text-slate-700 hover:bg-gray-50 border border-transparent hover:border-gray-200 transition-all text-center"
+                  className="w-full py-3 rounded-xl font-bold text-slate-700 hover:bg-slate-50 border border-transparent hover:border-slate-200 transition-all text-center"
                 >
                   Log In
                 </Link>

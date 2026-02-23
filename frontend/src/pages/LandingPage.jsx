@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Services from "../components/Services.jsx";
 import CustomerReviews from "../components/CustomerReview.jsx";
 import ServiceFeatures from "../components/ServiceFeatures.jsx";
@@ -11,32 +11,12 @@ import { FaStar, FaBolt, FaCheckCircle, FaClock, FaShieldAlt, FaTruck, FaLeaf } 
 
 // Assets
 import PrimaryElement from "../assets/PrimaryElement.png";
-import wash_iron from "../assets/wash_iron.jpg";
-import Decorativeele from "../assets/Decorativeele.png";
 import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import avatar1 from "../assets/avatar1.png";
 import avatar2 from "../assets/avatar2.png";
 import avatar3 from "../assets/avatar3.png";
-
-
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2, delayChildren: 0.1 }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1, y: 0,
-    transition: { duration: 0.6, ease: "easeOut" }
-  }
-};
 
 const ScrollReveal = ({ children }) => {
   return (
@@ -52,7 +32,6 @@ const ScrollReveal = ({ children }) => {
 };
 
 const LandingPage = () => {
-  const navigate = useNavigate();
 
   return (
     <div className="overflow-x-hidden font-sans selection:bg-brand selection:text-white">

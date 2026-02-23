@@ -99,14 +99,14 @@ const CustomerStories = () => {
     return (
       <div className="flex text-yellow-500 text-lg">
         {[...Array(5)].map((_, i) => (
-          <FaStar key={i} className={i < rating ? "text-yellow-400" : "text-gray-300"} />
+          <FaStar key={i} className={i < rating ? "text-yellow-400" : "text-slate-200"} />
         ))}
       </div>
     );
   };
 
   return (
-    <section className="bg-gradient-to-b from-yellow-50 to-yellow-100 py-20 overflow-hidden">
+    <section className="bg-slate-50 py-20 overflow-hidden">
       <div className="container mx-auto px-4 md:px-8">
         <h2 className="text-center text-4xl md:text-5xl font-bold mb-16 text-slate-800">
           Customer Stories
@@ -115,14 +115,14 @@ const CustomerStories = () => {
           {visibleStories.map((story) => (
             <div
               key={`${story.id}-${currentIndex}`} // Force re-render for animation
-              className="bg-white p-8 rounded-[2rem] shadow-xl hover:shadow-2xl transition-all duration-500 animate-fade-in-up border border-yellow-100 flex flex-col h-full"
+              className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 animate-fade-in-up border border-slate-100 flex flex-col h-full"
             >
               <div className="flex items-start mb-6">
                 <div className="relative flex-shrink-0">
                   <img
                     src={story.image}
                     alt={story.title}
-                    className="w-16 h-16 rounded-full object-cover border-4 border-yellow-50 shadow-md"
+                    className="w-16 h-16 rounded-full object-cover border-4 border-slate-50 shadow-sm"
                   />
                   <div className="absolute -bottom-2 -right-2 bg-white rounded-full p-1 shadow-sm">
                     <div className="w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>

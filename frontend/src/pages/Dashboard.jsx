@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
-import { FaPlus, FaListAlt, FaTags, FaHeadset, FaBox, FaChevronRight, FaClock, FaCheckCircle, FaSpinner } from 'react-icons/fa';
+import { FaPlus, FaListAlt, FaTags, FaHeadset, FaBox, FaChevronRight, FaClock, FaCheckCircle } from 'react-icons/fa';
 
 // --- Reusable Components ---
 
@@ -113,7 +113,7 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="animate-fade-in-up min-h-screen bg-slate-50/50 pb-20">
+        <div className="animate-fade-in-up mt-[80px] min-h-[calc(100vh-80px)] bg-slate-50/50 pb-20">
             {/* Header Section */}
             <header className="bg-white px-4 pt-8 pb-6 shadow-sm border-b border-slate-100">
                 <div className="container mx-auto">
@@ -184,8 +184,24 @@ const Dashboard = () => {
                         </div>
 
                         {loading ? (
-                            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex justify-center text-brand-blue">
-                                <FaSpinner className="animate-spin text-2xl" />
+                            /* Skeleton Loader — matches the order card layout */
+                            <div className="bg-white rounded-3xl p-0 overflow-hidden shadow-sm border border-slate-100">
+                                <div className="h-2 w-full bg-slate-100 animate-pulse"></div>
+                                <div className="p-6 space-y-4">
+                                    <div className="flex justify-between items-start">
+                                        <div className="space-y-2">
+                                            <div className="h-3 w-24 bg-slate-100 rounded animate-pulse"></div>
+                                            <div className="h-5 w-40 bg-slate-100 rounded animate-pulse"></div>
+                                            <div className="h-3 w-32 bg-slate-50 rounded animate-pulse"></div>
+                                        </div>
+                                        <div className="h-7 w-24 bg-slate-100 rounded-full animate-pulse"></div>
+                                    </div>
+                                    <div className="w-full bg-slate-100 h-2 rounded-full animate-pulse"></div>
+                                    <div className="flex justify-between items-center pt-2 border-t border-slate-50">
+                                        <div className="h-4 w-36 bg-slate-50 rounded animate-pulse"></div>
+                                        <div className="h-4 w-24 bg-slate-50 rounded animate-pulse"></div>
+                                    </div>
+                                </div>
                             </div>
                         ) : recentOrder ? (
                             <div className="bg-white rounded-3xl p-0 overflow-hidden shadow-md border border-slate-100 relative group cursor-pointer hover:shadow-lg transition-all duration-300">
