@@ -16,6 +16,11 @@ import Decorativeele from "../assets/Decorativeele.png";
 import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
+import avatar1 from "../assets/avatar1.png";
+import avatar2 from "../assets/avatar2.png";
+import avatar3 from "../assets/avatar3.png";
+
+
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -131,10 +136,11 @@ const LandingPage = () => {
             >
               <div className="flex items-center justify-center sm:justify-start gap-4">
                 <div className="flex -space-x-3">
-                  <div className="w-10 h-10 rounded-full border-2 border-brand bg-blue-200"></div>
-                  <div className="w-10 h-10 rounded-full border-2 border-brand bg-blue-300"></div>
-                  <div className="w-10 h-10 rounded-full border-2 border-brand bg-blue-400"></div>
+                  <img src={avatar1} alt="User 1" className="w-10 h-10 rounded-full border-2 border-brand object-cover" />
+                  <img src={avatar2} alt="User 2" className="w-10 h-10 rounded-full border-2 border-brand object-cover" />
+                  <img src={avatar3} alt="User 3" className="w-10 h-10 rounded-full border-2 border-brand object-cover" />
                 </div>
+
                 <p className="text-xs text-blue-100 font-medium tracking-wide">Trusted by<br className="hidden sm:block" /> 10,000+ users</p>
               </div>
               <div className="flex flex-col w-full sm:w-auto">

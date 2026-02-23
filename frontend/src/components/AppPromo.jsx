@@ -48,9 +48,10 @@ const AppPromo = () => {
       <div className="lg:w-5/12 w-full mt-8 lg:mt-0 bg-gradient-to-br from-brand to-brand-dark rounded-xl p-8 md:p-12 text-white relative overflow-hidden shadow-2xl">
         <div className="relative z-10 text-center lg:text-left">
           <span className="bg-yellow-400 text-slate-900 font-extrabold text-sm px-3 py-1 rounded-md uppercase tracking-wider mb-4 inline-block">Special Offer</span>
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">Get 20% Off Your First Order!</h2>
-          <p className="text-lg md:text-xl mb-6">Use code <span className="font-extrabold bg-white text-brand px-3 py-1 rounded-md border-2 border-dashed border-brand mx-1">FIRST20</span> at checkout.</p>
-          <p className="text-sm opacity-80 mt-8">*Terms and conditions apply. Valid for new customers only.</p>
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">Get ₹50 on your Andes Wallet!</h2>
+          <p className="text-lg md:text-xl mb-6">Minimum order <span className="font-extrabold bg-white text-brand px-3 py-1 rounded-md border-2 border-dashed border-brand mx-1">₹99</span> required.</p>
+          <p className="text-sm opacity-80 mt-8">*Only first time users. Terms and conditions apply.</p>
+
         </div>
 
         {/* Decorative elements */}

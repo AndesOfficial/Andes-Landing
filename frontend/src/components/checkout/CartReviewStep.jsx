@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaTshirt, FaMinus, FaPlus, FaTrash, FaExclamationCircle, FaShoppingCart } from 'react-icons/fa';
+import { FaTshirt, FaMinus, FaPlus, FaTrash, FaExclamationCircle, FaShoppingCart, FaChevronRight } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { quickServices } from '../../data/servicesData';
 
+/**
+ * CartReviewStep Component
+ * First step of checkout: View items, adjust quantities, or add more.
+ */
 const CartReviewStep = ({
     cart,
     updateQuantity,
@@ -16,10 +20,7 @@ const CartReviewStep = ({
     addToCart
 }) => {
 
-    const handleIncrement = (item) => {
-        updateQuantity(item.id, item.quantity + 1);
-    };
-
+    const handleIncrement = (item) => updateQuantity(item.id, item.quantity + 1);
     const handleDecrement = (item) => {
         if (item.quantity > 1) {
             updateQuantity(item.id, item.quantity - 1);
@@ -30,37 +31,41 @@ const CartReviewStep = ({
 
     if (cart.length === 0) {
         return (
-            <div className="min-h-[60vh] flex flex-col items-center justify-center text-center">
-                <div className="bg-white rounded-2xl shadow-sm p-12 max-w-2xl w-full">
-                    <div className="mb-6 bg-brand/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto">
-                        <FaTshirt className="text-4xl text-brand/50" />
+            <div className="flex flex-col items-center justify-center text-center py-12">
+                <div className="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 p-8 sm:p-12 max-w-2xl w-full border border-slate-100">
+                    <div className="mb-6 bg-brand/5 w-20 h-20 rounded-full flex items-center justify-center mx-auto text-brand">
+                        <FaShoppingCart className="text-3xl" />
                     </div>
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">Your Cart is Empty</h2>
-                    <p className="text-gray-500 mb-8 text-lg">Start with our popular services:</p>
+                    <h2 className="text-2xl font-black text-slate-900 mb-2 tracking-tight">Your cart is empty</h2>
+                    <p className="text-slate-400 font-bold mb-8 text-sm uppercase tracking-widest">Add some magic to your laundry</p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 text-left">
                         {quickServices.slice(0, 4).map((service) => (
-                            <div key={service.id} className="p-4 border rounded-xl hover:border-brand/30 hover:shadow-md transition-all cursor-pointer group" onClick={() => {
-                                addToCart(service, 1);
-                                toast.success(`${service.name} added to cart!`);
-                            }}>
-                                <div className="flex items-center justify-between mb-2">
-                                    <div className="p-2 bg-brand/5 rounded-lg text-brand group-hover:bg-brand group-hover:text-white transition-colors">
-                                        {service.icon}
-                                    </div>
-                                    <span className="font-bold text-brand">₹{service.price}/{service.unit}</span>
+                            <div
+                                key={service.id}
+                                className="p-4 bg-slate-50 border border-transparent rounded-2xl hover:border-brand/20 hover:bg-white hover:shadow-lg transition-all cursor-pointer group flex items-center gap-4 active:scale-95"
+                                onClick={() => {
+                                    addToCart(service, 1);
+                                    toast.success(`${service.name} added!`);
+                                }}
+                            >
+                                <div className="p-3 bg-white rounded-xl text-brand group-hover:bg-brand group-hover:text-white shadow-sm transition-colors text-xl">
+                                    {service.icon}
                                 </div>
-                                <h4 className="font-bold text-gray-900">{service.name}</h4>
-                                <p className="text-xs text-gray-500 line-clamp-1">{service.desc}</p>
+                                <div>
+                                    <h4 className="font-bold text-slate-800 text-sm">{service.name}</h4>
+                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">₹{service.price}/{service.unit}</p>
+                                </div>
                             </div>
                         ))}
                     </div>
 
                     <Link
                         to="/services"
-                        className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-brand hover:bg-brand-dark transition-all hover:shadow-lg hover:-translate-y-1"
+                        className="inline-flex items-center gap-2 px-10 py-4 rounded-2xl font-black text-white bg-brand hover:bg-brand-dark transition-all shadow-xl shadow-brand/20 hover:-translate-y-1"
                     >
                         Browse All Services
+                        <FaChevronRight size={12} />
                     </Link>
                 </div>
             </div>
@@ -68,95 +73,119 @@ const CartReviewStep = ({
     }
 
     return (
-        <>
-            <div className="bg-white rounded-2xl shadow-sm p-8 animate-fade-in">
-                {isBelowMOV && (
-                    <div className="bg-red-500 text-white p-4 rounded-xl mb-6 flex items-start animate-fade-in shadow-md">
-                        <div className="bg-white/20 p-2 rounded-lg mr-3">
-                            <FaExclamationCircle className="text-xl" />
-                        </div>
-                        <div>
-                            <h3 className="font-bold text-lg">Minimum Order Value</h3>
-                            <p className="text-sm opacity-90">The minimum order value is ₹{minOrderValue}. Please add items to your cart.</p>
-                        </div>
+        <div className="pb-32 lg:pb-0"> {/* Added padding for fixed footer on mobile */}
+            {/* MOV Notification */}
+            {isBelowMOV && (
+                <div className="bg-red-50 border border-red-100 p-4 rounded-2xl mb-8 flex items-start shadow-sm shadow-red-500/5 transition-all animate-pulse">
+                    <div className="bg-red-500 p-2 rounded-lg mr-3 text-white shadow-lg">
+                        <FaExclamationCircle className="text-lg" />
                     </div>
-                )}
-                <h2 className="text-2xl font-bold text-slate-800 mb-6">Review Cart</h2>
+                    <div className="flex-grow">
+                        <h3 className="font-black text-red-900 text-sm uppercase tracking-tight">Minimum Order Value</h3>
+                        <p className="text-xs text-red-700 font-medium">Add ₹{(minOrderValue - totalPrice).toFixed(0)} more to proceed</p>
+                    </div>
+                    <Link to="/services" className="text-red-700 font-black text-[10px] uppercase tracking-widest border-b-2 border-red-200">Shop more</Link>
+                </div>
+            )}
 
-                <div className="space-y-6 mb-8">
-                    {cart.map((item) => (
-                        <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between p-4 border border-gray-100 rounded-xl hover:border-brand/20 transition-colors bg-gray-50/50">
-                            <div className="flex items-center w-full sm:w-auto mb-4 sm:mb-0">
-                                <div className="h-16 w-16 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
+            <div className="space-y-4">
+                {/* CART ITEMS LIST */}
+                <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden divide-y divide-slate-50">
+                    <div className="p-4 border-b border-slate-50 flex items-center justify-between">
+                        <h2 className="text-lg font-black text-slate-800 flex items-center gap-2">
+                            Items in Cart
+                            <span className="text-xs bg-slate-100 px-2.5 py-1 rounded-lg text-slate-400 font-black">{cart.length}</span>
+                        </h2>
+                        <button
+                            onClick={() => { if (window.confirm('Clear all items from your cart?')) clearCart(); }}
+                            className="h-11 px-4 text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-red-500 transition-colors flex items-center justify-center rounded-xl hover:bg-red-50"
+                        >
+                            Empty Cart
+                        </button>
+                    </div>
+
+                    <div className="p-2 sm:p-4 space-y-2">
+                        {cart.map((item) => (
+                            <div key={item.id} className="flex items-center gap-4 p-3 rounded-2xl bg-slate-50/50 hover:bg-slate-50 transition-colors group">
+                                {/* Side-by-Side Image */}
+                                <div className="w-16 h-16 rounded-xl overflow-hidden bg-white border border-slate-100 flex-shrink-0 shadow-sm relative">
                                     {item.image ? (
                                         <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
                                     ) : (
-                                        <div className="h-full w-full flex items-center justify-center text-gray-400">
-                                            <FaTshirt />
+                                        <div className="h-full w-full flex items-center justify-center text-slate-200 bg-slate-50">
+                                            <FaTshirt size={24} />
                                         </div>
                                     )}
                                 </div>
-                                <div className="ml-4">
-                                    <h3 className="font-bold text-gray-900">{item.name}</h3>
-                                    <p className="text-sm text-gray-500">₹{item.price}/{item.unit}</p>
-                                </div>
-                            </div>
 
-                            <div className="flex items-center justify-between w-full sm:w-auto sm:space-x-8">
-                                <div className="flex items-center bg-white rounded-lg border border-gray-200">
-                                    <button onClick={() => handleDecrement(item)} className="px-3 py-1 hover:bg-gray-50 text-gray-600">
+                                <div className="flex-grow min-w-0">
+                                    <h3 className="font-extrabold text-slate-800 text-sm truncate">{item.name}</h3>
+                                    <p className="text-xs font-bold text-slate-400">₹{item.price}/{item.unit}</p>
+                                </div>
+
+                                {/* Modern Side-by-Side Quantity Controller */}
+                                <div className="flex items-center bg-white rounded-xl border border-slate-200 p-1 shadow-sm">
+                                    <button
+                                        onClick={() => handleDecrement(item)}
+                                        className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-brand transition-colors active:scale-90"
+                                    >
                                         <FaMinus size={10} />
                                     </button>
-                                    <span className="px-3 font-medium text-gray-900">{item.quantity}</span>
-                                    <button onClick={() => handleIncrement(item)} className="px-3 py-1 hover:bg-gray-50 text-brand">
+                                    <span className="w-6 text-center font-black text-slate-800 text-xs tabular-nums">{item.quantity}</span>
+                                    <button
+                                        onClick={() => handleIncrement(item)}
+                                        className="w-8 h-8 flex items-center justify-center text-brand active:scale-90"
+                                    >
                                         <FaPlus size={10} />
                                     </button>
                                 </div>
-                                <div className="text-right min-w-[80px]">
-                                    <p className="font-bold text-gray-900">₹{(item.price * item.quantity).toFixed(2)}</p>
+
+                                {/* Item Total & Remove */}
+                                <div className="hidden sm:flex flex-col items-end min-w-[60px] ml-2">
+                                    <span className="font-black text-slate-800 text-sm">₹{(item.price * item.quantity).toFixed(0)}</span>
                                 </div>
-                                <button onClick={() => removeFromCart(item.id)} className="text-gray-400 hover:text-red-500 transition-colors p-2">
-                                    <FaTrash />
+                                <button onClick={() => removeFromCart(item.id)} className="text-slate-200 hover:text-red-500 transition-colors p-2">
+                                    <FaTrash size={12} />
                                 </button>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+                </div>
+
+                {/* Upsell helper */}
+                <div className="bg-blue-50/50 border border-blue-100 rounded-3xl p-5 flex items-center justify-between group">
+                    <div>
+                        <span className="text-sm font-black text-blue-900 block tracking-tight">Missed something?</span>
+                        <p className="text-xs text-blue-700/60 font-medium">Add more items for faster service</p>
+                    </div>
+                    <Link to="/services" className="bg-white border-2 border-blue-200 text-brand px-6 py-2.5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:border-brand hover:shadow-lg transition-all active:scale-95">
+                        Add Items
+                    </Link>
                 </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-sm p-6 mb-4 flex items-center justify-between animate-fade-in mt-4">
-                <span className="text-lg font-medium text-slate-800">Missed Something?</span>
-                <Link to="/services" className="bg-brand text-white px-6 py-2 rounded-xl font-medium hover:bg-brand-dark transition-colors shadow-sm whitespace-nowrap">
-                    + Add Items
-                </Link>
-            </div>
+            {/* FIXED BOTTOM CTA FOR MOBILE, CENTERED FOR DESKTOP */}
+            <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-6 py-4 flex items-center justify-center z-50 lg:relative lg:bg-transparent lg:border-0 lg:px-0 lg:py-12 lg:z-10">
+                <div className="w-full max-w-3xl flex items-center justify-between gap-6">
+                    <div className="flex flex-col">
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] leading-none mb-1">Total Bill</span>
+                        <span className="text-2xl font-black text-slate-900 leading-none">₹{totalPrice.toFixed(0)}</span>
+                    </div>
 
-            <div className="bg-white rounded-2xl shadow-sm p-6 flex items-center justify-between animate-fade-in">
-                <button
-                    onClick={() => { if (window.confirm('Are you sure you want to clear your cart?')) clearCart(); }}
-                    className="text-red-500 p-4 hover:bg-red-50 rounded-xl transition-colors border-2 border-red-100"
-                    title="Clear Cart"
-                >
-                    <FaTrash className="text-xl" />
-                </button>
-
-                <div className="text-center">
-                    <span className="text-green-600 font-bold text-xl">Total: ₹{totalPrice.toFixed(2)}</span>
+                    <button
+                        onClick={onNext}
+                        disabled={isBelowMOV}
+                        className={`group px-10 py-4 rounded-2xl font-black text-white shadow-2xl transition-all flex items-center gap-3 shrink-0 active:scale-95 min-h-[56px] ${isBelowMOV
+                            ? 'bg-slate-300 cursor-not-allowed shadow-none'
+                            : 'bg-brand hover:bg-brand-dark shadow-brand/20 hover:-translate-y-0.5'
+                            }`}
+                    >
+                        Proceed
+                        <FaChevronRight className={`text-xs transition-transform group-hover:translate-x-1 ${isBelowMOV ? 'opacity-0' : 'opacity-100'}`} />
+                    </button>
                 </div>
-
-                <button
-                    onClick={onNext}
-                    disabled={isBelowMOV}
-                    className={`px-8 py-3 rounded-xl font-bold shadow-lg transition-all flex items-center gap-2 ${isBelowMOV
-                        ? 'bg-brand/50 text-white cursor-not-allowed shadow-none'
-                        : 'bg-brand text-white hover:bg-brand-dark hover:shadow-brand/30'
-                        }`}
-                >
-                    <FaShoppingCart className="text-lg" />
-                    Checkout
-                </button>
             </div>
-        </>
+        </div>
     );
 };
 
