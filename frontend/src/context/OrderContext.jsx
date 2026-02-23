@@ -49,7 +49,7 @@ export const OrderProvider = ({ children }) => {
             throw new Error("User must be logged in");
         }
 
-        const { deliverySlot, addPaperBag, finalTotal, deliveryAddress } = orderDetails;
+        const { deliverySlot, addPaperBag, finalTotal, deliveryAddress, convenienceFee, deliveryFee, couponDiscount } = orderDetails;
 
         const orderData = {
             userId: currentUser.uid,
@@ -60,6 +60,9 @@ export const OrderProvider = ({ children }) => {
             totalPrice: finalTotal || cart.reduce((acc, item) => acc + (item.price * item.quantity), 0), // Use passed total or calc
             subtotal: cart.reduce((acc, item) => acc + (item.price * item.quantity), 0),
             addPaperBag: !!addPaperBag,
+            convenienceFee: convenienceFee || 0,
+            deliveryFee: deliveryFee || 0,
+            couponDiscount: couponDiscount || 0,
             status: 'Pending',
             deliverySlot: deliverySlot || 'Not specified',
             deliveryAddress: deliveryAddress || null,
