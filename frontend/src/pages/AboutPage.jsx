@@ -42,10 +42,6 @@ const AboutPage = () => {
         </ScrollReveal>
 
         <ScrollReveal>
-          <AppPromo />
-        </ScrollReveal>
-
-        <ScrollReveal>
           <WorkWithUs />
         </ScrollReveal>
       </div>

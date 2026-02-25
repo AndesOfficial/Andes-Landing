@@ -6,6 +6,8 @@ import Schedule from "../components/Schedule";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { FaBell, FaClock, FaBoxOpen, FaDoorOpen, FaPhoneAlt, FaCommentDots, FaCheckCircle, FaLeaf, FaTint, FaHeart } from "react-icons/fa";
+import LaundryCalculator from "../components/LaundryCalculator.jsx";
+
 
 // Assets
 import AboutUsImage from "../assets/aboutus.jpeg";
@@ -88,7 +90,7 @@ const Working = () => {
         <QuickCleanFresh />
       </ScrollReveal>
 
-      {/* 🌟 PREMIUM 4-STEP PROCESS GRID (Mobile Optimized) */}
+
       <section className="py-12 md:py-28 bg-white relative">
         <div className="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
 
@@ -125,15 +127,15 @@ const Working = () => {
 
                   {/* Right: Text Content */}
                   <div className="relative z-10 flex-1 text-center sm:text-left mt-2 sm:mt-0 w-full">
-                    <span className="text-[10px] md:text-xs font-black text-brand tracking-widest uppercase mb-2 block bg-white/50 backdrop-blur-sm sm:bg-transparent sm:backdrop-blur-none py-1 sm:py-0 rounded-md">
+                    <span className="text-xs md:text-sm font-black text-brand tracking-widest uppercase mb-2 block bg-white/50 backdrop-blur-sm sm:bg-transparent sm:backdrop-blur-none py-1 sm:py-0 rounded-md">
                       Step {step.num} — {step.subtitle}
                     </span>
-                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-4 md:mb-5 leading-tight">
+                    <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 md:mb-5 leading-tight">
                       {step.title}
                     </h3>
                     <ul className="space-y-3 md:space-y-4">
                       {step.bullets.map((bullet, i) => (
-                        <li key={i} className="flex items-start justify-center sm:justify-start gap-2 md:gap-3 text-slate-600 font-medium text-sm md:text-base text-left">
+                        <li key={i} className="flex items-start justify-center sm:justify-start gap-2 md:gap-3 text-slate-600 font-medium text-base md:text-lg text-left">
                           <div className="text-brand mt-0.5 md:mt-1 text-base md:text-lg flex-shrink-0">
                             {bullet.icon}
                           </div>
@@ -149,6 +151,23 @@ const Working = () => {
           </div>
         </div>
       </section>
+
+      {/* ──── Visual Divider ──── */}
+      <div className="relative z-10">
+        <div className="h-8 md:h-12 bg-gradient-to-b from-white to-slate-50" />
+      </div>
+
+      {/* 💰 LAUNDRY COST CALCULATOR */}
+      <section className="bg-slate-50 py-8 md:py-16 relative z-10">
+        <ScrollReveal>
+          <LaundryCalculator />
+        </ScrollReveal>
+      </section>
+
+      {/* ──── Visual Divider ──── */}
+      <div className="relative z-10">
+        <div className="h-12 md:h-20 bg-gradient-to-b from-slate-50 to-slate-50" />
+      </div>
 
       {/* Environmental Feature */}
       <section className="bg-slate-50 py-12 md:py-24">
