@@ -18,16 +18,16 @@ const ItemCard = ({
     </div>
 
     <div>
-      <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-brand transition-colors">{title}</h3>
-      <p className="text-gray-500 text-sm leading-relaxed mb-4">
+      <h3 className="text-xl font-bold mb-2 text-slate-800 group-hover:text-brand transition-colors">{title}</h3>
+      <p className="text-slate-500 text-sm leading-relaxed mb-4">
         {description}
       </p>
 
       <div className="mb-3">
-        <p className="text-[10px] font-bold text-gray-400 mb-2 tracking-wider uppercase">INCLUDES</p>
+        <p className="text-[10px] font-bold text-slate-400 mb-2 tracking-wider uppercase">INCLUDES</p>
         <div className="flex flex-wrap gap-1">
           {includes.map((item, index) => (
-            <span key={index} className="text-[10px] bg-gray-50 text-gray-600 px-2 py-1 rounded border border-gray-100 group-hover:border-brand/20 group-hover:bg-brand/10 group-hover:text-brand transition-colors">
+            <span key={index} className="text-[10px] bg-slate-50 text-slate-600 px-2 py-1 rounded border border-slate-100 group-hover:border-brand/20 group-hover:bg-brand/10 group-hover:text-brand transition-colors">
               {item}
             </span>
           ))}
@@ -35,10 +35,10 @@ const ItemCard = ({
       </div>
     </div>
 
-    <div className="border-t border-gray-50 pt-4 mt-auto">
-      <span className="text-xs text-gray-400 block font-medium mb-1">Starting from</span>
+    <div className="border-t border-slate-100 pt-4 mt-auto">
+      <span className="text-xs text-slate-400 block font-medium mb-1">Starting from</span>
       <div className="flex items-center justify-between gap-4">
-        <span className="text-2xl font-black text-gray-900 leading-none">₹{price}</span>
+        <span className="text-2xl font-black text-slate-900 leading-none">₹{price}</span>
         <Link to="/order">
           <button className="text-white font-bold text-sm bg-brand px-6 py-3 rounded-xl shadow-lg shadow-brand/20 hover:shadow-brand/30 hover:bg-brand-dark active:scale-95 transition-all whitespace-nowrap leading-none flex items-center justify-center">
             Book Now

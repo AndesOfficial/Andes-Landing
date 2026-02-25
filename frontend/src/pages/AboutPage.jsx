@@ -36,13 +36,9 @@ const AboutPage = () => {
         </ScrollReveal>
 
         <ScrollReveal>
-          <div className="rounded-[3rem] overflow-hidden mx-4 md:mx-8 shadow-2xl">
+          <div className="rounded-[3rem] overflow-hidden mx-4 md:mx-8 shadow-soft">
             <TeamSection />
           </div>
-        </ScrollReveal>
-
-        <ScrollReveal>
-          <AppPromo />
         </ScrollReveal>
 
         <ScrollReveal>

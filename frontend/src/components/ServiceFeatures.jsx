@@ -26,7 +26,7 @@ const ServiceFeatures = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 text-gray-800 leading-tight">
+        className="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 text-slate-800 leading-tight">
         We Collect, Clean and Deliver
         <br className="hidden lg:inline" /> your laundry and dry cleaning.
       </motion.h2>
@@ -44,33 +44,33 @@ const ServiceFeatures = () => {
           <div className="bg-brand/10 p-4 rounded-full group-hover:bg-brand/20 transition-colors">
             <FaHeadset className="text-brand text-3xl group-hover:scale-110 transition-transform" />
           </div>
-          <span className="text-gray-800 text-lg md:text-xl font-bold max-w-[200px] md:max-w-none">
+          <span className="text-slate-800 text-lg md:text-xl font-bold max-w-[200px] md:max-w-none">
             24/7 Support
           </span>
         </motion.div>
 
         {/* Vertical Divider (Desktop) */}
-        <motion.div variants={itemVariants} className="hidden md:block h-12 w-px bg-gray-200"></motion.div>
+        <motion.div variants={itemVariants} className="hidden md:block h-12 w-px bg-slate-200"></motion.div>
 
         {/* Icon 2 */}
         <motion.div variants={itemVariants} className="flex flex-col md:flex-row items-center gap-4 group">
           <div className="bg-brand/10 p-4 rounded-full group-hover:bg-brand/20 transition-colors">
             <FaWater className="text-brand text-3xl group-hover:scale-110 transition-transform" />
           </div>
-          <span className="text-gray-800 text-lg md:text-xl font-bold max-w-[200px] md:max-w-none">
+          <span className="text-slate-800 text-lg md:text-xl font-bold max-w-[200px] md:max-w-none">
             Free Pickup & Delivery
           </span>
         </motion.div>
 
         {/* Vertical Divider (Desktop) */}
-        <motion.div variants={itemVariants} className="hidden md:block h-12 w-px bg-gray-200"></motion.div>
+        <motion.div variants={itemVariants} className="hidden md:block h-12 w-px bg-slate-200"></motion.div>
 
         {/* Icon 3 */}
         <motion.div variants={itemVariants} className="flex flex-col md:flex-row items-center gap-4 group">
           <div className="bg-brand/10 p-4 rounded-full group-hover:bg-brand/20 transition-colors">
             <FaTshirt className="text-brand text-3xl group-hover:scale-110 transition-transform" />
           </div>
-          <span className="text-gray-800 text-lg md:text-xl font-bold max-w-[200px] md:max-w-none">
+          <span className="text-slate-800 text-lg md:text-xl font-bold max-w-[200px] md:max-w-none">
             24Hr Turnaround
           </span>
         </motion.div>

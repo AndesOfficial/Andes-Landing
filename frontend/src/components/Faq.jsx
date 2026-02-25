@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaChevronDown } from 'react-icons/fa';
 
 const Faq = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -28,21 +28,28 @@ const Faq = () => {
   ];
 
   return (
-    <div id="faq" className="w-full">
+    <div id="faq" className="w-full space-y-3">
       {faqs.map((faq, index) => (
-        <div key={index} className="mb-4">
-          <div
-            className="flex justify-between items-center bg-gray-100 p-4 rounded cursor-pointer text-left hover:bg-gray-200 transition duration-300"
+        <div
+          key={index}
+          className="bg-white rounded-xl border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-sm"
+        >
+          <button
+            className="flex justify-between items-center w-full p-5 text-left bg-slate-50 hover:bg-slate-100 transition-all duration-300 cursor-pointer"
             onClick={() => toggleFaq(index)}
           >
-            <h2 className="text-lg font-semibold">{faq.question}</h2>
-            {openIndex === index ? <FaChevronUp /> : <FaChevronDown />}
-          </div>
-          {openIndex === index && (
-            <div className="bg-white p-4 border border-t-0 rounded-b text-left shadow-md">
-              <p>{faq.answer}</p>
+            <h2 className="text-lg font-semibold text-slate-800 pr-4">{faq.question}</h2>
+            <FaChevronDown
+              className={`text-slate-400 flex-shrink-0 transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}
+            />
+          </button>
+          <div
+            className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}
+          >
+            <div className="p-5 pt-0 text-left">
+              <p className="text-slate-600 leading-relaxed">{faq.answer}</p>
             </div>
-          )}
+          </div>
         </div>
       ))}
     </div>

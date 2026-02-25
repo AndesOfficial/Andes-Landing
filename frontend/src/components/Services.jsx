@@ -6,7 +6,7 @@ import Button from "./common/Button";
 
 const Services = () => {
   return (
-    <div id="pricing-section" className="bg-brand text-white py-12 px-4 rounded-[2.5rem] md:rounded-[3.5rem] shadow-2xl shadow-brand/30 transition-all duration-300 ease-in-out mx-auto max-w-7xl relative overflow-hidden">
+    <div id="pricing-section" className="bg-brand text-white py-12 px-4 rounded-[2.5rem] md:rounded-[3.5rem] shadow-xl shadow-brand/20 transition-all duration-300 ease-in-out mx-auto max-w-7xl relative overflow-hidden">
       {/* Decorative background circle */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none"></div>

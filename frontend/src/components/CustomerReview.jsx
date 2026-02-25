@@ -10,7 +10,7 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-import './CustomerReview.css';
+
 
 const CustomerReviews = () => {
   const swiperRef = useRef(null);
