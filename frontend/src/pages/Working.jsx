@@ -191,13 +191,6 @@ const Working = () => {
           <CustomerStories />
         </ScrollReveal>
       </section>
-
-      {/* Schedule / Booking Widget */}
-      <section className="bg-slate-50 pb-16 md:pb-20">
-        <ScrollReveal>
-          <Schedule />
-        </ScrollReveal>
-      </section>
     </div>
   );
 };
