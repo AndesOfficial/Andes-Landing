@@ -4,12 +4,14 @@ import { FaPaperPlane, FaRobot } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { db, auth } from '../../firebase';
 import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 
 const ChatWindow = ({ isOpen, onClose }) => {
     const [messages, setMessages] = useState([
         { id: 'init', text: "Hi! I'm Andy. How can I lighten your load today?", sender: 'bot' }
     ]);
     const [inputValue, setInputValue] = useState('');
+    const [currentUser, setCurrentUser] = useState(auth?.currentUser);
     const messagesEndRef = useRef(null);
     const navigate = useNavigate();
 
@@ -17,11 +19,25 @@ const ChatWindow = ({ isOpen, onClose }) => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
-    // 1. Listen to Firestore in Real-Time
+    // 0. Ensure user is authenticated (sign in anonymously if needed)
     useEffect(() => {
-        if (!auth?.currentUser) return; // Wait until user is logged in
+        const unsubAuth = onAuthStateChanged(auth, (user) => {
+            setCurrentUser(user);
+            if (!user) {
+                // No user at all — sign in anonymously so chatbot works for guests
+                signInAnonymously(auth).catch((err) => {
+                    console.error('Anonymous sign-in failed:', err);
+                });
+            }
+        });
+        return () => unsubAuth();
+    }, []);
 
-        const messagesRef = collection(db, `users/${auth.currentUser.uid}/messages`);
+    // 1. Listen to Firestore in Real-Time (works for both regular & anonymous users)
+    useEffect(() => {
+        if (!currentUser) return; // Wait until auth is resolved
+
+        const messagesRef = collection(db, `users/${currentUser.uid}/messages`);
         const q = query(messagesRef, orderBy('createTime', 'asc'));
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -46,7 +62,7 @@ const ChatWindow = ({ isOpen, onClose }) => {
         });
 
         return () => unsubscribe();
-    }, [isOpen]);
+    }, [currentUser]);
 
     // 2. Prevent Background Scroll on Mobile
     useEffect(() => {
@@ -59,19 +75,15 @@ const ChatWindow = ({ isOpen, onClose }) => {
         return () => { document.body.style.overflow = 'unset'; };
     }, [messages, isOpen]);
 
-    // 3. Send Message to Firestore
+    // 3. Send Message to Firestore (works for both regular & anonymous users)
     const handleSendMessage = async (text) => {
         if (!text.trim()) return;
-
-        if (!auth?.currentUser) {
-            alert("Please log in to chat with Andy!");
-            return;
-        }
+        if (!currentUser) return; // Auth still resolving, ignore
 
         setInputValue(''); // Clear input instantly
 
         try {
-            await addDoc(collection(db, `users/${auth.currentUser.uid}/messages`), {
+            await addDoc(collection(db, `users/${currentUser.uid}/messages`), {
                 prompt: text,
                 createTime: serverTimestamp()
             });

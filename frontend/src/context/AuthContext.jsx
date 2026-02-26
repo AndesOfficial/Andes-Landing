@@ -24,8 +24,8 @@ export const AuthProvider = ({ children }) => {
     // 1. Check if user is logged in (Firebase does this automatically)
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                // If user is logged in, fetch their name from Firestore
+            if (user && !user.isAnonymous) {
+                // If a real (non-anonymous) user is logged in, fetch their name from Firestore
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
 
