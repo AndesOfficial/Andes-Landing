@@ -2,7 +2,6 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { useEffect, useRef, Suspense, lazy, useState } from "react";
 import './App.css';
-// import IntercomComponent from './intercom';
 import data from './data';
 import MyFooter from './components/MyFooter';
 import DashboardLayout from "./components/DashboardLayout";
@@ -54,7 +53,6 @@ function App() {
             </Route>
           </Routes>
         </Suspense>
-        {/* <IntercomComponent /> */}
         <ChatWidget />
       </>
     );
@@ -91,8 +89,6 @@ function App() {
 
       <ToastContainer position="bottom-center" autoClose={2000} hideProgressBar={true} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
 
-      {/* <IntercomComponent /> */}
-      {/* <IntercomComponent /> */}
       <ChatWidget />
       <MobileStickyBtn />
     </>
