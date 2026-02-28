@@ -168,8 +168,8 @@ const ServiceGroupSection = ({ title, services }) => {
 
   return (
     <div className="scroll-mt-32 lg:scroll-mt-40" id={sectionId}>
-      {/* STICKY GROUP HEADER */}
-      <div className="sticky top-[125px] lg:top-[120px] z-30 bg-slate-50/95 backdrop-blur-md py-4 lg:py-6 mb-6 border-b border-slate-200/40">
+      {/* GROUP HEADER */}
+      <div className="bg-slate-50 py-4 lg:py-6 mb-6 border-b border-slate-200/40">
         <h3 className="text-xl lg:text-3xl font-black text-slate-800 flex items-center gap-4">
           {title}
           <div className="flex-grow h-[2px] bg-slate-100 hidden sm:block"></div>

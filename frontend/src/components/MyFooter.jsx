@@ -64,7 +64,7 @@ const MyFooter = () => {
               <li><Link to="/other" className="hover:text-white transition-colors">Terms & Conditions</Link></li>
               <li><Link to="/privacypolicy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link to="/other" className="hover:text-white transition-colors">Return Policy</Link></li>
-              <li><a href="mailto:care@andes.co.in" className="hover:text-white transition-colors">Contact Support</a></li>
+              <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
