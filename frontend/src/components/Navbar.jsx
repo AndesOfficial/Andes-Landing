@@ -15,12 +15,7 @@ const Navbar = () => {
   // We now handle scroll state locally only
   const [isScrolled, setIsScrolled] = useState(false);
 
-  /* 
-     SCROLL LISTENER LOGIC:
-     We want the navbar to change its background color when the user scrolls down.
-     This useEffect adds an event listener to the window's scroll event.
-     If the user scrolls more than 20 pixels, we set isScrolled to true.
-  */
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -100,6 +95,11 @@ const Navbar = () => {
                 className={`transition-colors duration-300 ease-in-out font-medium text-lg ${linkColorClass} ${isActive("/andes-assured") ? "font-bold text-brand" : ""}`}
               >
                 Andes Assured
+              </Link>
+              <Link to="/contact"
+                className={`transition-colors duration-300 ease-in-out font-medium text-lg ${linkColorClass} ${isActive("/contact") ? "font-bold text-brand" : ""}`}
+              >
+                Contact Us
               </Link>
             </div>
 
@@ -196,6 +196,10 @@ const Navbar = () => {
             </Link>
             <Link to="/andes-assured" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors flex justify-between items-center group">
               Andes Assured
+              <FaChevronRight className="text-slate-300 text-sm group-hover:text-brand transition-colors" />
+            </Link>
+            <Link to="/contact" onClick={closeMenu} className="text-xl font-bold text-slate-800 py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors flex justify-between items-center group">
+              Contact Us
               <FaChevronRight className="text-slate-300 text-sm group-hover:text-brand transition-colors" />
             </Link>
           </div>
