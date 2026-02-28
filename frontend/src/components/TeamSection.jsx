@@ -1,18 +1,28 @@
 import { FaHeart } from "react-icons/fa";
 import Aryan from '../assets/AryanGupta.png';
-import Girl1 from '../assets/girl1.jpg';
-import Boy1 from '../assets/Boy1.jpg';
-import Boy2 from '../assets/Boy2.jpg';
-import Girl2 from '../assets/girl2.jpg';
 import Gaurav from '../assets/Gaurav_Bind.jpeg';
+import Jeet from '../assets/Jeetzanvar.jpeg';
+import Kushal from '../assets/Kushalkumar _graphicdesigner.jpeg';
+import Neeyati from '../assets/NeeyatiDharamsey _marketing team.jpeg';
+import Nitya from '../assets/Nityajuneja_Marketing team.jpeg';
+import Prabjot from '../assets/PrabjotWaryah.jpeg';
+import Pranay from '../assets/Pranaysingh.jpeg';
+import Sneha from '../assets/Snehajaiswal_marketing team.jpeg';
+import Swanandi from '../assets/SwanandiBurute.jpeg';
+import Tushar from '../assets/Tushargitte_cinematographer.jpeg';
 
 const teamMembers = [
-  { src: Aryan, name: "Aryan Gupta", title: "Founder and CEO" },
+  { src: Aryan, name: "Aryan Gupta", title: "Founder & CEO" },
   { src: Gaurav, name: "Gaurav Bind", title: "Tech Team Lead" },
-  { src: Boy1, name: "Pranay Agarwal", title: "Tech Team Lead" },
-  { src: Boy2, name: "Pradyumna Deshpande", title: "Designer" },
-  { src: Girl1, name: "Nihi Srivastava", title: "Social Media Manager" },
-  { src: Girl2, name: "Sneha Sharma", title: "On Ground Lead" },
+  { src: Kushal, name: "Kushal Kumar", title: "Graphic Designer" },
+  { src: Neeyati, name: "Neeyati Dharamsey", title: "Marketing Team" },
+  { src: Nitya, name: "Nitya Juneja", title: "Marketing Team" },
+  { src: Sneha, name: "Sneha Jaiswal", title: "Marketing Team" },
+  { src: Tushar, name: "Tushar Gitte", title: "Cinematographer" },
+  { src: Jeet, name: "Jeet Zanvar", title: "Operation Manager" },          // TODO: Add title
+  { src: Prabjot, name: "Prabjot Waryah", title: "Operation Manager" },    // TODO: Add title
+  { src: Pranay, name: "Pranay Singh", title: "Operation Manager" },        // TODO: Add title
+  { src: Swanandi, name: "Swanandi Burute", title: "Marketing Team" },   // TODO: Add title
 ];
 
 const TeamSection = () => {
@@ -51,13 +61,13 @@ const TeamSection = () => {
           </div>
         </div>
 
-        {/* Other Team Members - Always Visible Text */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-8 gap-y-12">
+        {/* Other Team Members */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-10 md:gap-x-8 md:gap-y-12">
           {teamMembers.slice(1).map((member, index) => (
             <div key={index} className="flex flex-col items-center group">
-              <div className="relative w-full aspect-square mb-5">
+              <div className="relative w-full aspect-[4/5] mb-4">
                 <div className="absolute inset-0 bg-brand-light rounded-2xl rotate-3 opacity-0 group-hover:opacity-20 blur-md transition-all duration-300"></div>
-                <div className="w-full h-full overflow-hidden rounded-2xl shadow-xl border-2 border-white/10 transform transition-transform duration-500 group-hover:-translate-y-2 relative z-10">
+                <div className="absolute inset-0 w-full h-full overflow-hidden rounded-2xl shadow-xl border-2 border-white/10 transform transition-transform duration-500 group-hover:-translate-y-2 z-10 bg-slate-800">
                   <img
                     src={member.src}
                     alt={member.name}
@@ -66,8 +76,10 @@ const TeamSection = () => {
                 </div>
               </div>
               <div className="text-center">
-                <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
-                <p className="text-blue-200 font-semibold text-xs uppercase tracking-wider">{member.title}</p>
+                <h3 className="text-base md:text-lg font-bold text-white mb-1">{member.name}</h3>
+                {member.title && (
+                  <p className="text-blue-200 font-semibold text-xs uppercase tracking-wider">{member.title}</p>
+                )}
               </div>
             </div>
           ))}
