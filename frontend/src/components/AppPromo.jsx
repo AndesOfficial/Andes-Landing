@@ -1,7 +1,19 @@
 
 import { FaMobileAlt } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import holiOfferImg from "../assets/holioffer.png";
 
 const AppPromo = () => {
+  const [isHoliActive, setIsHoliActive] = useState(false);
+
+  useEffect(() => {
+    const now = new Date();
+    const start = new Date('2026-03-03T00:00:00');
+    const end = new Date('2026-03-06T23:59:59');
+    setIsHoliActive(now >= start && now <= end);
+  }, []);
+
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between px-4 md:px-8 py-8 bg-white container mx-auto gap-12 rounded-2xl shadow-soft border border-slate-100 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
       {/* Left Section */}
@@ -44,19 +56,29 @@ const AppPromo = () => {
         </div>
       </div>
 
-      {/* Promo Banner */}
-      <div className="lg:w-5/12 w-full mt-8 lg:mt-0 bg-gradient-to-br from-brand to-brand-dark rounded-2xl p-8 md:p-12 text-white relative overflow-hidden shadow-soft">
-        <div className="relative z-10 text-center lg:text-left">
-          <span className="bg-white/20 backdrop-blur-sm text-white font-extrabold text-sm px-3 py-1 rounded-lg uppercase tracking-wider mb-4 inline-block">Special Offer</span>
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">Get ₹50 on your Andes Wallet!</h2>
-          <p className="text-lg md:text-xl mb-6">Minimum order <span className="font-extrabold bg-white text-brand px-3 py-1 rounded-lg border-2 border-dashed border-brand mx-1">₹99</span> required.</p>
-          <p className="text-sm opacity-80 mt-8">*Only first time users. Terms and conditions apply.</p>
+      {/* Promo Banner — Holi Offer or Default */}
+      {isHoliActive ? (
+        <Link to="/services" className="lg:w-5/12 w-full mt-8 lg:mt-0 block group">
+          <div className="rounded-2xl overflow-hidden shadow-soft relative hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+            <img
+              src={holiOfferImg}
+              alt="Holi Special - Flat 50% Off with code ANDESHOLI50"
+              className="w-full h-auto object-contain group-hover:scale-[1.02] transition-transform duration-500"
+            />
+          </div>
+        </Link>
+      ) : (
+        <div className="lg:w-5/12 w-full mt-8 lg:mt-0 bg-gradient-to-br from-brand to-brand-dark rounded-2xl p-8 md:p-12 text-white relative overflow-hidden shadow-soft">
+          <div className="relative z-10 text-center lg:text-left">
+            <span className="bg-white/20 backdrop-blur-sm text-white font-extrabold text-sm px-3 py-1 rounded-lg uppercase tracking-wider mb-4 inline-block">Special Offer</span>
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">Get ₹50 on your Andes Wallet!</h2>
+            <p className="text-lg md:text-xl mb-6">Minimum order <span className="font-extrabold bg-white text-brand px-3 py-1 rounded-lg border-2 border-dashed border-brand mx-1">₹99</span> required.</p>
+            <p className="text-sm opacity-80 mt-8">*Only first time users. Terms and conditions apply.</p>
+          </div>
+          <div className="absolute top-0 right-0 h-full w-1/2 bg-white opacity-5 transform skew-x-12 translate-x-1/4"></div>
+          <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full border-4 border-white opacity-10"></div>
         </div>
-
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 h-full w-1/2 bg-white opacity-5 transform skew-x-12 translate-x-1/4"></div>
-        <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full border-4 border-white opacity-10"></div>
-      </div>
+      )}
     </div>
   );
 };

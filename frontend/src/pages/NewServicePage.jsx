@@ -19,7 +19,7 @@ import BottomNav from '../components/BottomNav';
  */
 const NewServicePage = () => {
   const { cart } = useOrder();
-  const [selectedMain, setSelectedMain] = useState('dry_cleaning');
+  const [selectedMain, setSelectedMain] = useState('general');
   const [searchQuery, setSearchQuery] = useState('');
 
   // 1. Filter & Search Logic
@@ -54,7 +54,7 @@ const NewServicePage = () => {
       <Navbar />
 
       {/* MOBILE HEADER: Search (scrolls) + Categories (sticky) */}
-      <div className="lg:hidden mt-[60px] md:mt-[80px]">
+      <div className="lg:hidden mt-[112px] sm:mt-[120px]">
         {/* Search Bar (Non-sticky on mobile per req) */}
         <div className="px-5 pt-6 pb-4 bg-white shadow-sm border-b border-slate-100">
           <div className="relative group">
@@ -70,7 +70,7 @@ const NewServicePage = () => {
         </div>
 
         {/* Categories (Sticky on mobile) */}
-        <div className="sticky top-[70px] md:top-[80px] z-40 bg-white/95 backdrop-blur-md py-3 px-4 shadow-sm border-b border-slate-100">
+        <div className="sticky top-[80px] z-40 bg-white/95 backdrop-blur-md py-3 px-4 shadow-sm border-b border-slate-100">
           <ServiceFilters
             mainCategories={data?.mainCategories || []}
             selectedMain={selectedMain}

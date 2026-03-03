@@ -86,7 +86,7 @@ const OrderPlacement = () => {
     };
 
     return (
-        <div className="min-h-[100dvh] bg-slate-50 pt-24 pb-12">
+        <div className="min-h-[100dvh] bg-slate-50 pt-28 pb-12">
             <Helmet>
                 <title>Checkout | Andes Laundry</title>
                 <meta name="description" content="Review your cart and place your laundry order." />
