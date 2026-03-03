@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaShoppingCart, FaClock, FaInfoCircle, FaMapMarkerAlt, FaTags, FaWallet, FaFileInvoice, FaChevronDown, FaChevronUp, FaArrowLeft, FaShieldAlt, FaPlus, FaCheck, FaChevronRight } from 'react-icons/fa';
+import { FaShoppingCart, FaClock, FaInfoCircle, FaMapMarkerAlt, FaTags, FaWallet, FaFileInvoice, FaChevronDown, FaChevronUp, FaArrowLeft, FaShieldAlt, FaPlus, FaCheck, FaChevronRight, FaGift } from 'react-icons/fa';
 import AddressList from '../AddressList';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -45,6 +45,10 @@ const PaymentSummaryStep = ({
             } else if (upperCode === 'ANDES10') {
                 setCouponDiscount(10);
                 toast.success("₹10 discount applied!");
+            } else if (upperCode === 'ANDESHOLI50') {
+                const discount = Math.min(totalPrice * 0.5, 300);
+                setCouponDiscount(discount);
+                toast.success(`₹${discount.toFixed(0)} discount applied!`);
             } else {
                 setCouponError('Invalid coupon code');
                 setCouponDiscount(0);
@@ -158,7 +162,7 @@ const PaymentSummaryStep = ({
                                 type="text"
                                 value={couponInput}
                                 onChange={(e) => setCouponInput(e.target.value)}
-                                placeholder="Enter code (e.g. WELCOME20)"
+                                placeholder="Enter code (e.g. ANDESHOLI50)"
                                 className="flex-grow bg-slate-50 border border-slate-100 rounded-xl px-4 py-2 text-sm font-bold focus:ring-2 focus:ring-brand/20 outline-none transition-all placeholder:text-slate-300 uppercase"
                             />
                             <button
@@ -169,6 +173,15 @@ const PaymentSummaryStep = ({
                                 {isApplyingCoupon ? '...' : 'Apply'}
                             </button>
                         </div>
+                        {/* Suggestion chip */}
+                        {couponDiscount === 0 && (
+                            <button
+                                onClick={() => setCouponInput('ANDESHOLI50')}
+                                className="inline-flex items-center gap-1.5 text-[10px] font-bold text-orange-600 bg-orange-50 border border-orange-200 px-3 py-1.5 rounded-lg hover:bg-orange-100 transition-colors active:scale-95"
+                            >
+                                <FaGift className="text-orange-500" size={10} /> <span>Try <span className="font-mono font-black tracking-wider">ANDESHOLI50</span> — Flat 50% Off!</span>
+                            </button>
+                        )}
                         {couponError && <p className="text-[10px] text-red-500 font-bold px-1">{couponError}</p>}
                         {couponDiscount > 0 && <p className="text-[10px] text-green-600 font-black px-1 uppercase tracking-tight">🎉 Coupon Applied: -₹{couponDiscount}</p>}
                     </div>

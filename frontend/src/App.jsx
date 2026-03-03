@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ChatWidget from "./components/Chat/ChatWidget";
 import MobileStickyBtn from "./components/MobileStickyBtn";
 
+
 // Lazy Load Pages
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
