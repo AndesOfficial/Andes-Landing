@@ -8,6 +8,8 @@ import { Helmet } from "react-helmet-async";
 import MobileStickyBtn from "../components/MobileStickyBtn.jsx";
 import { motion } from "framer-motion";
 import { FaStar, FaBolt, FaCheckCircle, FaClock, FaShieldAlt, FaTruck, FaLeaf } from "react-icons/fa";
+import TrustedBy from "../components/TrustedBy.jsx";
+
 
 // Assets
 import PrimaryElement from "../assets/PrimaryElement.png";
@@ -221,6 +223,10 @@ const LandingPage = () => {
           ))}
         </motion.div>
       </div>
+
+      {/* TRUSTED BY SECTION */}
+      <TrustedBy />
+
 
       {/*  HIGHLIGHTED PROMO */}
       <div className="py-8 md:py-12 bg-slate-50 relative z-20">

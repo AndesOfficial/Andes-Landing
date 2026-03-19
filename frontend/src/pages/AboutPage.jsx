@@ -2,6 +2,8 @@ import React from "react";
 import WhoWeAre from "../components/WhoWeAre";
 import TeamSection from "../components/TeamSection";
 import WorkWithUs from "../components/WorkWithUs";
+import TrustedBy from "../components/TrustedBy";
+
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 
@@ -60,6 +62,11 @@ const AboutPage = () => {
         <ScrollReveal>
           <WhoWeAre />
         </ScrollReveal>
+
+        <ScrollReveal>
+          <TrustedBy />
+        </ScrollReveal>
+
 
         <ScrollReveal>
           <div className="mx-4 md:mx-8">
