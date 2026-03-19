@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { db } from '../firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuth } from './AuthContext';
 
 const OrderContext = createContext();
@@ -74,6 +74,72 @@ export const OrderProvider = ({ children }) => {
 
         try {
             const docRef = await addDoc(collection(db, "orders"), orderData);
+
+            // Format services maps based on rider app expectations
+            const serviceUnitsMap = {};
+            const servicesMap = {};
+            cart.forEach(item => {
+                const itemName = item.title || item.name || 'Item';
+                // e.g., "Wash & Fold_regular"
+                const key = `${itemName}_regular`; 
+                serviceUnitsMap[key] = "regular";
+                servicesMap[key] = item.quantity || 1;
+            });
+
+            // Forward to cartdetails for Rider app
+            const cartDetailsData = {
+                address: deliveryAddress ? `${deliveryAddress.scAddress || ''}, ${deliveryAddress.scCity || ''}` : "Not provided",
+                convenienceFee: convenienceFee || 0,
+                createdAt: orderData.createdAt,
+                deliveryCharge: deliveryFee || 0,
+                dropTime: deliverySlot || 'Not specified',
+                freeDeliveryApplied: (deliveryFee === 0),
+                hasFreeCadbury: false,
+                location: {
+                    accuracyMeters: null,
+                    address: deliveryAddress ? `${deliveryAddress.scAddress || ''}, ${deliveryAddress.scCity || ''}` : "Not provided",
+                    isManual: true,
+                    latitude: 0.0,
+                    longitude: 0.0,
+                    pincode: deliveryAddress?.scZip || "",
+                    selectionSource: "website",
+                    timestamp: new Date().toISOString(),
+                    userEnteredAddress: deliveryAddress ? deliveryAddress.scAddress || '' : "Not provided"
+                },
+                orderNumber: parseInt(orderData.orderId.replace('#ORD-', ''), 10) || 0,
+                orderTimestamp: Date.now(),
+                originalTotalCost: orderData.totalPrice,
+                otherCharges: 0,
+                paperBag: !!addPaperBag,
+                paymentData: {
+                     convenienceFee: convenienceFee || 0,
+                     originalAmount: orderData.totalPrice - (convenienceFee || 0),
+                     totalWithFee: orderData.totalPrice
+                },
+                paymentId: null,
+                paymentMethod: "cod",
+                paymentStatus: "pending",
+                pickupTime: deliverySlot || 'Not specified',
+                serviceUnits: serviceUnitsMap,
+                services: servicesMap,
+                status: 'pending', // Rider app seems to prefer lowercase 'pending' in paymentStatus, let's use 'Pending' or 'placed' depending on what's standard. We'll use orderData.status or 'pending'
+                totalCost: orderData.totalPrice,
+                totalItems: orderData.totalItems,
+                ultraFastDelivery: false,
+                updatedAt: serverTimestamp(),
+                userId: currentUser.uid || '',
+                userMobile: currentUser.phone || currentUser.mobile || '',
+                userName: currentUser.fullName || 'Unknown',
+                walletAmountUsed: 0
+            };
+
+            // Clean up undefined values which Firestore hates just to be safe
+            Object.keys(cartDetailsData).forEach(key => cartDetailsData[key] === undefined && delete cartDetailsData[key]);
+            
+            console.log("Saving to cartdetails with ID:", docRef.id, " Payload:", cartDetailsData);
+            await setDoc(doc(db, "cartdetails", docRef.id), cartDetailsData);
+            console.log("Successfully saved to cartdetails!");
+
             clearCart();
             return { id: docRef.id, ...orderData };
         } catch (error) {
