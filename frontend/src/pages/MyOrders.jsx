@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../firebase';
-import { collection, query, where, orderBy, onSnapshot, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, where, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, getDoc, setDoc } from 'firebase/firestore';
 import { FaBoxOpen, FaClock, FaCheckCircle, FaTimesCircle, FaTruck, FaSpinner } from 'react-icons/fa';
 
 const MyOrders = () => {
@@ -61,11 +61,26 @@ const MyOrders = () => {
 
         try {
             console.log(`Attempting to cancel order: ${orderToCancel}`);
+            
+            // 1. Update orders collection
             const orderRef = doc(db, 'orders', orderToCancel);
             await updateDoc(orderRef, {
                 status: 'Cancelled',
                 cancelledAt: serverTimestamp()
             });
+
+            // 2. Update cartdetails collection for Rider App
+            try {
+                const cartRef = doc(db, 'cartdetails', orderToCancel);
+                await updateDoc(cartRef, {
+                    status: 'cancelled',
+                    updatedAt: serverTimestamp()
+                });
+            } catch (cartErr) {
+                console.warn("Cartdetails document might not exist or failed to update:", cartErr);
+                // We don't throw here so the user still sees the success message for their side
+            }
+
             console.log("Order cancelled successfully");
             alert("Order cancelled successfully.");
         } catch (error) {
@@ -80,6 +95,85 @@ const MyOrders = () => {
     const closeCancelModal = () => {
         setShowCancelModal(false);
         setOrderToCancel(null);
+    };
+
+    const runSync = async () => {
+        const ids = ["ftIj39EVylxXDPeCTSeK", "w3ar7Z28vWD5ZNEuWrmi", "w467k5Ja4ctparDJzi0k", "wDD6gzDCEnMEmzSZufIk", "wGUTPtIQChMz7tWqQMUi", "wXpmBz4KXWTVcG8cHIG9", "wlYQ5Nuaqp8ASFz6NPpm", "wpPgqAZzOw8CVANNBUNC", "wqHcEVKNn7EZM2vaPzuc", "wsKLizKRag03ANpGy1mp", "wsXhduqPww0u2GRvH7VW", "wyWYdgSh67vhsegm8qaV", "x6cNdE6JCtQSgFBvgAmm", "xI8AOJLwiSlLHWt1IyqE", "xKS0puSUnO76Rla1CoWF", "xMrH6QCK2hHR7RCC4kSQ", "xXmJjP6kN9oalY9cOqeJ", "xYCPYBoswN0CG2X8WbKw", "xhJtt7NwY7tLrbzprQCw", "xuY0KcTUaabSGmnK6wfb", "xwQlvZHFnssjhWeV5eIG", "xxoA0xqBQBiNpibuOBgJ", "xzVWICaHWSgxyJtNJ0uw", "xzdgx6hf5Re1evb8aIIv", "y2ntwWEpO0ObmG1wnBw3", "y5HJuBUkujbgBi6KfnJL", "yDCoGIgS0Vg29BxkopGL", "yGo3N0FScdLSGoxCXSxF", "yJNSKg9PLugEpbt1IwRY", "yMmO49gZLeiZSRGd0zUg", "yMsVa3JvoQFegbu9pHUI", "yW5rsAiyknp1OlesOUXf", "yWVFkamWDlZU7feySlYS", "yZOW8F5gWncsHoGdaRYw", "ycAFje6GUJefgnCDZuyl", "yprbnpP7VGfnog6o8ERu", "z9VJuJqWJ3yuImRBj4z9", "zIJTDObCfBCmFPNnQd69", "zRcGSs1bDE5vjCexIdgZ", "zSapKq7LmFhs1uBEMO3G", "zTO1DYfPbGgV98EUp40m", "zU0UjcqPORKtEzIxU1cF", "zXT9AnvRRUz3Bs9Qh5p6", "zsn01GUob766QCVZg5yf", "zvzWU1fB3P8nMBBGsVZL", "zwytHIuCvcKUHUxxEOSc"];
+        let count = 0;
+        alert("Starting sync for " + ids.length + " orders...");
+        for (let i = 0; i < ids.length; i++) {
+            const id = ids[i];
+            try {
+                const orderSnapshot = await getDoc(doc(db, "orders", id));
+                if (orderSnapshot.exists()) {
+                    const orderData = orderSnapshot.data();
+                    const deliveryAddress = orderData.deliveryAddress;
+                    const items = orderData.items || [];
+                    
+                    const serviceUnitsMap = {};
+                    const servicesMap = {};
+                    items.forEach(item => {
+                        const itemName = item.title || item.name || 'Item';
+                        const key = `${itemName}_regular`; 
+                        serviceUnitsMap[key] = "regular";
+                        servicesMap[key] = item.quantity || item.count || 1;
+                    });
+
+                    const cartDetailsData = {
+                        address: deliveryAddress ? `${deliveryAddress.scAddress || ''}, ${deliveryAddress.scCity || ''}` : "Not provided",
+                        convenienceFee: orderData.convenienceFee || 0,
+                        createdAt: orderData.createdAt || serverTimestamp(),
+                        deliveryCharge: orderData.deliveryFee || 0,
+                        dropTime: orderData.deliverySlot || 'Not specified',
+                        freeDeliveryApplied: ((orderData.deliveryFee || 0) === 0),
+                        hasFreeCadbury: false,
+                        location: {
+                            accuracyMeters: null,
+                            address: deliveryAddress ? `${deliveryAddress.scAddress || ''}, ${deliveryAddress.scCity || ''}` : "Not provided",
+                            isManual: true,
+                            latitude: 0.0,
+                            longitude: 0.0,
+                            pincode: deliveryAddress?.scZip || "",
+                            selectionSource: "website",
+                            timestamp: new Date().toISOString(),
+                            userEnteredAddress: deliveryAddress ? deliveryAddress.scAddress || '' : "Not provided"
+                        },
+                        orderNumber: orderData.orderId ? parseInt(orderData.orderId.replace('#ORD-', ''), 10) : 0,
+                        orderTimestamp: orderData.createdAt ? (orderData.createdAt.toMillis ? orderData.createdAt.toMillis() : Date.now()) : Date.now(),
+                        originalTotalCost: orderData.totalPrice || orderData.subtotal || 0,
+                        otherCharges: 0,
+                        paperBag: !!orderData.addPaperBag,
+                        paymentData: {
+                             convenienceFee: orderData.convenienceFee || 0,
+                             originalAmount: (orderData.totalPrice || orderData.subtotal || 0) - (orderData.convenienceFee || 0),
+                             totalWithFee: orderData.totalPrice || orderData.subtotal || 0
+                        },
+                        paymentId: null,
+                        paymentMethod: "cod",
+                        paymentStatus: "pending",
+                        pickupTime: orderData.deliverySlot || 'Not specified',
+                        serviceUnits: serviceUnitsMap,
+                        services: servicesMap,
+                        status: orderData.status ? orderData.status.toLowerCase() : 'pending',
+                        totalCost: orderData.totalPrice || orderData.subtotal || 0,
+                        totalItems: orderData.totalItems || items.length,
+                        ultraFastDelivery: false,
+                        updatedAt: serverTimestamp(),
+                        userId: orderData.userId || '',
+                        userMobile: orderData.userMobile || '',
+                        userName: orderData.userName || 'Unknown',
+                        walletAmountUsed: 0
+                    };
+                    
+                    Object.keys(cartDetailsData).forEach(key => cartDetailsData[key] === undefined && delete cartDetailsData[key]);
+                    await setDoc(doc(db, "cartdetails", id), cartDetailsData);
+                    count++;
+                }
+            } catch (err) {
+                console.error("Failed syncing " + id, err);
+            }
+        }
+        alert(`Finished syncing! Synced ${count} of ${ids.length} orders.`);
     };
 
     // Filter active vs past orders
@@ -127,7 +221,12 @@ const MyOrders = () => {
 
     return (
         <div className="animate-fade-in-up max-w-4xl">
-            <h1 className="text-3xl font-extrabold text-slate-900 mb-8">My Orders</h1>
+            <div className="flex justify-between items-center mb-8">
+                <h1 className="text-3xl font-extrabold text-slate-900">My Orders</h1>
+                {currentUser?.email === 'andesnow1604@gmail.com' && (
+                    <button onClick={runSync} className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-bold shadow-md hover:bg-blue-700">Sync Missing Orders</button>
+                )}
+            </div>
 
             {/* Tabs */}
             <div className="flex bg-gray-100 p-1 rounded-xl mb-8 w-fit">
