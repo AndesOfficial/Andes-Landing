@@ -5,8 +5,10 @@ const { defineSecret } = require("firebase-functions/params");
 
 initializeApp();
 
-// Define the secret parameter
+// Define all secret parameters
 const geminiApiKey = defineSecret("GEMINI_API_KEY");
+const whatsappAccessToken = defineSecret("WHATSAPP_ACCESS_TOKEN");
+const whatsappPhoneId = defineSecret("WHATSAPP_PHONE_ID");
 
 const SYSTEM_PROMPT = `
 You are **Andy**, the friendly, upbeat, and knowledgeable laundry assistant for **Andes Laundry** — a premium laundry service in Pune, India.
@@ -116,6 +118,9 @@ If someone mentions a Pune area not listed, say: "We likely cover your area or w
 10. Stay on topic — you only talk about Andes Laundry services. Politely redirect off-topic questions.
 `;
 
+// ==========================================
+// 1. GEMINI AI CHAT FUNCTION
+// ==========================================
 exports.chatWithGemini = onDocumentCreated(
     {
         document: "users/{userId}/messages/{messageId}",
@@ -207,6 +212,101 @@ exports.chatWithGemini = onDocumentCreated(
             await snapshot.ref.update({
                 response: "I'm having a bit of trouble thinking right now. Please try again later."
             });
+        }
+    }
+);
+
+
+// ==========================================
+// 2. WHATSAPP ORDER CONFIRMATION FUNCTION
+// ==========================================
+exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
+    {
+        document: "orders/{orderId}", // Listens to the 'orders' collection
+        secrets: [whatsappAccessToken, whatsappPhoneId],
+        region: "us-central1"
+    },
+    async (event) => {
+        const snapshot = event.data;
+        if (!snapshot) return;
+
+        const orderData = snapshot.data();
+        const orderId = orderData.orderId || event.params.orderId;
+
+        // Grab exactly what was saved via OrderContext.jsx
+        const customerName = orderData.userName || "Customer";
+        const orderStatus = orderData.status || "Confirmed";
+        let phoneNumber = orderData.userPhone;
+
+        if (!phoneNumber) {
+            console.error(`No phone number found for order ${event.params.orderId}`);
+            return;
+        }
+
+        // 1. Clean the phone number (strip absolutely everything except digits)
+        phoneNumber = phoneNumber.replace(/\D/g, "");
+
+        // 2. Strict Indian Number Validation
+        if (phoneNumber.length === 10) {
+            // Assume standard 10-digit local numbers are Indian and prepend country code
+            phoneNumber = "91" + phoneNumber;
+        } else if (phoneNumber.length !== 12 || !phoneNumber.startsWith("91")) {
+            // If it's not exactly 12 digits starting with 91, abort the operation
+            console.log(`WhatsApp Skipped: Non-Indian phone number detected (${phoneNumber}) for order ${orderId}`);
+            return;
+        }
+
+        const token = whatsappAccessToken.value();
+        const phoneId = whatsappPhoneId.value();
+
+        // Meta Graph API Endpoint
+        const url = `https://graph.facebook.com/v21.0/${phoneId}/messages`;
+
+        // Template body has 1 variable: {{1}} = Customer Name
+        // "Status: {{Order Status}}" is auto-added by Meta for utility category, not a body param
+        const payload = {
+            messaging_product: "whatsapp",
+            to: phoneNumber,
+            type: "template",
+            template: {
+                name: "andes_order_confirmation",
+                language: { code: "en" },
+                components: [
+                    {
+                        type: "body",
+                        parameters: [
+                            { type: "text", text: customerName }  // {{1}} = Customer Name
+                        ]
+                    }
+                ]
+            }
+        };
+
+        console.log(`WhatsApp: Sending to ${phoneNumber} for order ${orderId}. Payload:`, JSON.stringify(payload));
+
+        try {
+            // Send the request using native fetch (Available in Node.js 18+)
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                console.error(`WhatsApp API Error (HTTP ${response.status}):`, JSON.stringify(result));
+            } else {
+                console.log(`WhatsApp confirmation sent successfully to ${phoneNumber} for order ${orderId}. Response:`, JSON.stringify(result));
+
+                // Mark the order in Firestore as confirmed via WhatsApp
+                await snapshot.ref.update({ whatsappConfirmationSent: true });
+            }
+        } catch (error) {
+            console.error("Network error sending WhatsApp message:", error);
         }
     }
 );

@@ -15,7 +15,7 @@ async function test() {
     "w3ar7Z28vWD5ZNEuWrmi",
     "w467k5Ja4ctparDJzi0k"
   ];
-  
+
   for (const id of idsToCheck) {
     const doc = await db.collection("cartdetails").doc(id).get();
     if (doc.exists) {

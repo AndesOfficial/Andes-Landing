@@ -37,6 +37,13 @@ const OrderPlacement = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { currentUser } = useAuth();
+    const [contactPhone, setContactPhone] = useState('');
+
+    useEffect(() => {
+        if (currentUser && !contactPhone) {
+            setContactPhone(currentUser.phone || currentUser.mobile || '');
+        }
+    }, [currentUser]);
 
     useEffect(() => {
         // Handle incoming navigation state
@@ -65,6 +72,11 @@ const OrderPlacement = () => {
             toast.error("Please select a delivery address.");
             return;
         }
+        if (!contactPhone || contactPhone.replace(/\D/g, '').length < 10) {
+            toast.error("Please enter a valid 10-digit phone number.");
+            console.error("Validation failed: contactPhone is unset or too short");
+            return;
+        }
         setLoading(true);
         try {
             await placeOrder({
@@ -74,7 +86,8 @@ const OrderPlacement = () => {
                 deliveryAddress: selectedAddress,
                 convenienceFee,
                 deliveryFee,
-                couponDiscount
+                couponDiscount,
+                userPhone: contactPhone
             });
             navigate('/order-confirmation');
         } catch (error) {
@@ -173,6 +186,8 @@ const OrderPlacement = () => {
                                 selectedSlot={selectedSlot}
                                 selectedAddress={selectedAddress}
                                 setSelectedAddress={setSelectedAddress}
+                                contactPhone={contactPhone}
+                                setContactPhone={setContactPhone}
                                 finalTotal={finalTotal}
                                 onPlaceOrder={handlePlaceOrder}
                                 loading={loading}
