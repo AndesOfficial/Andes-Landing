@@ -49,12 +49,20 @@ export const OrderProvider = ({ children }) => {
             throw new Error("User must be logged in");
         }
 
-        const { deliverySlot, addPaperBag, finalTotal, deliveryAddress, convenienceFee, deliveryFee, couponDiscount } = orderDetails;
+        const { deliverySlot, addPaperBag, finalTotal, deliveryAddress, convenienceFee, deliveryFee, couponDiscount, userPhone } = orderDetails;
+
+        const finalPhone = currentUser.phone || currentUser.mobile || userPhone || '';
+
+        if (!finalPhone) {
+            console.error("Attempted to place order without user phone number");
+            throw new Error("A valid phone number is required to place an order.");
+        }
 
         const orderData = {
             userId: currentUser.uid,
             userEmail: currentUser.email,
             userName: currentUser.fullName || 'Unknown',
+            userPhone: finalPhone,
             items: cart.map(({ icon, ...rest }) => rest),
             totalItems: cart.reduce((acc, item) => acc + item.quantity, 0),
             totalPrice: finalTotal || cart.reduce((acc, item) => acc + (item.price * item.quantity), 0), // Use passed total or calc
@@ -81,7 +89,7 @@ export const OrderProvider = ({ children }) => {
             cart.forEach(item => {
                 const itemName = item.title || item.name || 'Item';
                 // e.g., "Wash & Fold_regular"
-                const key = `${itemName}_regular`; 
+                const key = `${itemName}_regular`;
                 serviceUnitsMap[key] = "regular";
                 servicesMap[key] = item.quantity || 1;
             });
@@ -112,9 +120,9 @@ export const OrderProvider = ({ children }) => {
                 otherCharges: 0,
                 paperBag: !!addPaperBag,
                 paymentData: {
-                     convenienceFee: convenienceFee || 0,
-                     originalAmount: orderData.totalPrice - (convenienceFee || 0),
-                     totalWithFee: orderData.totalPrice
+                    convenienceFee: convenienceFee || 0,
+                    originalAmount: orderData.totalPrice - (convenienceFee || 0),
+                    totalWithFee: orderData.totalPrice
                 },
                 paymentId: null,
                 paymentMethod: "cod",
@@ -135,7 +143,7 @@ export const OrderProvider = ({ children }) => {
 
             // Clean up undefined values which Firestore hates just to be safe
             Object.keys(cartDetailsData).forEach(key => cartDetailsData[key] === undefined && delete cartDetailsData[key]);
-            
+
             console.log("Saving to cartdetails with ID:", docRef.id, " Payload:", cartDetailsData);
             await setDoc(doc(db, "cartdetails", docRef.id), cartDetailsData);
             console.log("Successfully saved to cartdetails!");

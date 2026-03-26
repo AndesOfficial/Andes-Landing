@@ -14,15 +14,15 @@ import Tushar from '../assets/Tushargitte_cinematographer.jpeg';
 const teamMembers = [
   { src: Aryan, name: "Aryan Gupta", title: "Founder & CEO" },
   { src: Gaurav, name: "Gaurav Bind", title: "Tech Team Lead" },
-  { src: Kushal, name: "Kushal Kumar", title: "Graphic Designer" },
+ 
   { src: Neeyati, name: "Neeyati Dharamsey", title: "Marketing Team" },
   { src: Nitya, name: "Nitya Juneja", title: "Marketing Team" },
   { src: Sneha, name: "Sneha Jaiswal", title: "Marketing Team" },
-  { src: Tushar, name: "Tushar Gitte", title: "Cinematographer" },
-  { src: Jeet, name: "Jeet Zanvar", title: "Operation Manager" },          // TODO: Add title
-  { src: Prabjot, name: "Prabjot Waryah", title: "Operation Manager" },    // TODO: Add title
-  { src: Pranay, name: "Pranay Singh", title: "Operation Manager" },        // TODO: Add title
-  { src: Swanandi, name: "Swanandi Burute", title: "Marketing Team" },   // TODO: Add title
+ 
+  { src: Jeet, name: "Jeet Zanvar", title: "Operation Manager" },          
+  { src: Prabjot, name: "Prabjot Waryah", title: "Operation Manager" },   
+  { src: Pranay, name: "Pranay Singh", title: "Operation Manager" },      
+  { src: Swanandi, name: "Swanandi Burute", title: "Marketing Team" },   
 ];
 
 const TeamSection = () => {

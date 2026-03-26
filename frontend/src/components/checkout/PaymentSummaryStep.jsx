@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaShoppingCart, FaClock, FaInfoCircle, FaMapMarkerAlt, FaTags, FaWallet, FaFileInvoice, FaChevronDown, FaChevronUp, FaArrowLeft, FaShieldAlt, FaPlus, FaCheck, FaChevronRight, FaGift } from 'react-icons/fa';
+import { FaShoppingCart, FaClock, FaInfoCircle, FaMapMarkerAlt, FaTags, FaWallet, FaFileInvoice, FaChevronDown, FaChevronUp, FaArrowLeft, FaShieldAlt, FaPlus, FaCheck, FaChevronRight, FaGift, FaPhoneAlt } from 'react-icons/fa';
 import AddressList from '../AddressList';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -21,6 +21,8 @@ const PaymentSummaryStep = ({
     selectedSlot,
     selectedAddress,
     setSelectedAddress,
+    contactPhone,
+    setContactPhone,
     finalTotal,
     onPlaceOrder,
     loading,
@@ -108,6 +110,26 @@ const PaymentSummaryStep = ({
                             <span className="text-xs font-black text-slate-400 uppercase tracking-widest group-hover:text-brand">Select an address</span>
                         </button>
                     )}
+                </div>
+
+                {/* 1.5 CONTACT NUMBER SECTION */}
+                <div className="bg-white rounded-3xl p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-slate-100 ring-1 ring-slate-100/50">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-2xl bg-brand/5 flex items-center justify-center text-brand">
+                            <FaPhoneAlt size={16} />
+                        </div>
+                        <h3 className="font-black text-slate-800 tracking-tight">Contact Number</h3>
+                    </div>
+                    <div>
+                        <input
+                            type="tel"
+                            value={contactPhone || ''}
+                            onChange={(e) => setContactPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                            placeholder="e.g. 9876543210"
+                            className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-brand/20 outline-none transition-all placeholder:text-slate-300 tracking-wider"
+                        />
+                        <p className="text-[10px] text-slate-400 font-bold mt-2 px-1">We'll send order updates to this number via WhatsApp.</p>
+                    </div>
                 </div>
 
                 {/* 2. PICKUP WINDOW (READ-ONLY PER USER REQ) */}
