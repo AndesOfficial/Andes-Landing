@@ -125,18 +125,18 @@ exports.chatWithGemini = onDocumentCreated(
     {
         document: "users/{userId}/messages/{messageId}",
         secrets: [geminiApiKey],
-        region: "us-central1" // Optional: Specify region if needed, defaults to us-central1
+        region: "us-central1"
     },
     async (event) => {
         const snapshot = event.data;
         if (!snapshot) {
-            return; // No data found
+            return;
         }
 
         const data = snapshot.data();
         const { prompt, response } = data;
 
-        // 1. Idempotency Check: If response already exists, skip
+        // 1. Idempotency Check
         if (response) {
             return;
         }
@@ -161,19 +161,16 @@ exports.chatWithGemini = onDocumentCreated(
             });
 
             // 3. Fetch Conversation History (Last 10 messages)
-            // We need to query the parent collection 'messages' of this document
             const messagesRef = snapshot.ref.parent;
             const historySnapshot = await messagesRef
-                .orderBy("createTime", "desc") // Get newest first
+                .orderBy("createTime", "desc")
                 .limit(10)
                 .get();
 
-            // Re-order to oldest first for the AI context
             const historyDocs = historySnapshot.docs.reverse();
 
-            // Transform to Gemini format
             const history = historyDocs
-                .filter((doc) => doc.id !== snapshot.id) // Exclude current message from history to avoid confusion
+                .filter((doc) => doc.id !== snapshot.id)
                 .map((doc) => {
                     const d = doc.data();
                     const parts = [];
@@ -222,7 +219,8 @@ exports.chatWithGemini = onDocumentCreated(
 // ==========================================
 exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
     {
-        document: "orders/{orderId}", // Listens to the 'orders' collection
+        // Listens ONLY to the 'orders' collection to prevent duplicate messages
+        document: "orders/{orderId}",
         secrets: [whatsappAccessToken, whatsappPhoneId],
         region: "us-central1"
     },
@@ -233,25 +231,22 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
         const orderData = snapshot.data();
         const orderId = orderData.orderId || event.params.orderId;
 
-        // Grab exactly what was saved via OrderContext.jsx
         const customerName = orderData.userName || "Customer";
-        const orderStatus = orderData.status || "Confirmed";
-        let phoneNumber = orderData.userPhone;
+        // Checks for userPhone first, falls back to userMobile just in case
+        let phoneNumber = orderData.userPhone || orderData.userMobile;
 
         if (!phoneNumber) {
             console.error(`No phone number found for order ${event.params.orderId}`);
             return;
         }
 
-        // 1. Clean the phone number (strip absolutely everything except digits)
-        phoneNumber = phoneNumber.replace(/\D/g, "");
+        // 1. Clean the phone number (Convert to string FIRST, then strip everything except digits)
+        phoneNumber = String(phoneNumber).replace(/\D/g, "");
 
         // 2. Strict Indian Number Validation
         if (phoneNumber.length === 10) {
-            // Assume standard 10-digit local numbers are Indian and prepend country code
             phoneNumber = "91" + phoneNumber;
         } else if (phoneNumber.length !== 12 || !phoneNumber.startsWith("91")) {
-            // If it's not exactly 12 digits starting with 91, abort the operation
             console.log(`WhatsApp Skipped: Non-Indian phone number detected (${phoneNumber}) for order ${orderId}`);
             return;
         }
@@ -259,17 +254,14 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
         const token = whatsappAccessToken.value();
         const phoneId = whatsappPhoneId.value();
 
-        // Meta Graph API Endpoint
         const url = `https://graph.facebook.com/v21.0/${phoneId}/messages`;
 
-        // Template body has 1 variable: {{1}} = Customer Name
-        // "Status: {{Order Status}}" is auto-added by Meta for utility category, not a body param
         const payload = {
             messaging_product: "whatsapp",
             to: phoneNumber,
             type: "template",
             template: {
-                name: "andes_order_confirmation",
+                name: "order_confirmation", // Exact Meta Template Name
                 language: { code: "en" },
                 components: [
                     {
@@ -285,7 +277,6 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
         console.log(`WhatsApp: Sending to ${phoneNumber} for order ${orderId}. Payload:`, JSON.stringify(payload));
 
         try {
-            // Send the request using native fetch (Available in Node.js 18+)
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -302,7 +293,6 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
             } else {
                 console.log(`WhatsApp confirmation sent successfully to ${phoneNumber} for order ${orderId}. Response:`, JSON.stringify(result));
 
-                // Mark the order in Firestore as confirmed via WhatsApp
                 await snapshot.ref.update({ whatsappConfirmationSent: true });
             }
         } catch (error) {
