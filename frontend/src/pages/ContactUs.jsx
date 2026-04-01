@@ -16,8 +16,8 @@ const contactInfo = [
     {
         icon: <FaMapMarkerAlt />,
         label: "Address",
-        value: "Survey No 124, Paud Rd, Mahatma Society, Kothrud, Pune 411038",
-        href: "https://maps.google.com/?q=Survey+No+124+Paud+Rd+Mahatma+Society+Kothrud+Pune+411038",
+        value: "Survey No 124, Paud Rd, Kothrud, Pune 411038",
+        href: "https://maps.google.com/?q=Survey+No+124+Paud+Rd+Kothrud+Pune+411038",
         gradient: "from-purple-500 to-indigo-500",
     },
     {

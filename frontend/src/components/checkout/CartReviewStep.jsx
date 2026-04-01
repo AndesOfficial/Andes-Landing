@@ -50,7 +50,7 @@ const CartReviewStep = ({
                                 }}
                             >
                                 <div className="p-3 bg-white rounded-xl text-brand group-hover:bg-brand group-hover:text-white shadow-sm transition-colors text-xl">
-                                    {service.icon}
+                                    {(() => { const Icon = service.icon; return <Icon />; })()}
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-slate-800 text-sm">{service.name}</h4>

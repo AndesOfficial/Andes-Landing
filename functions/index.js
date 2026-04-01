@@ -36,7 +36,7 @@ If someone mentions a Pune area not listed, say: "We likely cover your area or w
 |----------------|---------------|
 | Wash & Fold    | ₹49/kg        |
 | Wash & Iron    | ₹79/kg        |
-| Iron Only      | ₹12/item      |
+| Iron Only      | ₹8/item       |
 
 ### Dry Cleaning — Ethnic Wear
 | Item                | Price       |
@@ -138,6 +138,12 @@ exports.chatWithGemini = onDocumentCreated(
 
         // 1. Idempotency Check
         if (response) {
+            return;
+        }
+
+        // 2. Validate prompt
+        if (!prompt || typeof prompt !== 'string' || prompt.trim() === '') {
+            console.log("Skipped: empty or missing prompt field.");
             return;
         }
 
@@ -254,7 +260,8 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
         const token = whatsappAccessToken.value();
         const phoneId = whatsappPhoneId.value();
 
-        const url = `https://graph.facebook.com/v21.0/${phoneId}/messages`;
+        const META_API_VERSION = "v22.0";
+        const url = `https://graph.facebook.com/${META_API_VERSION}/${phoneId}/messages`;
 
         const payload = {
             messaging_product: "whatsapp",
@@ -290,13 +297,20 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
 
             if (!response.ok) {
                 console.error(`WhatsApp API Error (HTTP ${response.status}):`, JSON.stringify(result));
+                await snapshot.ref.update({
+                    whatsappConfirmationSent: false,
+                    whatsappError: JSON.stringify(result)
+                });
             } else {
                 console.log(`WhatsApp confirmation sent successfully to ${phoneNumber} for order ${orderId}. Response:`, JSON.stringify(result));
-
                 await snapshot.ref.update({ whatsappConfirmationSent: true });
             }
         } catch (error) {
             console.error("Network error sending WhatsApp message:", error);
+            await snapshot.ref.update({
+                whatsappConfirmationSent: false,
+                whatsappError: error.message
+            });
         }
     }
 );
