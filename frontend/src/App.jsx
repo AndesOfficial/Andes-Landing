@@ -18,6 +18,8 @@ const LandingPage = lazy(() => import("./pages/LandingPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const Working = lazy(() => import("./pages/Working"));
 const AndesAssured = lazy(() => import("./pages/AndesAssured"));
+const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions"));
+const PrivacyPolicy = lazy(() => import("./pages/privacypolicy"));
 const Other = lazy(() => import("./pages/Other"));
 const DownloadPage = lazy(() => import("./pages/DownloadPage"));
 const NewServicePage = lazy(() => import("./pages/NewServicePage"));
@@ -71,8 +73,8 @@ function App() {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/working" element={<Working />} />
               <Route path="/andes-assured" element={<AndesAssured />} />
-              <Route path="/other" element={<Other />} />
-              <Route path="/privacypolicy" element={<Other />} />
+              <Route path="/other" element={<TermsAndConditions />} />
+              <Route path="/privacypolicy" element={<PrivacyPolicy />} />
               <Route path="/download" element={<DownloadPage />} />
               <Route path="/services" element={<NewServicePage />} />
               <Route path="/contact" element={<ContactUs />} />
