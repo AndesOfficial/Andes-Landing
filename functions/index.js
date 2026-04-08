@@ -223,6 +223,9 @@ exports.chatWithGemini = onDocumentCreated(
 // ==========================================
 // 2. WHATSAPP ORDER CONFIRMATION FUNCTION
 // ==========================================
+// ==========================================
+// 2. WHATSAPP ORDER CONFIRMATION FUNCTION
+// ==========================================
 exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
     {
         // Listens ONLY to the 'orders' collection to prevent duplicate messages
@@ -260,6 +263,20 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
         const token = whatsappAccessToken.value();
         const phoneId = whatsappPhoneId.value();
 
+        // --- EXTRACT ADDITIONAL VARIABLES FOR THE TEMPLATE ---
+        // Variable 2: Services
+        let servicesString = "Laundry Services";
+        // Adapts based on how you store items. If it's an array of item objects:
+        if (orderData.items && Array.isArray(orderData.items) && orderData.items.length > 0) {
+            servicesString = orderData.items.map(item => item.name || item.category || "Item").join(", ");
+        } else if (orderData.serviceType) { // Or if it's a single string field
+            servicesString = orderData.serviceType;
+        }
+
+        // Variable 3: Additional Details 
+        const orderDetailsString = `Order ID: ${orderId}`;
+        // -----------------------------------------------------
+
         const META_API_VERSION = "v22.0";
         const url = `https://graph.facebook.com/${META_API_VERSION}/${phoneId}/messages`;
 
@@ -274,7 +291,9 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
                     {
                         type: "body",
                         parameters: [
-                            { type: "text", text: customerName }  // {{1}} = Customer Name
+                            { type: "text", text: customerName },       // {{1}} = Customer Name
+                            { type: "text", text: servicesString },     // {{2}} = Services List
+                            { type: "text", text: orderDetailsString }  // {{3}} = Order ID
                         ]
                     }
                 ]

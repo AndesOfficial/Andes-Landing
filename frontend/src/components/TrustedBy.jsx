@@ -88,17 +88,13 @@ const TrustedBy = () => {
             {[...clients, ...clients].map((client, index) => (
               <div 
                 key={index}
-                className="group relative bg-white border border-slate-100/60 shadow-sm p-6 md:p-8 rounded-3xl flex items-center justify-center min-w-[150px] md:min-w-[200px] h-28 md:h-36 shrink-0 transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-blue-100 cursor-pointer"
+                className="group relative flex items-center justify-center min-w-[120px] md:min-w-[160px] h-20 md:h-28 shrink-0 transition-transform duration-300 hover:-translate-y-1 cursor-pointer"
               >
-                {/* Subtle hover glow */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-50/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-300"></div>
-
-                <div className="relative h-full w-full flex items-center justify-center z-10">
+                <div className="relative h-full w-full flex items-center justify-center z-10 px-4">
                   <img
                     src={client.logo}
                     alt={client.name}
-                    // Filter is set to none (no grayscale), maintaining native colors
-                    className="max-h-full max-w-full object-contain filter-none opacity-90 group-hover:opacity-100 transition-all duration-300 group-hover:scale-105" 
+                    className="max-h-full max-w-full object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-400" 
                     onError={(e) => {
                       e.target.style.display = 'none';
                       e.target.nextSibling.style.display = 'block';

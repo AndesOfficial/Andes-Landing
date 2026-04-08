@@ -78,7 +78,7 @@ const WorkWithUs = () => {
                   {item.description}
                 </p>
 
-                <div className="flex items-center text-sm font-bold text-slate-800 uppercase tracking-wider group-hover:text-brand transition-colors duration-300">
+                <div className="mt-auto flex items-center text-sm font-bold text-brand uppercase tracking-wider group-hover:text-blue-700 transition-colors duration-300">
                   {item.linkText}
                   <FaArrowRight className="ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
                 </div>
