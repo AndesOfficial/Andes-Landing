@@ -20,49 +20,49 @@ const teamsData = {
     title: "LEADERSHIP TEAM",
     icon: <FaUsers className="text-blue-600" size={20} />,
     members: [
-      { src: Aryan, name: "Aryan", title: "CEO" },
-      { src: Gaurav, name: "Gaurav", title: "CTO" },
-      { src: prathamesh, name: "Prathamesh", title: "COO" },
-      { src: Pranay, name: "Pranay", title: "CFO" },
+      { src: Aryan, name: "Aryan Gupta", title: "Chief Executive Officer" },
+      { src: Gaurav, name: "Gaurav Bind", title: "Chief Technology Officer" },
+      { src: prathamesh, name: "Prathamesh Birajdar", title: "Chief Operating Officer" },
+      { src: Pranay, name: "Pranay Singh", title: "Chief Financial Officer" },
     ]
   },
   technology: {
     title: "TECHNOLOGY TEAM",
     icon: <FaDesktop className="text-blue-500" size={18} />,
     members: [
-      { src: Ishan, name: "Ishan", title: "Tech Team Lead" },
+      { src: Ishan, name: "Ishan Gupta", title: "Tech Team Lead" },
     ]
   },
   marketing: {
     title: "MARKETING TEAM",
     icon: <FaBullhorn className="text-blue-500" size={18} />,
     members: [
-      { src: Neeyati, name: "Neeyati", title: "Marketing Executive" },
-      { src: Sneha, name: "Sneha", title: "Marketing Executive" },
-      { src: Nitya, name: "Nitya", title: "Marketing Executive" },
+      { src: Neeyati, name: "Neeyati Dharamsey", title: "Marketing Executive" },
+      { src: Sneha, name: "Sneha Jaiswal", title: "Marketing Executive" },
+      { src: Nitya, name: "Nitya Juneja", title: "Marketing Executive" },
     ]
   },
   research: {
     title: "RESEARCH TEAM",
     icon: <FaSearch className="text-blue-500" size={18} />,
     members: [
-      { src: Swanandi, name: "Swanandi", title: "Research Analyst" },
-      { src: Tamanna, name: "Tamanna", title: "Research Analyst" },
+      { src: Swanandi, name: "Swanandi Burute", title: "Research Analyst" },
+      { src: Tamanna, name: "Tamanna Roy", title: "Research Analyst" },
     ]
   },
   operations: {
     title: "OPERATIONS TEAM",
     icon: <FaCog className="text-blue-500" size={18} />,
     members: [
-      { src: Jeet, name: "Jeet", title: "Operations Executive" },
-      { src: Prabjot, name: "Prabjot", title: "Operations Executive" },
+      { src: Jeet, name: "Jeet Zanvar", title: "Operations Executive" },
+      { src: Prabjot, name: "Prabjot Waryah", title: "Operations Executive" },
     ]
   },
   creative: {
     title: "CREATIVE & DESIGN",
     icon: <FaPaintBrush className="text-blue-500" size={18} />,
     members: [
-      { src: Nisba, name: "Nisba", title: "Head of Design" },
+      { src: Nisba, name: "Nisba  Mujawar", title: "Head of Design" },
     ]
   }
 };
@@ -70,7 +70,7 @@ const teamsData = {
 const TeamSection = () => {
   return (
     <div className="bg-[#f8fbff] text-slate-800 py-20 relative overflow-hidden font-sans">
-      
+
       {/* Subtle Background Elements to prevent 'blank' feeling */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden mix-blend-multiply">
         <div className="absolute top-[-10%] left-[-5%] w-[40vw] h-[40vw] bg-blue-100/50 rounded-full blur-[100px] opacity-70"></div>
@@ -93,7 +93,7 @@ const TeamSection = () => {
 
         {/* Content Structure */}
         <div className="flex flex-col gap-12 md:gap-16">
-          
+
           {/* Row 1 */}
           <TeamCategoryGroup data={teamsData.leadership} />
 
@@ -119,7 +119,7 @@ const TeamSection = () => {
 
           {/* Row 4 */}
           <div className="w-full md:w-1/3">
-             <TeamCategoryGroup data={teamsData.creative} />
+            <TeamCategoryGroup data={teamsData.creative} />
           </div>
 
         </div>
@@ -149,7 +149,7 @@ const TeamCategoryGroup = ({ data }) => (
 
 const TeamCard = ({ member }) => (
   <div className="group relative bg-white/80 backdrop-blur-md rounded-[24px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 hover:shadow-[0_8px_30px_rgb(26,143,227,0.12)] hover:-translate-y-1.5 transition-all duration-300 p-6 flex flex-col items-center w-full lg:w-[220px] overflow-hidden">
-    
+
     {/* Subtle gradient border top */}
     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
@@ -161,7 +161,7 @@ const TeamCard = ({ member }) => (
         className="relative w-full h-full rounded-full object-cover object-top border-4 border-white shadow-sm z-10"
       />
     </div>
-    
+
     <h4 className="text-lg md:text-xl font-bold text-slate-800 mb-1 leading-tight text-center">{member.name}</h4>
     <p className="text-xs md:text-sm font-semibold text-blue-600/80 text-center">{member.title}</p>
   </div>
