@@ -40,19 +40,21 @@ const AboutPage = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex flex-col items-center"
           >
-            <span className="text-brand font-bold tracking-widest text-xs md:text-sm uppercase mb-6 px-4 py-1.5 rounded-full bg-blue-50/80 border border-brand/20 backdrop-blur-md shadow-sm">
-              Our Story
-            </span>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-slate-900 tracking-tight leading-[1.05] mb-8">
-              Changing how the <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-cyan-500 pb-2">
-                world does laundry
-              </span>
-            </h1>
-            <p className="text-lg md:text-2xl text-slate-600 max-w-3xl mx-auto font-medium leading-relaxed">
-              We started with a simple idea: returning the most valuable asset to people — their time.
-              By combining premium care with seamless technology.
-            </p>
+            <div className="max-w-4xl text-center space-y-8 mx-auto">
+              <div>
+                <span className="text-brand font-bold tracking-widest text-xs md:text-sm uppercase inline-block px-4 py-1.5 rounded-full bg-blue-50/80 border border-brand/20 backdrop-blur-md shadow-sm">
+                  Our Story
+                </span>
+              </div>
+              <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] font-black text-[#0D1F3C] tracking-tight leading-[1.1]">
+                Changing how the <br className="hidden md:block" />
+                <span className="text-brand">world does laundry</span>
+              </h1>
+              <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl mx-auto">
+                We started with a simple idea: returning the most valuable asset to people — their time. 
+                By combining premium care with seamless technology.
+              </p>
+            </div>
           </motion.div>
         </div>
       </div>

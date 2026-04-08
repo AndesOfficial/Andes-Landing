@@ -46,10 +46,10 @@ const WhoWeAre = () => {
         </div>
 
         {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
 
           {/* Main Visual Box (Spans 7 cols on desktop) */}
-          <div className="lg:col-span-7 bg-gradient-to-br from-slate-50 to-blue-50/50 rounded-[2.5rem] p-6 sm:p-12 relative overflow-hidden border border-slate-100 shadow-lg group flex items-center justify-center min-h-[350px] md:min-h-[450px]">
+          <div className="lg:col-span-7 lg:sticky lg:top-32 bg-gradient-to-br from-slate-50 to-blue-50/50 rounded-[2.5rem] p-6 sm:p-12 relative overflow-hidden border border-slate-100 shadow-lg group flex items-center justify-center min-h-[350px] md:min-h-[450px]">
             {/* Animated Glows */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-gradient-to-tr from-brand/20 to-blue-300/30 rounded-full blur-[60px] opacity-60 group-hover:opacity-100 transition-opacity duration-700"></div>
 
