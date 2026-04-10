@@ -3,7 +3,7 @@ import { FaTshirt, FaWater, FaSteam, FaShoePrints, FaLayerGroup } from 'react-ic
 // Data for OrderPlacement.jsx
 export const quickServices = [
     { id: 'wash-fold', name: 'Wash & Fold', price: 49, unit: 'kg', icon: FaTshirt, desc: 'Professional laundry, washed, dried, and folded.' },
-    { id: 'iron', name: 'Iron', price: 8, unit: 'piece', icon: FaTshirt, desc: 'Professional steam ironing.' },
+    { id: 'iron', name: 'Iron', price: 10, unit: 'piece', icon: FaTshirt, desc: 'Professional steam ironing.' },
     { id: 'wash-iron', name: 'Wash & Iron', price: 79, unit: 'kg', icon: FaTshirt, desc: 'Laundry washed and neatly ironed.' },
 ];
 
@@ -29,9 +29,9 @@ export const servicesPricingData = [
         icon: FaSteam,
         title: "Only Iron",
         description: "For clothes that only need ironing and no washing.",
-        actualPrice: 8,
+        actualPrice: 10,
         fakePrice: 15,
-        priceInfo: "from ₹8 / piece",
+        priceInfo: "from ₹10 / piece",
     },
     {
         icon: FaLayerGroup,

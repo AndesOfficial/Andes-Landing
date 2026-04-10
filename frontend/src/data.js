@@ -70,7 +70,7 @@ const data = {
     // --- 1. GENERAL SERVICE (Iron, Wash & Fold, Wash & Iron) ---
     { id: 101, name: "Wash & Fold", mainCategory: "general", group: "General", rateByKg: 49, fakePrice: 99, unit: "kg", displayName: "Wash & Fold", customText: "₹49/kg", image: washFoldImage, badge: "Wash & Fold", featured: true },
     { id: 102, name: "Wash & Iron", mainCategory: "general", group: "General", rateByKg: 79, fakePrice: 129, unit: "kg", displayName: "Wash & Iron", customText: "₹79/kg", image: washIronImage, badge: "Wash & Iron", featured: true },
-    { id: 103, name: "Iron Only", mainCategory: "general", group: "General", rateByPiece: 8, fakePrice: 15, unit: "piece", displayName: "Iron Only", customText: "₹8/item", image: ironImage, badge: "Iron Only", featured: true },
+    { id: 103, name: "Iron Only", mainCategory: "general", group: "General", rateByPiece: 10, fakePrice: 15, unit: "piece", displayName: "Iron Only", customText: "₹10/item", image: ironImage, badge: "Iron Only", featured: true },
 
 
     // --- 2. DRY CLEANING (The Big List) ---

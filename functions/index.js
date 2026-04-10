@@ -36,7 +36,7 @@ If someone mentions a Pune area not listed, say: "We likely cover your area or w
 |----------------|---------------|
 | Wash & Fold    | ₹49/kg        |
 | Wash & Iron    | ₹79/kg        |
-| Iron Only      | ₹8/item       |
+| Iron Only      | ₹10/item       |
 
 ### Dry Cleaning — Ethnic Wear
 | Item                | Price       |
@@ -116,6 +116,16 @@ If someone mentions a Pune area not listed, say: "We likely cover your area or w
 8. If you're unsure about something, direct the user to support (+91 86260 76578 or care@andes.co.in). NEVER make up information.
 9. If asked about stains, say: "We're stain-fighting experts! We'll do our best, but 100% removal can't be guaranteed for old or delicate-fabric stains. Please mark stained items at pickup."
 10. Stay on topic — you only talk about Andes Laundry services. Politely redirect off-topic questions.
+
+---
+## WEBSITE NAVIGATION (CRITICAL)
+When you suggest a user visit a specific page, you MUST include the corresponding redirect tag at the end of your message:
+- To book an order/schedule pickup: [REDIRECT:/order]
+- To see detailed services or pricing: [REDIRECT:/services]
+- To contact support: [REDIRECT:/contact]
+- To learn how it works: [REDIRECT:/working]
+- To learn about the company: [REDIRECT:/about]
+Example: "I can definitely help with that! I'm taking you to our order page now. [REDIRECT:/order]"
 `;
 
 // ==========================================
@@ -125,7 +135,7 @@ exports.chatWithGemini = onDocumentCreated(
     {
         document: "users/{userId}/messages/{messageId}",
         secrets: [geminiApiKey],
-        region: "us-central1"
+        region: "us-central1",
     },
     async (event) => {
         const snapshot = event.data;
@@ -142,7 +152,7 @@ exports.chatWithGemini = onDocumentCreated(
         }
 
         // 2. Validate prompt
-        if (!prompt || typeof prompt !== 'string' || prompt.trim() === '') {
+        if (!prompt || typeof prompt !== "string" || prompt.trim() === "") {
             console.log("Skipped: empty or missing prompt field.");
             return;
         }
@@ -153,70 +163,110 @@ exports.chatWithGemini = onDocumentCreated(
             if (!apiKey) {
                 console.error("GEMINI_API_KEY not set");
                 await snapshot.ref.update({
-                    response: "I'm having technical trouble (API Key missing). Please contact support."
+                    response: "I'm having technical trouble (API Key missing). Please contact support.",
                 });
                 return;
             }
-            const genAI = new GoogleGenerativeAI(apiKey);
-            const model = genAI.getGenerativeModel({
-                model: "gemini-2.0-flash-lite",
-                generationConfig: {
-                    temperature: 0.7,
-                    maxOutputTokens: 300,
-                },
-            });
 
-            // 3. Fetch Conversation History (Last 10 messages)
+            const genAI = new GoogleGenerativeAI(apiKey);
             const messagesRef = snapshot.ref.parent;
+
+            // 3. User Rate Limiting Check (Limit to 5 messages per minute as requested)
+            const now = new Date();
+            const oneMinuteAgo = new Date(now.getTime() - 60000);
+            const recentMessages = await messagesRef
+                .where("createTime", ">=", oneMinuteAgo)
+                .orderBy("createTime", "desc")
+                .get();
+
+            if (recentMessages.size > 5) {
+                console.log(`Rate limited user ${event.params.userId}`);
+                await snapshot.ref.update({
+                    response: "I'm processing a lot of requests right now! Please wait about 60 seconds and try again. I want to make sure everyone gets help!",
+                });
+                return;
+            }
+
+            // 4. Fetch Conversation History (Last 10 messages)
             const historySnapshot = await messagesRef
                 .orderBy("createTime", "desc")
-                .limit(10)
+                .limit(5)
                 .get();
 
             const historyDocs = historySnapshot.docs.reverse();
-
             const history = historyDocs
                 .filter((doc) => doc.id !== snapshot.id)
                 .map((doc) => {
                     const d = doc.data();
-                    const parts = [];
-                    if (d.prompt) parts.push({ role: "user", parts: [{ text: d.prompt }] });
-                    if (d.response) parts.push({ role: "model", parts: [{ text: d.response }] });
-                    return parts;
+                    const turns = [];
+                    if (d.prompt) turns.push({ role: "user", parts: [{ text: d.prompt }] });
+                    if (d.response) turns.push({ role: "model", parts: [{ text: d.response }] });
+                    return turns;
                 })
                 .flat();
 
-            // 4. Start Chat
-            const chat = model.startChat({
-                history: [
-                    {
-                        role: "user",
-                        parts: [{ text: SYSTEM_PROMPT }],
-                    },
-                    {
-                        role: "model",
-                        parts: [{ text: "Understood. I am Andy. Ready to help!" }],
-                    },
-                    ...history
-                ],
-            });
+            // 5. Generate Response with Multi-Model Fallback
+            // Hierarchy: 3.1-Flash-Lite -> 1.5-Flash -> 1.5-Pro
+            const models = [
+                "gemini-3.1-flash-lite-preview",
+                "gemini-1.5-flash",
+                "gemini-1.5-pro",
+            ];
 
-            // 5. Generate Content
-            const result = await chat.sendMessage(prompt);
-            const aiResponseText = result.response.text();
+            let aiResponseText = null;
+            let lastError = null;
+
+            for (const modelId of models) {
+                try {
+                    console.log(`Attempting generation with model: ${modelId}`);
+                    const model = genAI.getGenerativeModel({
+                        model: modelId,
+                        systemInstruction: SYSTEM_PROMPT,
+                        generationConfig: {
+                            temperature: 0.7,
+                            maxOutputTokens: 300,
+                        },
+                    });
+
+                    const chat = model.startChat({ history });
+                    const result = await chat.sendMessage(prompt);
+                    aiResponseText = result.response.text();
+
+                    if (aiResponseText) {
+                        console.log(`Successfully generated with: ${modelId}`);
+                        break;
+                    }
+                } catch (err) {
+                    lastError = err;
+                    console.error(`Model ${modelId} failed: ${err.message}`);
+                    // Continue to next backup model in the chain
+                }
+            }
+
+            if (!aiResponseText && lastError) {
+                throw lastError; // Rethrow if all models failed
+            }
 
             // 6. Update Firestore Document with Response
             await snapshot.ref.update({
                 response: aiResponseText,
-                responseTimestamp: new Date()
+                responseTimestamp: new Date(),
             });
         } catch (error) {
-            console.error("Error generating AI response:", error);
+            console.error("Critical error in AI generation:", error);
+
+            let userMessage = "I'm having a bit of trouble thinking right now. Please try again later.";
+
+            // Specific 429 Quota handling (only shown if ALL fallbacks fail)
+            if (error.status === 429 || error.message?.includes("429") || error.message?.includes("Quota")) {
+                userMessage = "I'm taking a quick 60-second breather after helping many people! Please try again in a moment.";
+            }
+
             await snapshot.ref.update({
-                response: "I'm having a bit of trouble thinking right now. Please try again later."
+                response: userMessage,
             });
         }
-    }
+    },
 );
 
 
@@ -231,7 +281,7 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
         // Listens ONLY to the 'orders' collection to prevent duplicate messages
         document: "orders/{orderId}",
         secrets: [whatsappAccessToken, whatsappPhoneId],
-        region: "us-central1"
+        region: "us-central1",
     },
     async (event) => {
         const snapshot = event.data;
@@ -268,12 +318,12 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
         let servicesString = "Laundry Services";
         // Adapts based on how you store items. If it's an array of item objects:
         if (orderData.items && Array.isArray(orderData.items) && orderData.items.length > 0) {
-            servicesString = orderData.items.map(item => item.name || item.category || "Item").join(", ");
+            servicesString = orderData.items.map((item) => item.name || item.category || "Item").join(", ");
         } else if (orderData.serviceType) { // Or if it's a single string field
             servicesString = orderData.serviceType;
         }
 
-        // Variable 3: Additional Details 
+        // Variable 3: Additional Details
         const orderDetailsString = `Order ID: ${orderId}`;
         // -----------------------------------------------------
 
@@ -291,13 +341,13 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
                     {
                         type: "body",
                         parameters: [
-                            { type: "text", text: customerName },       // {{1}} = Customer Name
-                            { type: "text", text: servicesString },     // {{2}} = Services List
-                            { type: "text", text: orderDetailsString }  // {{3}} = Order ID
-                        ]
-                    }
-                ]
-            }
+                            { type: "text", text: customerName }, // {{1}} = Customer Name
+                            { type: "text", text: servicesString }, // {{2}} = Services List
+                            { type: "text", text: orderDetailsString }, // {{3}} = Order ID
+                        ],
+                    },
+                ],
+            },
         };
 
         console.log(`WhatsApp: Sending to ${phoneNumber} for order ${orderId}. Payload:`, JSON.stringify(payload));
@@ -307,9 +357,9 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
             });
 
             const result = await response.json();
@@ -318,7 +368,7 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
                 console.error(`WhatsApp API Error (HTTP ${response.status}):`, JSON.stringify(result));
                 await snapshot.ref.update({
                     whatsappConfirmationSent: false,
-                    whatsappError: JSON.stringify(result)
+                    whatsappError: JSON.stringify(result),
                 });
             } else {
                 console.log(`WhatsApp confirmation sent successfully to ${phoneNumber} for order ${orderId}. Response:`, JSON.stringify(result));
@@ -328,8 +378,8 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
             console.error("Network error sending WhatsApp message:", error);
             await snapshot.ref.update({
                 whatsappConfirmationSent: false,
-                whatsappError: error.message
+                whatsappError: error.message,
             });
         }
-    }
+    },
 );
