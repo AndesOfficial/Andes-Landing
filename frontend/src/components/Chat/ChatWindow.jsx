@@ -51,7 +51,28 @@ const ChatWindow = ({ isOpen, onClose }) => {
                     fetchedMessages.push({ id: doc.id + '-u', text: data.prompt, sender: 'user' });
                 }
                 if (data.response) {
-                    fetchedMessages.push({ id: doc.id + '-b', text: data.response, sender: 'bot' });
+                    let rawText = data.response;
+                    const redirectMatch = rawText.match(/\[REDIRECT:(.+?)\]/);
+
+                    if (redirectMatch) {
+                        const path = redirectMatch[1];
+                        // Clean the text for display
+                        const cleanText = rawText.replace(/\[REDIRECT:.+?\]/, '').trim();
+                        fetchedMessages.push({ id: doc.id + '-b', text: cleanText, sender: 'bot' });
+
+                        // Handle the actual redirect with a 2-sec delay
+                        // Only trigger if this is the VERY LATEST message and we haven't handled it yet
+                        if (doc.metadata.hasPendingWrites === false) {
+                            const isLatest = snapshot.docs[snapshot.docs.length - 1].id === doc.id;
+                            if (isLatest) {
+                                setTimeout(() => {
+                                    navigate(path);
+                                }, 2000);
+                            }
+                        }
+                    } else {
+                        fetchedMessages.push({ id: doc.id + '-b', text: rawText, sender: 'bot' });
+                    }
                 } else if (data.prompt && !data.response) {
                     // Show a loading state while AI is thinking
                     fetchedMessages.push({ id: doc.id + '-loading', text: "Andy is typing...", sender: 'bot' });

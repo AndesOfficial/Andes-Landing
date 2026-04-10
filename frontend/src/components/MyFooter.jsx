@@ -66,7 +66,7 @@ const MyFooter = () => {
               <li><Link to="/working" className="hover:text-brand transition-colors">How it works</Link></li>
               <li><Link to="/services" className="hover:text-brand transition-colors">Services & Pricing</Link></li>
               <li><Link to="/contact" className="hover:text-brand transition-colors">Contact Us</Link></li>
-              <li><Link to="/about" className="hover:text-brand transition-colors">Join the Team</Link></li>
+              <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfz3SVf8P3Wknst4ySpVrTamafRS1FldXWoWv5CtP1oAMCGHA/viewform?usp=sharing" target="_blank" rel="noopener noreferrer" className="hover:text-brand transition-colors">Careers</a></li>
             </ul>
           </div>
 
