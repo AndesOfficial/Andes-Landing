@@ -7,7 +7,7 @@ export const quickServices = [
     { id: 'wash-iron', name: 'Wash & Iron', price: 79, unit: 'kg', icon: FaTshirt, desc: 'Laundry washed and neatly ironed.' },
 ];
 
-// Data for ServicesPage.jsx
+// Data for ServicesPage.jsx    
 export const servicesPricingData = [
     {
         icon: FaWater,

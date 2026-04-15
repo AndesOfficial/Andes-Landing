@@ -10,6 +10,7 @@ import {
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
+import { Intercom } from '@intercom/messenger-js-sdk';
 
 const AuthContext = createContext();
 
@@ -97,7 +98,11 @@ export const AuthProvider = ({ children }) => {
 
     // 4. Logout
     const logout = () => {
-        return signOut(auth);
+        return signOut(auth).then(() => {
+            try {
+                Intercom({ app_id: 'p0z99uur' }); // reboots anonymously
+            } catch(e) { console.error('Intercom reset error', e) }
+        });
     };
 
     // 5. Reset Password

@@ -1,13 +1,13 @@
 import React from 'react';
 import { FaCommentDots, FaCalendarCheck } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { show } from '@intercom/messenger-js-sdk';
 
 const MobileBottomBar = () => {
     const navigate = useNavigate();
 
     const openChat = () => {
-        // Custom event to trigger ChatWidget opening
-        window.dispatchEvent(new Event('openChat'));
+        show();
     };
 
     return (

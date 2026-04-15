@@ -7,7 +7,8 @@
         "shell": "npx firebase functions:shell",
         "start": "npm run shell",
         "deploy": "npx firebase deploy --only functions",
-        "logs": "npx firebase functions:log"
+        "logs": "npx firebase functions:log",
+        "export-users": "node exportUsers.js"
     },
     "engines": {
         "node": "24"
@@ -17,7 +18,8 @@
         "@google/generative-ai": "^0.24.1",
         "axios": "^1.13.6",
         "firebase-admin": "^13.6.1",
-        "firebase-functions": "^7.0.5"
+        "firebase-functions": "^7.0.5",
+        "jsonwebtoken": "^9.0.3"
     },
     "devDependencies": {
         "eslint": "^8.15.0",
