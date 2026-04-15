@@ -9,8 +9,11 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
-import ChatWidget from "./components/Chat/ChatWidget";
+import { Intercom } from '@intercom/messenger-js-sdk';
 import MobileStickyBtn from "./components/MobileStickyBtn";
+import { useAuth } from "./context/AuthContext";
+import { httpsCallable } from "firebase/functions";
+import { functions } from "./firebase";
 
 
 // Lazy Load Pages
@@ -38,7 +41,47 @@ import PageLoader from './components/common/PageLoader';
 
 function App() {
   const location = useLocation();
+  const { currentUser } = useAuth();
 
+  useEffect(() => {
+    let isMounted = true;
+    
+    if (currentUser) {
+      const bootIntercomSecurely = async () => {
+        try {
+          // Fetch secure JWT from Firebase Functions
+          const generateIntercomHash = httpsCallable(functions, 'generateIntercomHash');
+          const result = await generateIntercomHash();
+          
+          if (isMounted) {
+            Intercom({
+              app_id: 'p0z99uur',
+              name: currentUser.displayName || currentUser.fullName || currentUser.name || "Andes User", 
+              email: currentUser.email,
+              user_id: currentUser.uid || currentUser.id,
+              intercom_user_jwt: result.data.intercom_user_jwt,
+            });
+          }
+        } catch (err) {
+          console.error("Failed to generate Intercom Identity Verification Hash:", err);
+          // Fallback to anonymous boot if it fails (optional, depending on strictness)
+          if (isMounted) {
+             Intercom({ app_id: 'p0z99uur' });
+          }
+        }
+      };
+      
+      bootIntercomSecurely();
+    } else {
+      Intercom({
+        app_id: 'p0z99uur',
+      });
+    }
+    
+    return () => {
+      isMounted = false;
+    };
+  }, [currentUser]);
 
   if (location.pathname.startsWith('/dashboard')) {
     return (
@@ -57,7 +100,6 @@ function App() {
             </Route>
           </Routes>
         </Suspense>
-        <ChatWidget />
       </>
     );
   }
@@ -94,7 +136,6 @@ function App() {
 
       <ToastContainer position="bottom-center" autoClose={2000} hideProgressBar={true} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
 
-      <ChatWidget />
       <MobileStickyBtn />
     </>
   );

@@ -2,6 +2,8 @@ const { onDocumentCreated } = require("firebase-functions/v2/firestore");
 const { initializeApp } = require("firebase-admin/app");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { defineSecret } = require("firebase-functions/params");
+const { onCall, HttpsError } = require("firebase-functions/v2/https");
+const jwt = require("jsonwebtoken");
 
 initializeApp();
 
@@ -9,6 +11,7 @@ initializeApp();
 const geminiApiKey = defineSecret("GEMINI_API_KEY");
 const whatsappAccessToken = defineSecret("WHATSAPP_ACCESS_TOKEN");
 const whatsappPhoneId = defineSecret("WHATSAPP_PHONE_ID");
+const intercomSecretKey = defineSecret("INTERCOM_SECRET_KEY");
 
 const SYSTEM_PROMPT = `
 You are **Andy**, the friendly, upbeat, and knowledgeable laundry assistant for **Andes Laundry** — a premium laundry service in Pune, India.
@@ -382,4 +385,37 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
             });
         }
     },
+);
+
+// ==========================================
+// 3. INTERCOM IDENTITY VERIFICATION
+// ==========================================
+exports.generateIntercomHash = onCall(
+    { secrets: [intercomSecretKey] },
+    (request) => {
+        // Ensure the user is authenticated with Firebase
+        if (!request.auth || !request.auth.uid) {
+            throw new HttpsError(
+                "unauthenticated",
+                "The function must be called while authenticated."
+            );
+        }
+
+        const uid = request.auth.uid;
+        const secret = intercomSecretKey.value();
+
+        if (!secret) {
+            console.error("INTERCOM_SECRET_KEY is not configured.");
+            throw new HttpsError("internal", "Server misconfiguration.");
+        }
+
+        // Generate JWT token
+        const payload = {
+            user_id: uid,
+            email: request.auth.token ? request.auth.token.email : "", 
+        };
+        const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+
+        return { intercom_user_jwt: token };
+    }
 );
