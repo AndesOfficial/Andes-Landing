@@ -245,7 +245,7 @@ const LandingPage = () => {
       </section>
 
       {/*  EXPLORE SERVICES */}
-      <div className="bg-slate-50 py-12 md:py-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat relative z-20 -mt-12 pt-24 rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
+      <div className="bg-slate-50 py-12 md:py-20 relative z-20 -mt-12 pt-24 rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
         <ScrollReveal>
           <div className="container mx-auto px-4 max-w-7xl">
             <div className="text-center mb-12">
@@ -331,7 +331,7 @@ const LandingPage = () => {
       </section>
 
       {/* 🌟 CUSTOMER INSIGHTS */}
-      <div className="bg-slate-50 py-12 md:py-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat relative z-20 -mt-12 pt-24 rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
+      <div className="bg-slate-50 py-12 md:py-20 relative z-20 -mt-12 pt-24 rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
         <ScrollReveal>
           <CustomerReviews />
         </ScrollReveal>

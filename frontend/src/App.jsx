@@ -9,7 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
-import { Intercom } from '@intercom/messenger-js-sdk';
+import Intercom from '@intercom/messenger-js-sdk';
 import MobileStickyBtn from "./components/MobileStickyBtn";
 import { useAuth } from "./context/AuthContext";
 import { httpsCallable } from "firebase/functions";
