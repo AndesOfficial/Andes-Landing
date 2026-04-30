@@ -136,7 +136,7 @@ export const OrderProvider = ({ children }) => {
                 ultraFastDelivery: false,
                 updatedAt: serverTimestamp(),
                 userId: currentUser.uid || '',
-                userMobile: currentUser.phone || currentUser.mobile || '',
+                userMobile: finalPhone,
                 userName: currentUser.fullName || 'Unknown',
                 walletAmountUsed: 0
             };
