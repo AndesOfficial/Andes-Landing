@@ -144,7 +144,7 @@ const OrderConfirmation = () => {
                             </div>
                         </motion.div>
 
-                        <Link to="/">
+                        <Link to="/dashboard/orders" state={{ autoTrackOrderId: orderId }}>
                             <Button className="w-full h-14 rounded-2xl font-black uppercase tracking-widest text-sm shadow-[0_8px_20px_-8px_rgba(0,137,255,0.4)] hover:shadow-[0_12px_25px_-8px_rgba(0,137,255,0.6)] hover:-translate-y-0.5 active:scale-95 transition-all flex items-center justify-center gap-2">
                                 Track My Order
                             </Button>
