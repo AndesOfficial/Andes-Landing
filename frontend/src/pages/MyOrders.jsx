@@ -1,17 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../firebase';
-import { collection, query, where, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, getDoc, setDoc } from 'firebase/firestore';
-import { FaBoxOpen, FaClock, FaCheckCircle, FaTimesCircle, FaTruck, FaSpinner } from 'react-icons/fa';
+import { collection, query, where, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, getDoc, setDoc, limit } from 'firebase/firestore';
+import { FaBoxOpen, FaClock, FaCheckCircle, FaTimesCircle, FaTruck, FaSpinner, FaTshirt, FaMotorcycle, FaHome, FaCheck, FaBox, FaArrowLeft } from 'react-icons/fa';
+
+const TRACKING_STEPS = [
+    { id: 'placed', label: 'Order Placed', time: '48 Hrs', icon: FaCheck, match: ['pending', 'placed'] },
+    { id: 'confirmed', label: 'Order Confirmed', time: '48 Hrs', icon: FaCheckCircle, match: ['confirm'] },
+    { id: 'partner_on_way', label: 'Pickup partner on the way', time: '48 Hrs', icon: FaMotorcycle, match: ['on the way', 'partner'] },
+    { id: 'picked_up', label: 'Pickup Completed', time: '48 Hrs', icon: FaBox, match: ['picked up', 'pickup completed', 'reached laundry facility'] },
+    { id: 'processing', label: 'Laundry Processing', time: '48 Hrs', icon: FaTshirt, match: ['process', 'processing'] },
+    { id: 'out_for_delivery', label: 'Out for Delivery', time: '48 Hrs', icon: FaTruck, match: ['out for delivery'] },
+    { id: 'delivered', label: 'Delivered', time: '48 Hrs (24h delivery)', icon: FaHome, match: ['deliver', 'completed'] }
+];
 
 const MyOrders = () => {
     const { currentUser } = useAuth();
     const [orders, setOrders] = useState([]);
+    const [cartDetails, setCartDetails] = useState({});
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('active'); // 'active' or 'past'
     const [cancellingId, setCancellingId] = useState(null);
     const [showCancelModal, setShowCancelModal] = useState(false);
     const [orderToCancel, setOrderToCancel] = useState(null);
+    const [trackingOrder, setTrackingOrder] = useState(null); // The order currently being tracked
+    const [orderLimit, setOrderLimit] = useState(20);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!currentUser) {
@@ -25,10 +41,11 @@ const MyOrders = () => {
         const q = query(
             collection(db, 'orders'),
             where('userId', '==', currentUser.uid),
-            orderBy('createdAt', 'desc')
+            orderBy('createdAt', 'desc'),
+            limit(orderLimit)
         );
 
-        const unsubscribe = onSnapshot(q, (snapshot) => {
+        const unsubscribeOrders = onSnapshot(q, (snapshot) => {
             const ordersData = snapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
@@ -37,17 +54,33 @@ const MyOrders = () => {
             setLoading(false);
         }, (error) => {
             console.error("Error fetching orders:", error);
-            // Fallback for missing index error
             if (error.code === 'failed-precondition') {
                 console.log("Index missing, might fall back to client-side sort if needed, but alerting dev.");
-                // For now, let's just show unsorted or simple query if strictly needed,
-                // but ideally user creates index.
             }
             setLoading(false);
         });
 
-        return () => unsubscribe();
-    }, [currentUser]);
+        // Query cartdetails for tracking status
+        const qCart = query(
+            collection(db, 'cartdetails'),
+            where('userId', '==', currentUser.uid)
+        );
+
+        const unsubscribeCart = onSnapshot(qCart, (snapshot) => {
+            const cartData = {};
+            snapshot.docs.forEach(doc => {
+                cartData[doc.id] = doc.data();
+            });
+            setCartDetails(cartData);
+        }, (error) => {
+            console.error("Error fetching cartdetails:", error);
+        });
+
+        return () => {
+            unsubscribeOrders();
+            unsubscribeCart();
+        };
+    }, [currentUser, orderLimit]);
 
     const initiateCancel = (orderId) => {
         setOrderToCancel(orderId);
@@ -177,20 +210,59 @@ const MyOrders = () => {
     };
 
     // Filter active vs past orders
-    // Active: Pending, Processing, Out for Delivery
+    // Active: Pending, Processing, Out for Delivery, etc.
     // Past: Completed, Delivered, Cancelled
-    const activeStatus = ['Pending', 'Processing', 'Out for Delivery'];
+    const pastStatusList = useMemo(() => ['completed', 'delivered', 'cancelled'], []);
 
-    // Sort logic handled by Firestore query ideally, but client side robust too
-    const activeOrders = orders.filter(order =>
-        (activeStatus.includes(order.status) || !order.status) && order.status !== 'Cancelled'
-    );
+    // Combine order data with real-time cartdetails status
+    const mergedOrders = useMemo(() => {
+        return orders.map(order => {
+            const cart = cartDetails[order.id];
+            let mergedStatus = order.status || 'Pending';
+            let rawCartStatus = 'pending';
+            
+            if (cart && cart.status) {
+                rawCartStatus = cart.status.toLowerCase();
+                // Title case the status from cartdetails for UI display
+                mergedStatus = cart.status
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                    .join(' ');
+            }
+            
+            return {
+                ...order,
+                status: mergedStatus,
+                cartStatus: rawCartStatus
+            };
+        });
+    }, [orders, cartDetails]);
 
-    const pastOrders = orders.filter(order =>
-        (!activeStatus.includes(order.status) || order.status === 'Cancelled') && order.status
-    );
+    const activeOrders = useMemo(() => {
+        return mergedOrders.filter(order =>
+            !pastStatusList.includes((order.status || '').toLowerCase())
+        );
+    }, [mergedOrders, pastStatusList]);
+
+    const pastOrders = useMemo(() => {
+        return mergedOrders.filter(order =>
+            pastStatusList.includes((order.status || '').toLowerCase())
+        );
+    }, [mergedOrders, pastStatusList]);
 
     const displayedOrders = activeTab === 'active' ? activeOrders : pastOrders;
+
+    // Auto-open tracking modal if navigated from elsewhere with state
+    useEffect(() => {
+        if (location.state?.autoTrackOrderId && mergedOrders.length > 0) {
+            const orderToTrack = mergedOrders.find(o => o.id === location.state.autoTrackOrderId);
+            if (orderToTrack) {
+                setTrackingOrder(orderToTrack);
+                // Clean up state via react-router so it doesn't reopen it
+                navigate(location.pathname, { replace: true, state: {} });
+            }
+        }
+    }, [location.state, mergedOrders, navigate, location.pathname]);
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -274,8 +346,8 @@ const MyOrders = () => {
                                     </p>
                                 </div>
                                 <div className="text-right">
-                                    <p className="font-black text-slate-900 text-2xl">₹{(order.finalTotal || 0).toFixed(2)}</p>
-                                    <p className="text-sm font-medium text-slate-400">{order.totalItems || order.cart?.length || 0} Items</p>
+                                    <p className="font-black text-slate-900 text-2xl">₹{(order.totalPrice || order.finalTotal || order.subtotal || 0).toFixed(2)}</p>
+                                    <p className="text-sm font-medium text-slate-400">{order.totalItems || order.cart?.length || order.items?.length || 0} Items</p>
                                 </div>
                             </div>
 
@@ -305,8 +377,17 @@ const MyOrders = () => {
                             </div>
 
                             {/* Actions */}
-                            <div className="flex justify-end pt-2">
-                                {activeTab === 'active' && (order.status === 'Pending' || !order.status) && (
+                            <div className="flex justify-end pt-2 space-x-3">
+                                {activeTab === 'active' && (
+                                    <button
+                                        onClick={() => setTrackingOrder(order)}
+                                        className="px-5 py-2.5 bg-blue-50 text-brand rounded-xl font-bold text-sm hover:bg-blue-100 transition-all flex items-center"
+                                    >
+                                        Track Order
+                                    </button>
+                                )}
+
+                                {activeTab === 'active' && (order.status.toLowerCase() === 'pending' || order.status.toLowerCase() === 'order placed') && (
                                     <button
                                         onClick={() => initiateCancel(order.id)}
                                         disabled={cancellingId === order.id}
@@ -336,10 +417,22 @@ const MyOrders = () => {
                         </div>
                     ))
                 )}
+                
+                {/* Load More Button */}
+                {displayedOrders.length >= orderLimit && (
+                    <div className="flex justify-center mt-8">
+                        <button
+                            onClick={() => setOrderLimit(prev => prev + 20)}
+                            className="px-6 py-2 bg-white border border-gray-200 text-gray-600 rounded-lg text-sm font-bold shadow-sm hover:bg-gray-50 transition-colors"
+                        >
+                            Load More Orders
+                        </button>
+                    </div>
+                )}
                 {/* Cancel Confirmation Modal */}
                 {
                     showCancelModal && (
-                        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-fade-in">
+                        <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4 animate-fade-in">
                             <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform transition-all scale-100">
                                 <div className="text-center">
                                     <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
@@ -368,6 +461,90 @@ const MyOrders = () => {
                         </div>
                     )
                 }
+
+                {/* Track Order Modal */}
+                {trackingOrder && (
+                    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-fade-in sm:p-0">
+                        <div className="bg-white w-full h-full sm:h-auto sm:max-w-md sm:rounded-2xl flex flex-col shadow-2xl relative">
+                            {/* Header */}
+                            <div className="flex items-center p-4 border-b border-gray-100 sticky top-0 bg-white sm:rounded-t-2xl z-10">
+                                <button 
+                                    onClick={() => setTrackingOrder(null)}
+                                    className="p-2 hover:bg-gray-100 rounded-full transition-colors mr-2"
+                                >
+                                    <FaArrowLeft className="text-gray-800" />
+                                </button>
+                                <h2 className="text-lg font-bold text-gray-900 mx-auto absolute left-1/2 -translate-x-1/2">Track Order</h2>
+                            </div>
+
+                            {/* Timeline Content */}
+                            <div className="flex-1 overflow-y-auto p-6 bg-gray-50">
+                                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                                    <div className="flex items-center gap-2 mb-8 text-brand font-bold text-lg">
+                                        <FaCheckCircle /> Order Status
+                                    </div>
+
+                                    {(() => {
+                                        const currentStatus = (trackingOrder.cartStatus || trackingOrder.status || 'pending').toLowerCase();
+
+                                        if (currentStatus.includes('cancel')) {
+                                            return (
+                                                <div className="flex flex-col items-center justify-center py-10">
+                                                    <FaTimesCircle className="text-red-500 text-6xl mb-4" />
+                                                    <h3 className="text-xl font-bold text-gray-900">Order Cancelled</h3>
+                                                    <p className="text-gray-500 text-center mt-2">This order has been cancelled and will not be processed further.</p>
+                                                </div>
+                                            );
+                                        }
+
+                                        let currentIndex = 0;
+                                        // Determine highest matching index
+                                        TRACKING_STEPS.forEach((step, index) => {
+                                            if (step.match.some(keyword => currentStatus.includes(keyword))) {
+                                                currentIndex = Math.max(currentIndex, index);
+                                            }
+                                        });
+
+                                        return (
+                                            <div className="relative pl-6 space-y-8 before:content-[''] before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-200">
+                                                {TRACKING_STEPS.map((step, index) => {
+                                                    const isCompleted = index <= currentIndex;
+                                                    const isCurrent = index === currentIndex;
+                                                    const Icon = step.icon;
+
+                                                    return (
+                                                        <div key={step.id} className={`relative flex items-start group ${isCompleted ? 'opacity-100' : 'opacity-40'}`}>
+                                                            {/* Line override for completed steps */}
+                                                            {isCompleted && index !== TRACKING_STEPS.length - 1 && (
+                                                                <div className="absolute left-[-11px] top-8 bottom-[-40px] w-0.5 bg-blue-500 z-0"></div>
+                                                            )}
+                                                            
+                                                            {/* Icon node */}
+                                                            <div className={`absolute left-[-30px] flex items-center justify-center w-7 h-7 rounded-full border-2 bg-white z-10 transition-colors ${
+                                                                isCurrent ? 'border-blue-500 bg-blue-500 text-white' : 
+                                                                isCompleted ? 'border-blue-500 text-blue-500' : 'border-gray-300 text-gray-400'
+                                                            }`}>
+                                                                <Icon className="w-3 h-3" />
+                                                            </div>
+
+                                                            {/* Content */}
+                                                            <div className="ml-4 flex-1">
+                                                                <h4 className={`text-base font-bold ${isCurrent ? 'text-gray-900' : isCompleted ? 'text-gray-700' : 'text-gray-400'}`}>
+                                                                    {step.label}
+                                                                </h4>
+                                                                <p className="text-xs text-gray-400 mt-1">{step.time}</p>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        );
+                                    })()}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

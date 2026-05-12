@@ -237,7 +237,7 @@ const Dashboard = () => {
                                             <FaBox />
                                             <span>Est. Delivery: Tomorrow</span>
                                         </div>
-                                        <Link to={`/order-confirmation`} state={{ orderId: recentOrder.id }} className="text-brand-blue font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                        <Link to="/dashboard/orders" state={{ autoTrackOrderId: recentOrder.id }} className="text-brand-blue font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                                             Track Order <FaChevronRight />
                                         </Link>
                                     </div>
