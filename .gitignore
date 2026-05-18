@@ -1,4 +1,10 @@
 node_modules
 
 .env
-.secret.local*-adminsdk-*.json
+.env.*
+.secret.local
+*-adminsdk-*.json
+*.pem
+*.p12
+*.key
+*.crt
