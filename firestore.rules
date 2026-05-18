@@ -10,5 +10,19 @@ service cloud.firestore {
         allow read, write: if request.auth != null && request.auth.uid == userId;
       }
     }
+
+    // Orders security rules
+    match /orders/{orderId} {
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow read, update: if request.auth != null && resource.data.userId == request.auth.uid;
+    }
+
+    // Cart Details security rules
+    match /cartdetails/{orderId} {
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow read, update: if request.auth != null && (resource == null || resource.data.userId == request.auth.uid);
+      // Fallback for setDoc if it performs an overwrite/merge and resource doesn't exist yet
+      allow write: if request.auth != null && (resource == null || resource.data.userId == request.auth.uid) && request.resource.data.userId == request.auth.uid;
+    }
   }
 }
