@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { collection, addDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuth } from './AuthContext';
@@ -14,8 +14,24 @@ export const OrderProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const [preferences, setPreferences] = useState({});
     const [schedule, setSchedule] = useState({ pickup: null, delivery: null });
+    // 'regular' or 'instant' — whichever was added first locks the cart
+    const [cartMode, setCartMode] = useState(null);
 
-    const addToCart = (item, quantity = 1) => {
+    // Keep cartMode consistent: once cart is empty, unlock mode switching
+    useEffect(() => {
+        if (cart.length === 0 && cartMode !== null) {
+            setCartMode(null);
+        }
+    }, [cart.length, cartMode]);
+
+    const addToCart = (item, quantity = 1, serviceMode = 'regular') => {
+        // Enforce single service type per cart
+        if (cart.length > 0 && cartMode && cartMode !== serviceMode) {
+            return { conflict: true, currentMode: cartMode };
+        }
+        if (cart.length === 0 || !cartMode) {
+            setCartMode(serviceMode);
+        }
         setCart((prev) => {
             const existing = prev.find((i) => i.id === item.id);
             if (existing) {
@@ -23,8 +39,9 @@ export const OrderProvider = ({ children }) => {
                     i.id === item.id ? { ...i, quantity: i.quantity + quantity } : i
                 );
             }
-            return [...prev, { ...item, quantity }];
+            return [...prev, { ...item, quantity, serviceMode }];
         });
+        return { conflict: false };
     };
 
     const removeFromCart = (itemId) => {
@@ -41,7 +58,10 @@ export const OrderProvider = ({ children }) => {
         );
     };
 
-    const clearCart = () => setCart([]);
+    const clearCart = () => {
+        setCart([]);
+        setCartMode(null);
+    };
 
     const placeOrder = async (orderDetails) => {
         if (!currentUser) {
@@ -86,11 +106,13 @@ export const OrderProvider = ({ children }) => {
             // Format services maps based on rider app expectations
             const serviceUnitsMap = {};
             const servicesMap = {};
+            const isInstant = cartMode === 'instant';
             cart.forEach(item => {
                 const itemName = item.title || item.name || 'Item';
-                // e.g., "Wash & Fold_regular"
-                const key = `${itemName}_regular`;
-                serviceUnitsMap[key] = "regular";
+                // e.g., "Wash & Fold_instant" or "Wash & Fold_regular"
+                const suffix = isInstant ? 'instant' : 'regular';
+                const key = `${itemName}_${suffix}`;
+                serviceUnitsMap[key] = suffix;
                 servicesMap[key] = item.quantity || 1;
             });
 
@@ -133,7 +155,7 @@ export const OrderProvider = ({ children }) => {
                 status: 'pending', // Rider app seems to prefer lowercase 'pending' in paymentStatus, let's use 'Pending' or 'placed' depending on what's standard. We'll use orderData.status or 'pending'
                 totalCost: orderData.totalPrice,
                 totalItems: orderData.totalItems,
-                ultraFastDelivery: false,
+                ultraFastDelivery: cartMode === 'instant',
                 updatedAt: serverTimestamp(),
                 userId: currentUser.uid || '',
                 userMobile: finalPhone,
@@ -162,6 +184,7 @@ export const OrderProvider = ({ children }) => {
 
     const value = {
         cart,
+        cartMode,
         preferences,
         schedule,
         addToCart,

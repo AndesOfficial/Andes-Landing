@@ -58,7 +58,7 @@ const Services = () => {
             <div className="snap-center shrink-0 w-[85%] sm:w-[350px] md:w-auto h-full">
               <ItemCard
                 title="Wash & Fold"
-                price="69/Kg"
+                price="59/Kg"
                 description="For delicate items and fabrics."
                 includes={["WASH", "FOLD"]}
                 serviceTime="24H - 48H"
