@@ -2,9 +2,9 @@ import { FaTshirt, FaWater, FaSteam, FaShoePrints, FaLayerGroup } from 'react-ic
 
 // Data for OrderPlacement.jsx
 export const quickServices = [
-    { id: 'wash-fold', name: 'Wash & Fold', price: 49, unit: 'kg', icon: FaTshirt, desc: 'Professional laundry, washed, dried, and folded.' },
+    { id: 'wash-fold', name: 'Wash & Fold', price: 59, unit: 'kg', icon: FaTshirt, desc: 'Professional laundry, washed, dried, and folded.' },
     { id: 'iron', name: 'Iron', price: 10, unit: 'piece', icon: FaTshirt, desc: 'Professional steam ironing.' },
-    { id: 'wash-iron', name: 'Wash & Iron', price: 79, unit: 'kg', icon: FaTshirt, desc: 'Laundry washed and neatly ironed.' },
+    { id: 'wash-iron', name: 'Wash & Iron', price: 89, unit: 'kg', icon: FaTshirt, desc: 'Laundry washed and neatly ironed.' },
 ];
 
 // Data for ServicesPage.jsx    
@@ -13,17 +13,17 @@ export const servicesPricingData = [
         icon: FaWater,
         title: "Wash & Fold",
         description: "For everyday laundry, washed, dried, and folded.",
-        actualPrice: 49,
+        actualPrice: 59,
         fakePrice: 99,
-        priceInfo: "₹49 / kg",
+        priceInfo: "₹59 / kg",
     },
     {
         icon: FaTshirt,
         title: "Wash & Iron",
         description: "For everyday laundry that requires ironing.",
-        actualPrice: 79,
+        actualPrice: 89,
         fakePrice: 129,
-        priceInfo: "from ₹79 / kg",
+        priceInfo: "from ₹89 / kg",
     },
     {
         icon: FaSteam,

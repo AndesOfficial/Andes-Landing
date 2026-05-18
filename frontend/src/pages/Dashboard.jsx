@@ -3,7 +3,9 @@ import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
-import { FaPlus, FaListAlt, FaTags, FaHeadset, FaBox, FaChevronRight, FaClock, FaCheckCircle } from 'react-icons/fa';
+import { FaPlus, FaListAlt, FaTags, FaHeadset, FaBox, FaChevronRight, FaClock, FaCheckCircle, FaWhatsapp } from 'react-icons/fa';
+import WhatsAppTestTool from '../components/WhatsAppTestTool';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // --- Reusable Components ---
 
@@ -45,6 +47,8 @@ const Dashboard = () => {
     const [stats, setStats] = useState({ active: 0, completed: 0, saved: 0 });
     const [recentOrder, setRecentOrder] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showWhatsAppTool, setShowWhatsAppTool] = useState(false);
+    const isAdmin = currentUser?.email === 'andesnow1604@gmail.com';
 
     useEffect(() => {
         if (!currentUser) return;
@@ -138,6 +142,22 @@ const Dashboard = () => {
                         <QuickActionBtn to="/services" icon={<FaTags />} label="Srvc & Pricing" />
                         <QuickActionBtn to="mailto:care@andes.co.in" icon={<FaHeadset />} label="Help & Support" />
                     </div>
+
+                    {/* Admin Tools */}
+                    {isAdmin && (
+                        <div className="mt-4 p-4 bg-green-50 rounded-2xl border border-green-100 flex items-center justify-between">
+                            <div className="flex items-center gap-3 text-green-700">
+                                <FaWhatsapp size={20} />
+                                <span className="font-bold text-sm">WhatsApp Admin Tool</span>
+                            </div>
+                            <button
+                                onClick={() => setShowWhatsAppTool(true)}
+                                className="bg-green-600 text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-700 transition-all shadow-md shadow-green-200"
+                            >
+                                Open Tool
+                            </button>
+                        </div>
+                    )}
                 </div>
             </header>
 
@@ -282,6 +302,22 @@ const Dashboard = () => {
                     </div>
                 </div>
             </main>
+
+            {/* WhatsApp Tool Modal */}
+            <AnimatePresence>
+                {showWhatsAppTool && (
+                    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            className="bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-2xl relative"
+                        >
+                            <WhatsAppTestTool onClose={() => setShowWhatsAppTool(false)} />
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

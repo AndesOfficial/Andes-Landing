@@ -1,4 +1,4 @@
-const { onDocumentCreated } = require("firebase-functions/v2/firestore");
+const { onDocumentCreated, onDocumentUpdated, onDocumentWritten } = require("firebase-functions/v2/firestore");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore, FieldValue } = require("firebase-admin/firestore"); // <-- ADDED for Custom Actions
 
@@ -12,6 +12,7 @@ initializeApp();
 
 const whatsappAccessToken = defineSecret("WHATSAPP_ACCESS_TOKEN");
 const whatsappPhoneId = defineSecret("WHATSAPP_PHONE_ID");
+const whatsappBusinessAccountId = defineSecret("WHATSAPP_BUSINESS_ACCOUNT_ID");
 const intercomSecretKey = defineSecret("INTERCOM_SECRET_KEY");
 
 // ==========================================
@@ -46,15 +47,12 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
         const token = whatsappAccessToken.value();
         const phoneId = whatsappPhoneId.value();
 
-        let servicesString = "Laundry Services";
-        if (orderData.items && Array.isArray(orderData.items) && orderData.items.length > 0) {
-            servicesString = orderData.items.map((item) => item.name || item.category || "Item").join(", ");
-        } else if (orderData.serviceType) {
-            servicesString = orderData.serviceType;
-        }
+        // Extract Pickup Date and Slot
+        const createdAt = orderData.createdAt ? orderData.createdAt.toDate() : new Date();
+        const pickupDate = createdAt.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        const pickupSlot = orderData.deliverySlot || "6:00 PM - 9:00 PM"; // Default fallback
 
-        const orderDetailsString = `Order ID: ${orderId}`;
-        const META_API_VERSION = "v22.0";
+        const META_API_VERSION = "v19.0";
         const url = `https://graph.facebook.com/${META_API_VERSION}/${phoneId}/messages`;
 
         const payload = {
@@ -62,20 +60,21 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
             to: phoneNumber,
             type: "template",
             template: {
-                name: "order_confirmation",
+                name: "order_placed",
                 language: { code: "en" },
                 components: [
                     {
                         type: "body",
                         parameters: [
                             { type: "text", text: customerName },
-                            { type: "text", text: servicesString },
-                            { type: "text", text: orderDetailsString },
+                            { type: "text", text: pickupDate },
                         ],
                     },
                 ],
             },
         };
+
+        console.log(`Sending WhatsApp to ${phoneNumber} using PhoneID ${phoneId} and Version ${META_API_VERSION}`);
 
         try {
             const response = await fetch(url, {
@@ -88,6 +87,7 @@ exports.sendOrderConfirmationWhatsApp = onDocumentCreated(
             });
 
             const result = await response.json();
+            console.log("WhatsApp API Response:", JSON.stringify(result));
 
             if (!response.ok) {
                 await snapshot.ref.update({
@@ -130,6 +130,80 @@ exports.generateIntercomHash = onCall(
         const token = jwt.sign(payload, secret, { expiresIn: '1h' });
 
         return { intercom_user_jwt: token };
+    }
+);
+
+// ==========================================
+// 3.5 SEND CUSTOM WHATSAPP MESSAGE (ON CALL)
+// ==========================================
+exports.sendWhatsAppMessage = onCall(
+    { secrets: [whatsappAccessToken, whatsappPhoneId] },
+    async (request) => {
+        // Auth check (Admin only recommended)
+        if (!request.auth) {
+            throw new HttpsError("unauthenticated", "The function must be called while authenticated.");
+        }
+
+        const { to, type, body, templateName, languageCode, parameters } = request.data;
+
+        if (!to || !type) {
+            throw new HttpsError("invalid-argument", "Missing recipient (to) or message type.");
+        }
+
+        const phoneId = whatsappPhoneId.value();
+        const token = whatsappAccessToken.value();
+        const META_API_VERSION = "v19.0";
+        const url = `https://graph.facebook.com/${META_API_VERSION}/${phoneId}/messages`;
+
+        let payload = {
+            messaging_product: "whatsapp",
+            to: to.replace(/\D/g, ""), // Sanitize number
+        };
+
+        if (type === "template") {
+            if (!templateName) {
+                throw new HttpsError("invalid-argument", "Missing templateName for template message.");
+            }
+            payload.type = "template";
+            payload.template = {
+                name: templateName,
+                language: { code: languageCode || "en" },
+                components: parameters ? [{
+                    type: "body",
+                    parameters: parameters.map(p => ({ type: "text", text: String(p) }))
+                }] : []
+            };
+        } else {
+            // Default to text message (Custom)
+            if (!body) {
+                throw new HttpsError("invalid-argument", "Missing body for text message.");
+            }
+            payload.type = "text";
+            payload.text = { body: body };
+        }
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                console.error("WhatsApp API Error:", result);
+                return { success: false, error: result };
+            }
+
+            return { success: true, messageId: result.messages?.[0]?.id };
+        } catch (error) {
+            console.error("WhatsApp Function Error:", error);
+            throw new HttpsError("internal", error.message);
+        }
     }
 );
 
@@ -248,6 +322,169 @@ exports.scheduleAndesOrder = onRequest(
         } catch (error) {
             console.error("Error scheduling order:", error);
             res.status(500).send({ error: "Internal Server Error" });
+        }
+    }
+);
+
+// ==========================================
+// 5. ORDER STATUS UPDATES WHATSAPP MESSAGES
+// ==========================================
+exports.notifyWhatsAppOrderStatus = onDocumentWritten(
+    {
+        document: "cartdetails/{orderId}",
+        secrets: [whatsappAccessToken, whatsappPhoneId],
+        region: "us-central1",
+    },
+    async (event) => {
+        const beforeData = event.data.before.data();
+        const afterData = event.data.after.data();
+
+        if (!beforeData || !afterData) return;
+
+        const beforeStatus = (beforeData.status || "").toLowerCase();
+        const afterStatus = (afterData.status || "").toLowerCase();
+
+        // Only proceed if status actually changed
+        if (beforeStatus === afterStatus) return;
+
+        const orderId = event.params.orderId;
+        const customerName = afterData.userName || "Customer";
+        let phoneNumber = afterData.userMobile || afterData.userPhone || "";
+
+        if (!phoneNumber) return;
+
+        phoneNumber = String(phoneNumber).replace(/\D/g, "");
+        if (phoneNumber.length === 10) {
+            phoneNumber = "91" + phoneNumber;
+        } else if (phoneNumber.length !== 12 || !phoneNumber.startsWith("91")) {
+            return;
+        }
+
+        const token = whatsappAccessToken.value();
+        const phoneId = whatsappPhoneId.value();
+        const META_API_VERSION = "v19.0";
+        const url = `https://graph.facebook.com/${META_API_VERSION}/${phoneId}/messages`;
+
+        let templateName = "";
+        let parameters = [];
+
+        // Check for specific status transitions
+        if (["on the way", "partner"].some(kw => afterStatus.includes(kw)) && !["on the way", "partner"].some(kw => beforeStatus.includes(kw))) {
+            templateName = "pickup_partner_on_way_v1";
+            parameters = [{ type: "text", text: customerName }];
+        } 
+        else if (["picked up", "pickup completed", "reached laundry facility"].some(kw => afterStatus.includes(kw)) && !["picked up", "pickup completed", "reached laundry facility"].some(kw => beforeStatus.includes(kw))) {
+            templateName = "pickup_completed_v1";
+            
+            // Try to fetch order data for more details (like weight if exists)
+            const db = getFirestore();
+            let totalWeight = "N/A";
+            let deliveryDate = afterData.dropTime || "within 48 hours";
+            
+            try {
+                const orderDoc = await db.collection("orders").doc(orderId).get();
+                if (orderDoc.exists) {
+                    const oData = orderDoc.data();
+                    if (oData.totalWeight) totalWeight = String(oData.totalWeight);
+                    if (oData.deliverySlot) deliveryDate = String(oData.deliverySlot);
+                    if (oData.deliveryDate) deliveryDate = String(oData.deliveryDate);
+                }
+            } catch (e) {
+                console.warn("Failed to fetch order doc for additional details:", e);
+            }
+
+            const totalItems = String(afterData.totalItems || "0");
+            const estimatedTotal = String(afterData.totalCost || "0");
+            
+            // Build services breakdown
+            let breakdown = "Standard Laundry Service";
+            if (afterData.services && Object.keys(afterData.services).length > 0) {
+                breakdown = Object.entries(afterData.services)
+                    .map(([serviceName, count]) => `- ${serviceName.replace("_regular", "")}: ${count}`)
+                    .join("\n");
+            }
+
+            parameters = [
+                { type: "text", text: customerName },
+                { type: "text", text: totalWeight },
+                { type: "text", text: totalItems },
+                { type: "text", text: breakdown },
+                { type: "text", text: estimatedTotal },
+                { type: "text", text: deliveryDate }
+            ];
+        } 
+        else if (["out for delivery"].some(kw => afterStatus.includes(kw)) && !["out for delivery"].some(kw => beforeStatus.includes(kw))) {
+            templateName = "out_for_delivery";
+            
+            const db = getFirestore();
+            let deliveryDate = afterData.dropTime || "today";
+            try {
+                const orderDoc = await db.collection("orders").doc(orderId).get();
+                if (orderDoc.exists && orderDoc.data().deliverySlot) {
+                    deliveryDate = orderDoc.data().deliverySlot;
+                }
+            } catch (e) {}
+
+            parameters = [
+                { type: "text", text: customerName },
+                { type: "text", text: deliveryDate }
+            ];
+        } 
+        else if (["deliver", "completed"].some(kw => afterStatus.includes(kw)) && !["deliver", "completed"].some(kw => beforeStatus.includes(kw))) {
+            templateName = "order_delivered";
+            parameters = [{ type: "text", text: customerName }];
+        }
+
+        // If no matching template for the status change, do nothing
+        if (!templateName) return;
+
+        const payload = {
+            messaging_product: "whatsapp",
+            to: phoneNumber,
+            type: "template",
+            template: {
+                name: templateName,
+                language: { code: "en" },
+                components: [
+                    {
+                        type: "body",
+                        parameters: parameters,
+                    },
+                ],
+            },
+        };
+
+        console.log(`Sending WhatsApp Template '${templateName}' to ${phoneNumber} for status update to '${afterStatus}'`);
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const result = await response.json();
+            
+            // Log outcome to the cartdetails document
+            if (!response.ok) {
+                console.error("WhatsApp API Error:", JSON.stringify(result));
+                await event.data.after.ref.update({
+                    whatsappStatusError: JSON.stringify(result),
+                    whatsappStatusSent: false
+                });
+            } else {
+                console.log("WhatsApp Status message sent successfully.");
+                await event.data.after.ref.update({ whatsappStatusSent: true });
+            }
+        } catch (error) {
+            console.error("WhatsApp Function Exception:", error);
+            await event.data.after.ref.update({
+                whatsappStatusError: error.message,
+                whatsappStatusSent: false
+            });
         }
     }
 );
