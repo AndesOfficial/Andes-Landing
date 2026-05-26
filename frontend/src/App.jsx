@@ -35,6 +35,7 @@ const OrderPlacement = lazy(() => import("./pages/OrderPlacement"));
 const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation"));
 const NotFound = lazy(() => import("./pages/NotFound")); // Planned for next step
 const ContactUs = lazy(() => import("./pages/ContactUs"));
+const Calculator = lazy(() => import("./pages/Calculator"));
 
 import PageLoader from './components/common/PageLoader';
 
@@ -104,6 +105,16 @@ function App() {
     );
   }
 
+  if (location.pathname === '/cococalculator') {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/cococalculator" element={<Calculator />} />
+        </Routes>
+      </Suspense>
+    );
+  }
+
   return (
     <>
       <Navbar />
@@ -120,6 +131,7 @@ function App() {
               <Route path="/download" element={<DownloadPage />} />
               <Route path="/services" element={<NewServicePage />} />
               <Route path="/contact" element={<ContactUs />} />
+              <Route path="/cococalculator" element={<Calculator />} />
 
               {/* Public Auth Routes */}
               <Route path="/signup" element={<SignUp />} />
