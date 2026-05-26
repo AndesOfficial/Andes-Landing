@@ -904,7 +904,41 @@ export default function Calculator() {
               )}
 
               {tab === "detail" && (
-                <DetailPanel out={activeOut} assumptions={assumptions} />
+                <div className="space-y-4">
+                  {/* Scenario selection pills */}
+                  <div className="flex flex-wrap gap-2 pb-2">
+                    {Object.entries(SCENARIO_SEEDS).map(([k, seed]) => {
+                      const isActive = activeScenario === k;
+                      const color = seed.color;
+                      
+                      let btnClass = "";
+                      if (color === "emerald") {
+                        btnClass = isActive 
+                          ? "bg-emerald-600 border-emerald-600 text-white shadow-sm" 
+                          : "bg-white border-emerald-200 text-emerald-600 hover:bg-emerald-50";
+                      } else if (color === "blue") {
+                        btnClass = isActive 
+                          ? "bg-blue-600 border-blue-600 text-white shadow-sm" 
+                          : "bg-white border-blue-200 text-blue-600 hover:bg-blue-50";
+                      } else { // amber
+                        btnClass = isActive 
+                          ? "bg-amber-500 border-amber-500 text-white shadow-sm" 
+                          : "bg-white border-amber-200 text-amber-600 hover:bg-amber-50";
+                      }
+
+                      return (
+                        <button
+                          key={k}
+                          onClick={() => setActiveScenario(k)}
+                          className={`px-5 py-1.5 rounded-full text-xs font-semibold border transition ${btnClass}`}
+                        >
+                          {seed.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <DetailPanel out={activeOut} assumptions={assumptions} />
+                </div>
               )}
             </div>
           </div>
