@@ -38,6 +38,7 @@ const SignUp = () => {
         setLoading(true);
         try {
             await signup(name, email, password);
+            if (window.fbq) window.fbq('track', 'CompleteRegistration');
             navigate(from, { replace: true }); // Redirect to origin or dashboard
         } catch (err) {
             setError('Failed to create an account');
