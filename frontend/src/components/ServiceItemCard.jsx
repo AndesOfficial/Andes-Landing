@@ -37,7 +37,10 @@ const ServiceItemCard = ({ service, onAdd }) => {
 
                 {/* Add Button */}
                 <button
-                    onClick={() => onAdd(service)}
+                    onClick={() => {
+                        if (window.fbq) window.fbq('track', 'AddToCart');
+                        onAdd(service);
+                    }}
                     className="mt-auto w-full py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-2xl transition-colors shadow-lg shadow-blue-500/20 active:scale-95 transform transition-transform"
                 >
                     Add to Cart
