@@ -45,6 +45,7 @@ const CartReviewStep = ({
                                 key={service.id}
                                 className="p-4 bg-slate-50 border border-transparent rounded-2xl hover:border-brand/20 hover:bg-white hover:shadow-lg transition-all cursor-pointer group flex items-center gap-4 active:scale-95"
                                 onClick={() => {
+                                    if (window.fbq) window.fbq('track', 'AddToCart');
                                     addToCart(service, 1, 'regular');
                                     toast.success(`${service.name} added!`);
                                 }}
