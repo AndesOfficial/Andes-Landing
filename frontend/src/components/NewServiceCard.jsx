@@ -19,6 +19,7 @@ const NewServiceCard = ({ service, serviceMode = 'regular' }) => {
 
   const handleAddToCart = () => {
     setIsAdding(true);
+    if (window.fbq) window.fbq('track', 'AddToCart');
 
     const result = addToCart({
       id: service.id,
