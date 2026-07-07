@@ -95,13 +95,13 @@ const LandingPage = () => {
               transition={{ delay: 0.6, duration: 0.5 }}
               className="flex flex-col sm:flex-row gap-5 w-full max-w-md items-center justify-center lg:justify-start mx-auto lg:mx-0"
             >
-              <Link to="/order" className="w-full sm:w-3/5">
+              <Link to="/order" className="w-full sm:w-3/5" onClick={() => window.fbq && window.fbq('track', 'Schedule')}>
                 <button className="w-full h-14 md:h-16 bg-yellow-400 text-slate-900 font-black tracking-wide uppercase rounded-xl md:rounded-2xl shadow-[0_10px_40px_rgba(250,204,21,0.4)] hover:-translate-y-1 hover:bg-yellow-300 transition-all duration-300 text-base md:text-lg flex items-center justify-center gap-2 group relative overflow-hidden">
                   <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-40 group-hover:animate-[shine_1s_ease-in-out]" />
                   Schedule Pickup
                 </button>
               </Link>
-              <Link to="/services" className="w-full sm:w-2/5">
+              <Link to="/services" className="w-full sm:w-2/5" onClick={() => window.fbq && window.fbq('track', 'ViewContent')}>
                 <button className="w-full h-14 md:h-16 bg-white/10 backdrop-blur-lg border border-white/30 text-white font-bold uppercase rounded-xl md:rounded-2xl hover:bg-white/20 hover:border-white hover:-translate-y-1 transition-all duration-300 text-base md:text-lg shadow-xl">
                   View Pricing
                 </button>
@@ -125,7 +125,7 @@ const LandingPage = () => {
                 <p className="text-xs text-blue-100 font-medium tracking-wide">Trusted by<br className="hidden sm:block" /> 10,000+ users</p>
               </div>
               <div className="flex flex-col w-full sm:w-auto">
-                <Link to="/download" className="flex items-center justify-center sm:justify-start gap-2 text-xl sm:text-2xl md:text-3xl text-yellow-400 font-black hover:text-yellow-300 transition-colors group bg-white/10 px-6 py-3 rounded-2xl border border-white/20 hover:bg-white/20 backdrop-blur-md shadow-lg w-full">
+                <Link to="/download" className="flex items-center justify-center sm:justify-start gap-2 text-xl sm:text-2xl md:text-3xl text-yellow-400 font-black hover:text-yellow-300 transition-colors group bg-white/10 px-6 py-3 rounded-2xl border border-white/20 hover:bg-white/20 backdrop-blur-md shadow-lg w-full" onClick={() => window.fbq && window.fbq('trackCustom', 'DownloadApp')}>
                   Download App <FaBolt className="text-lg sm:text-xl group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>

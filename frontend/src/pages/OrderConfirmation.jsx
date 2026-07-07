@@ -15,6 +15,9 @@ const OrderConfirmation = () => {
 
     // Stop confetti after 5 seconds to prevent overwhelming the UI
     useEffect(() => {
+        if (window.fbq) {
+            window.fbq('track', 'Purchase', { currency: 'INR', value: 0 });
+        }
         const timer = setTimeout(() => setShowConfetti(false), 5000);
         return () => clearTimeout(timer);
     }, []);

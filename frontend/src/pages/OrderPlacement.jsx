@@ -64,6 +64,9 @@ const OrderPlacement = () => {
             navigate('/login', { state: { from: '/order' } });
             return;
         }
+        if (window.fbq) {
+            window.fbq('track', 'InitiateCheckout');
+        }
         setStep(2);
     };
 

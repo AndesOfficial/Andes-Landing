@@ -1389,6 +1389,13 @@ function DetailPanel({ out, assumptions }) {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function Calculator() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (window.fbq) {
+      window.fbq('track', 'ViewContent');
+    }
+  }, []);
+
   const [activeScenario, setActiveScenario] = useState("mostlikely");
   const [assumptions,    setAssumptions]    = useState({ ...DEFAULT_ASSUMPTIONS });
   const [tab,            setTab]            = useState("detail");

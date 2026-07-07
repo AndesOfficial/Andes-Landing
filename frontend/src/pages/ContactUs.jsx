@@ -116,6 +116,7 @@ const ContactUs = () => {
         e.preventDefault();
         setSubmitting(true);
         setTimeout(() => {
+            if (window.fbq) window.fbq('track', 'Contact');
             toast.success("Message sent! We'll get back to you shortly. 🎉");
             setForm({ name: "", email: "", location: "", message: "" });
             setSubmitting(false);
