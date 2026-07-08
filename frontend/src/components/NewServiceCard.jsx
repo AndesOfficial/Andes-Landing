@@ -19,7 +19,7 @@ const NewServiceCard = ({ service, serviceMode = 'regular' }) => {
 
   const handleAddToCart = () => {
     setIsAdding(true);
-    if (window.fbq) window.fbq('track', 'AddToCart');
+    if (window.fbq) window.fbq('track', 'AddToCart', { currency: 'INR', value: currentPrice });
 
     const result = addToCart({
       id: service.id,
