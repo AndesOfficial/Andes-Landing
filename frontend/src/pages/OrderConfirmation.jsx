@@ -12,11 +12,12 @@ const OrderConfirmation = () => {
 
     // In a real app, you'd get this from location.state or context
     const orderId = location.state?.orderId || "#ORD-89234";
+    const finalTotal = location.state?.finalTotal || 0;
 
     // Stop confetti after 5 seconds to prevent overwhelming the UI
     useEffect(() => {
         if (window.fbq) {
-            window.fbq('track', 'Purchase', { currency: 'INR', value: 0 });
+            window.fbq('track', 'Purchase', { currency: 'INR', value: finalTotal });
         }
         const timer = setTimeout(() => setShowConfetti(false), 5000);
         return () => clearTimeout(timer);

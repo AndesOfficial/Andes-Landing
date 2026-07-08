@@ -65,7 +65,7 @@ const OrderPlacement = () => {
             return;
         }
         if (window.fbq) {
-            window.fbq('track', 'InitiateCheckout');
+            window.fbq('track', 'InitiateCheckout', { currency: 'INR', value: totalPrice });
         }
         setStep(2);
     };
@@ -92,7 +92,7 @@ const OrderPlacement = () => {
                 couponDiscount,
                 userPhone: contactPhone
             });
-            navigate('/order-confirmation');
+            navigate('/order-confirmation', { state: { finalTotal: finalTotal } });
         } catch (error) {
             console.error("Order placement failed:", error);
             toast.error("Failed to place order. Please try again.");
