@@ -23,6 +23,7 @@ const teamsData = {
       { src: Aryan, name: "Aryan Gupta", title: "Chief Executive Officer" },
       { src: Gaurav, name: "Gaurav Bind", title: "Chief Technology Officer" },
       { src: prathamesh, name: "Prathamesh Birajdar", title: "Chief Operating Officer" },
+      { src: Pranay, name: "Pranay Singh", title: "Chief Marketing Officer" },
      
     ]
   },
