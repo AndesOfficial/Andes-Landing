@@ -20,7 +20,7 @@ const clients = [
 
 const TrustedBy = () => {
   return (
-    <section className="py-24 md:py-32 bg-[#fdfeff] relative overflow-hidden">
+    <section className="pt-24 md:pt-32 pb-4 bg-[#fdfeff] relative overflow-hidden">
       {/* Subtle Background Elements */}
       <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
         style={{ backgroundImage: `radial-gradient(#2563eb 0.5px, transparent 0.5px)`, backgroundSize: '24px 24px' }}>
@@ -63,52 +63,29 @@ const TrustedBy = () => {
           </motion.p>
         </div>
 
-        {/* --- INFINITE SCROLLING MARQUEE --- */}
-        <div className="relative w-full overflow-hidden flex items-center pt-4 pb-12">
-          
-          {/* Fading Edges for the Marquee Effect */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 md:w-48 bg-gradient-to-r from-[#fdfeff] to-transparent z-20 pointer-events-none"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-24 md:w-48 bg-gradient-to-l from-[#fdfeff] to-transparent z-20 pointer-events-none"></div>
+        {/* --- PARTNER LOGOS --- */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-10 items-center pt-4 pb-12">
+          {clients.map((client) => (
+            <div
+              key={client.name}
+              className="flex items-center justify-center h-20 md:h-28 px-4"
+            >
+              <img
+                src={client.logo}
+                alt={client.name}
+                className="max-h-full max-w-full object-contain"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'block';
+                }}
+              />
 
-          <motion.div
-            className="flex gap-8 md:gap-16 items-center flex-nowrap shrink-0"
-            // The magic happens here: Animate x from 0% to -50% to create a seamless loop
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ 
-              repeat: Infinity, 
-              ease: "linear", 
-              duration: 25 // Adjust this value to make it scroll faster or slower
-            }}
-          >
-            {/* 
-              We duplicate the array twice combining them to create a seamless infinite loop.
-              Total items = 6 original + 6 duplicated = 12 items.
-              When the first set of 6 scrolls past, the second set of 6 comes in perfectly.
-            */}
-            {[...clients, ...clients].map((client, index) => (
-              <div 
-                key={index}
-                className="group relative flex items-center justify-center min-w-[120px] md:min-w-[160px] h-20 md:h-28 shrink-0 transition-transform duration-300 hover:-translate-y-1 cursor-pointer"
-              >
-                <div className="relative h-full w-full flex items-center justify-center z-10 px-4">
-                  <img
-                    src={client.logo}
-                    alt={client.name}
-                    className="max-h-full max-w-full object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-400" 
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'block';
-                    }}
-                  />
-
-                  {/* Fallback Text in case image breaks */}
-                  <span className="hidden font-bold text-slate-400 text-xs md:text-sm text-center uppercase tracking-wider relative z-10 group-hover:text-blue-600 transition-colors">
-                    {client.name}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </motion.div>
+              {/* Fallback Text in case image breaks */}
+              <span className="hidden font-bold text-slate-400 text-xs md:text-sm text-center uppercase tracking-wider">
+                {client.name}
+              </span>
+            </div>
+          ))}
         </div>
 
         {/* Enhanced "More Partners" Badge */}

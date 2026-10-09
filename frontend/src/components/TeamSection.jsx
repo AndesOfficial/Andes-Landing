@@ -1,19 +1,9 @@
 import React from 'react';
-import { FaHeart, FaUsers, FaDesktop, FaBullhorn, FaSearch, FaCog, FaPaintBrush } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 import Aryan from '../assets/AryanGupta.png';
 import Gaurav from '../assets/Gaurav_Bind.jpeg';
-import Jeet from '../assets/Jeetzanvar.jpeg';
-import Neeyati from '../assets/NeeyatiDharamsey _marketing team.jpeg';
-import Nitya from '../assets/Nityajuneja_Marketing team.jpeg';
-import Prabjot from '../assets/PrabjotWaryah.jpeg';
 import Pranay from '../assets/Pranaysingh.jpeg';
-import Sneha from '../assets/Snehajaiswal_marketing team.jpeg';
-import Swanandi from '../assets/SwanandiBurute.jpeg';
 import prathamesh from '../assets/prathmesh.jpeg';
-import AvatarPlaceholder from '../assets/avatar1.png';
-import Ishan from '../assets/ishan.jpeg';
-import Tamanna from '../assets/tamana.jpeg';
-import Nisba from '../assets/Nisba.jpeg';
 
 const teamsData = {
   leadership: {
@@ -26,51 +16,12 @@ const teamsData = {
       { src: Pranay, name: "Pranay Singh", title: "Chief Financial Officer" },
      
     ]
-  },
-  technology: {
-    title: "TECHNOLOGY TEAM",
-    icon: <FaDesktop className="text-blue-500" size={18} />,
-    members: [
-      { src: Ishan, name: "Ishan Gupta", title: "Tech Team Lead" },
-    ]
-  },
-  marketing: {
-    title: "MARKETING TEAM",
-    icon: <FaBullhorn className="text-blue-500" size={18} />,
-    members: [
-      { src: Neeyati, name: "Neeyati Dharamsey", title: "Marketing Executive" },
-      { src: Sneha, name: "Sneha Jaiswal", title: "Marketing Executive" },
-      { src: Nitya, name: "Nitya Juneja", title: "Marketing Executive" },
-    ]
-  },
-  research: {
-    title: "RESEARCH TEAM",
-    icon: <FaSearch className="text-blue-500" size={18} />,
-    members: [
-      { src: Swanandi, name: "Swanandi Burute", title: "Research Analyst" },
-      { src: Tamanna, name: "Tamanna Roy", title: "Research Analyst" },
-    ]
-  },
-  operations: {
-    title: "OPERATIONS TEAM",
-    icon: <FaCog className="text-blue-500" size={18} />,
-    members: [
-      { src: Jeet, name: "Jeet Zanvar", title: "Operations Executive" },
-      { src: Prabjot, name: "Prabjot Waryah", title: "Operations Executive" },
-    ]
-  },
-  creative: {
-    title: "CREATIVE & DESIGN",
-    icon: <FaPaintBrush className="text-blue-500" size={18} />,
-    members: [
-      { src: Nisba, name: "Nisba  Mujawar", title: "Head of Design" },
-    ]
   }
 };
 
 const TeamSection = () => {
   return (
-    <div className="bg-[#f8fbff] text-slate-800 py-20 relative overflow-hidden font-sans">
+    <div className="bg-[#f8fbff] text-slate-800 pt-12 pb-16 md:pt-14 md:pb-20 relative overflow-hidden font-sans">
 
       {/* Subtle Background Elements to prevent 'blank' feeling */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden mix-blend-multiply">
@@ -84,7 +35,7 @@ const TeamSection = () => {
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
 
         {/* Header */}
-        <div className="text-center mb-16 md:mb-24">
+        <div className="text-center mb-10 md:mb-14">
           <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tight text-[#1e3a8a]">Our Team</h2>
           <p className="text-base md:text-lg text-slate-500 max-w-2xl mx-auto font-medium">
             Meet the talented professionals driving our success forward.
@@ -95,33 +46,7 @@ const TeamSection = () => {
         {/* Content Structure */}
         <div className="flex flex-col gap-12 md:gap-16">
 
-          {/* Row 1 */}
           <TeamCategoryGroup data={teamsData.leadership} />
-
-          {/* Row 2 */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12">
-            <div className="md:col-span-4">
-              <TeamCategoryGroup data={teamsData.technology} />
-            </div>
-            <div className="md:col-span-8">
-              <TeamCategoryGroup data={teamsData.marketing} />
-            </div>
-          </div>
-
-          {/* Row 3 */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12">
-            <div className="md:col-span-6">
-              <TeamCategoryGroup data={teamsData.research} />
-            </div>
-            <div className="md:col-span-6">
-              <TeamCategoryGroup data={teamsData.operations} />
-            </div>
-          </div>
-
-          {/* Row 4 */}
-          <div className="w-full md:w-1/3">
-            <TeamCategoryGroup data={teamsData.creative} />
-          </div>
 
         </div>
 
