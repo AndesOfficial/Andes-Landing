@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaLayerGroup, FaTshirt, FaShoePrints } from 'react-icons/fa';
 
 /**
  * ServiceFilters Component
@@ -15,14 +14,6 @@ const ServiceFilters = ({
   layout = 'horizontal',
 }) => {
 
-  const getMainIcon = (key) => {
-    switch (key) {
-      case 'general': return <FaLayerGroup />;
-      case 'dry_cleaning': return <FaTshirt />;
-      case 'shoe_cleaning': return <FaShoePrints />;
-      default: return null;
-    }
-  };
 
   // 1. Desktop Sidebar Layout
   if (layout === 'vertical') {
@@ -39,9 +30,6 @@ const ServiceFilters = ({
                 : 'bg-transparent text-slate-600 hover:bg-white hover:shadow-sm hover:translate-x-1'
                 }`}
             >
-              <span className={`text-lg mr-3 transition-transform duration-300 group-hover:scale-110 ${selectedMain === cat.key ? 'text-white' : 'text-[#0089FF] opacity-70'}`}>
-                {getMainIcon(cat.key)}
-              </span>
               <span>{cat.name}</span>
             </button>
           ))}
@@ -63,9 +51,6 @@ const ServiceFilters = ({
               : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50'
               }`}
           >
-            <span className={selectedMain === cat.key ? 'text-white' : 'text-[#0089FF]'}>
-              {getMainIcon(cat.key)}
-            </span>
             <span className="uppercase tracking-tight">{cat.name}</span>
           </button>
         ))}

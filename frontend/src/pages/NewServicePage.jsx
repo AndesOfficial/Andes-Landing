@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Navbar from '../components/Navbar';
 import ServiceFilters from '../components/NewServiceFilters';
-import data from '../data';
+import { useServiceCatalog } from '../utils/serviceCatalog';
 import CartSidebar from '../components/CartSidebar';
 import { FaSearch, FaShoppingBasket, FaBolt, FaClock } from 'react-icons/fa';
 import { useOrder } from '../context/OrderContext';
@@ -14,6 +14,7 @@ import BottomNav from '../components/BottomNav';
  */
 const NewServicePage = () => {
   const { cart, cartMode } = useOrder();
+  const { services, mainCategories, loading, error } = useServiceCatalog();
   const [selectedMain, setSelectedMain] = useState('general');
   const [searchQuery, setSearchQuery] = useState('');
   const [serviceMode, setServiceMode] = useState('regular');
@@ -37,8 +38,7 @@ const NewServicePage = () => {
 
   // Filter: instant items only show in instant mode, regular items only in regular mode
   const filteredServices = useMemo(() => {
-    if (!data || !data.services) return [];
-    return data.services.filter(service => {
+    return services.filter(service => {
       const isInstantItem = !!service.instantOnly;
       if (activeMode === 'instant' && !isInstantItem) return false;
       if (activeMode === 'regular' && isInstantItem) return false;
@@ -49,16 +49,17 @@ const NewServicePage = () => {
       if (searchQuery.trim()) return matchesSearch;
       return service.mainCategory === selectedMain;
     });
-  }, [selectedMain, searchQuery, activeMode]);
+  }, [services, selectedMain, searchQuery, activeMode]);
 
   const groupedServices = useMemo(() => {
+    const labels = Object.fromEntries(mainCategories.map(c => [c.key, c.name]));
     return filteredServices.reduce((acc, service) => {
-      const group = service.group || 'Other';
+      const group = labels[service.mainCategory] || 'Other';
       if (!acc[group]) acc[group] = [];
       acc[group].push(service);
       return acc;
     }, {});
-  }, [filteredServices]);
+  }, [filteredServices, mainCategories]);
 
   const isInstant = activeMode === 'instant';
 
@@ -96,7 +97,7 @@ const NewServicePage = () => {
         {!isInstant && (
           <div className="sticky top-[80px] z-40 bg-white/95 backdrop-blur-md py-3 px-4 shadow-sm border-b border-slate-100">
             <ServiceFilters
-              mainCategories={data?.mainCategories || []}
+              mainCategories={mainCategories}
               selectedMain={selectedMain}
               onMainChange={(key) => {
                 setSelectedMain(key);
@@ -162,7 +163,7 @@ const NewServicePage = () => {
           {!isInstant && (
             <div className="hidden lg:block lg:col-span-1">
               <ServiceFilters
-                mainCategories={data?.mainCategories || []}
+                mainCategories={mainCategories}
                 selectedMain={selectedMain}
                 onMainChange={(key) => {
                   setSelectedMain(key);
@@ -180,7 +181,18 @@ const NewServicePage = () => {
               <ServiceGroupSection key={group} title={group} services={services} serviceMode={activeMode} />
             ))}
 
-            {filteredServices.length === 0 && (
+            {loading && (
+              <p className="text-center py-24 text-slate-400 font-bold">Loading services…</p>
+            )}
+
+            {!loading && error && (
+              <div className="text-center py-24 bg-white rounded-[3rem] border-2 border-dashed border-slate-100 mt-8">
+                <h3 className="text-2xl font-black text-slate-800 mb-3">Couldn't load services</h3>
+                <p className="text-slate-400 font-bold">Check your connection and refresh the page.</p>
+              </div>
+            )}
+
+            {!loading && !error && filteredServices.length === 0 && (
               <div className="text-center py-24 bg-white rounded-[3rem] border-2 border-dashed border-slate-100 mt-8">
                 <div className="text-7xl mb-6 opacity-20 filter grayscale flex justify-center">
                   <FaShoppingBasket />

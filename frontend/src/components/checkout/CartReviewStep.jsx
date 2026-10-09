@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaTshirt, FaMinus, FaPlus, FaTrash, FaExclamationCircle, FaShoppingCart, FaChevronRight } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { quickServices } from '../../data/servicesData';
+import { useServiceCatalog, toCartItem } from '../../utils/serviceCatalog';
 
 /**
  * CartReviewStep Component
@@ -19,6 +19,10 @@ const CartReviewStep = ({
     onNext,
     addToCart
 }) => {
+    const { services } = useServiceCatalog();
+    const quickServices = services
+        .filter((s) => s.mainCategory === 'general' && !s.instantOnly)
+        .slice(0, 4);
 
     const handleIncrement = (item) => updateQuantity(item.id, item.quantity + 1);
     const handleDecrement = (item) => {
@@ -40,21 +44,21 @@ const CartReviewStep = ({
                     <p className="text-slate-400 font-bold mb-8 text-sm uppercase tracking-widest">Add some magic to your laundry</p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 text-left">
-                        {quickServices.slice(0, 4).map((service) => (
+                        {quickServices.map((service) => (
                             <div
                                 key={service.id}
                                 className="p-4 bg-slate-50 border border-transparent rounded-2xl hover:border-brand/20 hover:bg-white hover:shadow-lg transition-all cursor-pointer group flex items-center gap-4 active:scale-95"
                                 onClick={() => {
                                     if (window.fbq) window.fbq('track', 'AddToCart', { currency: 'INR', value: service.price });
-                                    addToCart(service, 1, 'regular');
-                                    toast.success(`${service.name} added!`);
+                                    addToCart(toCartItem(service), 1, 'regular');
+                                    toast.success(`${service.displayName} added!`);
                                 }}
                             >
                                 <div className="p-3 bg-white rounded-xl text-brand group-hover:bg-brand group-hover:text-white shadow-sm transition-colors text-xl">
-                                    {(() => { const Icon = service.icon; return <Icon />; })()}
+                                    <FaTshirt />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-slate-800 text-sm">{service.name}</h4>
+                                    <h4 className="font-bold text-slate-800 text-sm">{service.displayName}</h4>
                                     <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">₹{service.price}/{service.unit}</p>
                                 </div>
                             </div>

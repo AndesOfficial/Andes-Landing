@@ -2,7 +2,6 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { useEffect, useRef, Suspense, lazy, useState } from "react";
 import './App.css';
-import data from './data';
 import MyFooter from './components/MyFooter';
 import DashboardLayout from "./components/DashboardLayout";
 import ProtectedRoute from "./components/ProtectedRoute";

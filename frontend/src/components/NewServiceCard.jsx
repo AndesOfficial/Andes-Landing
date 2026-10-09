@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useOrder } from '../context/OrderContext';
 import { toast } from 'react-toastify';
 import { FaMinus, FaPlus, FaTshirt, FaBolt } from 'react-icons/fa';
+import { toCartItem } from '../utils/serviceCatalog';
 
 const NewServiceCard = ({ service, serviceMode = 'regular' }) => {
   const { cart, cartMode, addToCart, updateQuantity, removeFromCart, clearCart } = useOrder();
   const [isAdding, setIsAdding] = useState(false);
 
-  const isKg = service.unit === 'kg';
-  const currentPrice = isKg ? service.rateByKg : service.rateByPiece;
-  const originalPrice = service.fakePrice || service.originalPrice || currentPrice;
+  const currentPrice = service.price;
+  const originalPrice = service.original || currentPrice;
   const discount = originalPrice && originalPrice > currentPrice
     ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100)
     : 0;
@@ -21,13 +21,7 @@ const NewServiceCard = ({ service, serviceMode = 'regular' }) => {
     setIsAdding(true);
     if (window.fbq) window.fbq('track', 'AddToCart', { currency: 'INR', value: currentPrice });
 
-    const result = addToCart({
-      id: service.id,
-      name: service.displayName,
-      price: currentPrice,
-      unit: service.unit,
-      image: service.image,
-    }, 1, serviceMode);
+    const result = addToCart(toCartItem(service), 1, serviceMode);
 
     if (result && result.conflict) {
       // Cart has items of a different mode — warn the user
