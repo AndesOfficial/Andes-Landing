@@ -100,18 +100,9 @@ const CustomerReviews = () => {
 
                     {/* User Profile */}
                     <div className="mt-auto flex flex-col items-center">
-                      <div className={`rounded-full p-1 border-2 border-brand/20 mb-3 transition-all duration-300 ${isActive ? "w-16 h-16 md:w-20 md:h-20 border-brand shadow-lg" : "w-12 h-12"}`}>
-                        <img
-                          src={review.imageUrl}
-                          alt={review.name}
-                          className="w-full h-full object-cover rounded-full"
-                        />
-                      </div>
-
                       <h4 className={`font-bold text-slate-900 transition-all ${isActive ? "text-lg md:text-xl" : "text-base"}`}>
                         {review.name}
                       </h4>
-                      <span className="text-sm text-slate-400 font-medium tracking-wide uppercase">Verified Customer</span>
                     </div>
                   </div>
                 )}
